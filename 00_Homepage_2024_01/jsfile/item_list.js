@@ -1,12 +1,19 @@
 // 제품 목록 생성
 const productList = document.querySelector('.product-list');
-    
+
+// 도서 이미지 배열
+const bookImages = [
+    'C:/PJT_1/img/book1.jpg',
+    'C:/PJT_1/img/book2.jpg',
+    // 추가 이미지 경로
+];
+
 function createProducts() {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
         const productItem = document.createElement('div');
         productItem.className = 'product-item';
         productItem.innerHTML = `
-            <img src="/api/placeholder/200/300" alt="도서 ${i + 1}">
+            <img src="${bookImages[i] || '/api/placeholder/200/300'}" alt="도서 ${i + 1}">
             <div class="rating">★★★★☆</div>
             <h3>도서 제목 ${i + 1}</h3>
             <p>저자 | 출판사</p>
@@ -23,14 +30,23 @@ function createProducts() {
 createProducts();
 
 // 장바구니 기능
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function addToCart(productId) {
-    cart.push({
-        id: productId,
-        title: `도서 제목 ${productId + 1}`,
-        price: 10000 // 예시 가격
-    });
+    const existingItem = cart.find(item => item.id === productId);
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({
+            id: productId,
+            title: `도서 제목 ${productId + 1}`,
+            price: 10000, // 예시 가격
+            image: bookImages[productId] || '/api/placeholder/50/75', // 이미지 URL
+            quantity: 1
+        });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('아이템이 장바구니에 추가되었습니다. 장바구니를 열어 확인해 보세요.');
     updateCartUI();
 }
 
@@ -42,32 +58,57 @@ function updateCartUI() {
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
-            <img src="/api/placeholder/50/75" alt="${item.title}">
+            <img src="${item.image}" alt="${item.title}">
             <div class="cart-item-details">
                 <h4>${item.title}</h4>
                 <p>가격: ${item.price}원</p>
+                <div class="quantity-controls">
+                    <button class="quantity-decrease" onclick="changeQuantity(${index}, -1)">-</button>
+                    <input type="text" class="quantity" value="${item.quantity}" readonly>
+                    <button class="quantity-increase" onclick="changeQuantity(${index}, 1)">+</button>
+                </div>
             </div>
             <div class="cart-item-actions">
                 <button onclick="removeFromCart(${index})">삭제</button>
             </div>
         `;
         cartItems.appendChild(cartItem);
-        total += item.price;
+        total += item.price * item.quantity;
     });
     document.getElementById('total-price').textContent = total;
 }
 
+function changeQuantity(index, change) {
+    const item = cart[index];
+    item.quantity += change;
+    if (item.quantity <= 0) {
+        item.quantity = 1;
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartUI();
+}
+
 function removeFromCart(index) {
     cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCartUI();
 }
 
 function openCart() {
-    document.querySelector('.cart-page').style.display = 'block';
+    document.querySelector('.cart-overlay').style.display = 'flex'; // 장바구니 오버레이 표시
+    updateCartUI();
 }
 
 function closeCart() {
-    document.querySelector('.cart-page').style.display = 'none';
+    document.querySelector('.cart-overlay').style.display = 'none'; // 장바구니 오버레이 숨기기
+}
+
+// 장바구니 비우기 기능
+function clearCart() {
+    cart = []; // 장바구니를 빈 배열로 초기화
+    localStorage.setItem('cart', JSON.stringify(cart)); // 로컬 스토리지에 빈 장바구니 저장
+    updateCartUI(); // 장바구니 UI 업데이트
+    alert('장바구니가 비워졌습니다.');
 }
 
 // 쿠폰 적용 기능
@@ -91,13 +132,12 @@ function addToRecentProducts(productId) {
     updateRecentProductsUI();
 }
 
-// 최근 본 상품 기능 수정
 function updateRecentProductsUI() {
     const recentProductsContainer = document.querySelector('.recent-products');
     recentProductsContainer.innerHTML = '<h3>최근 본 상품</h3>';
     [...recentProducts].slice(-5).reverse().forEach(productId => {
         const img = document.createElement('img');
-        img.src = `/api/placeholder/50/75`;
+        img.src = bookImages[productId] || '/api/placeholder/50/75';
         img.alt = `최근 본 상품 ${productId + 1}`;
         img.onclick = () => openInfoPage(productId);
         recentProductsContainer.appendChild(img);
