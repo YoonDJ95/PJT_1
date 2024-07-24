@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="C:\PJT_1\css\cart_page.css">
     <!-- 책 미리보기 -->
     <link rel="stylesheet" href="C:\PJT_1\css\page_preview.css">
+    <!-- 계정 생성 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\account_add.css">
+
+
 
 </head>
 
@@ -56,10 +60,18 @@
             </nav>
             <!-- 로그인영역 -->
             <nav style="display: flex; justify-content: space-between; align-items: center;">
+
                 <!-- 로그인 메뉴 -->
                 <p id="login_space">
-                    <img src="C:\PJT_1\img\login_icon.png" style="width: 50px; height: 50px;" onclick="toggleDropdown()">
+                    <img src="C:\PJT_1\img\login_icon.png" style="width: 50px; height: 50px;"
+                        onclick="toggleDropdown()">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img id="trigger-image" src="C:\PJT_1\img\add-photo_2961348.png" alt="계정 생성"
+                        style="width: 48px; height: 48px;">
+
                 </p>
+                <!-- 이미지 클릭 시 팝업 나타나기 -->
+                <p></p>
                 <div id="login-menu" class="dropdown4">
                     <p style="font-size: 30px;">
                         <label for="inp" class="inp">
@@ -86,7 +98,7 @@
                         <button class="btn btn-3 hover-border-1" onclick="removetext()">취소</button>
                     </nav>
                 </div>
-            
+
                 <div class="login-status" id="login-status" style="display: none;">
                     <p id="welcome-message"></p>
                     <P><button id="logout-btn" style="display: none;" onclick="logout()">로그아웃</button></P>
@@ -94,10 +106,53 @@
                 </div>
                 <div>
                     <p id="market_guest" class="market_cart" style="align-self: flex-end; margin-top: 10px;">
-                        <img id="cart-icon" onclick="openCart()" src="C:\PJT_1\img\basket_empty.png" style="width: 50px; height: 50px;">
+                        <img id="cart-icon" onclick="openCart()" src="C:\PJT_1\img\basket_empty.png"
+                            style="width: 50px; height: 50px;">
                     </p>
                 </div>
             </nav>
+
+            <!-- 오버레이 -->
+            <div id="overlay"></div>
+
+            <!-- 계정 생성 폼 -->
+            <div id="signup-section">
+                <h2 style="text-align: center;">계정 생성</h2>
+                <form id="signup-form" class="signup-form">
+                    <label for="signup-id" class="inp_add">
+                        <input type="text" id="signup-id" name="id" required>
+                        <span class="label">ID</span>
+                        <svg width="120px" height="30px" viewBox="0 0 120 26">
+                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                        </svg>
+                        <span class="border"></span>
+                    </label>
+                    <br>
+                    <br>
+                    <label for="signup-password" class="pwr_add">
+                        <input type="password" id="signup-password" name="password" required>
+                        <span class="label">Password</span>
+                        <svg width="120px" height="30px" viewBox="0 0 120 26">
+                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                        </svg>
+                        <span class="border"></span>
+                    </label>
+                    <br>
+                    <br>
+                    <label for="signup-name" class="name_add">
+                        <input type="text" id="signup-name" name="name" required>
+                        <span class="label">이름</span>
+                        <svg width="120px" height="30px" viewBox="0 0 120 26">
+                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                        </svg>
+                        <span class="border"></span>
+                    </label>
+                    <br>
+                    <button type="submit">계정 생성</button>
+                </form>
+                <p id="signup-message"></p>
+            </div>
+
 
 
 

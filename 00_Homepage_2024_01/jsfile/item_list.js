@@ -1,24 +1,97 @@
 let userType = 'Guest'; // 기본값을 'Guest'로 설정 
-
+let userName = '';
 
 let cartItems = [];  // 장바구니 아이템 리스트를 저장할 배열
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 let wishlist = {}; // 찜하기 상태를 저장할 전역 변수
+// 페이지 로드 시 초기화
 
 
-/* 계정 관리 */
-function saveUserInfo(userId, password, name) { // 사용자 정보 저장 함수
+
+document.addEventListener('DOMContentLoaded', function () {
+  // 모든 localStorage 항목을 삭제하는 것이 맞는지 확인하세요.
+  clearLocalStorage(); // 주석 처리하거나 조건에 따라 호출
+
+  initializeUserInfo(); // 초기 사용자 정보 설정
+
+  setupSignupForm(); // 계정 생성 폼 설정
+  setupShowSignupFormButton(); // 계정 생성 버튼 설정
+
+  userType = loaduserType(); // 현재 사용자 유형을 로드
+  wishlist = loadWishList(); // 로컬 스토리지에서 찜하기 목록 불러오기
+  updateUI(); // UI 업데이트
+  initializeData(); // 데이터 초기화
+
+});
+
+
+
+/* 회원가입 */
+function saveUserInfo(userId, password, name) {
   const users = JSON.parse(localStorage.getItem('users') || '{}');
+
+  // 이미 존재하는 ID 확인
+  if (users[userId]) {
+    return '이미 존재하는 ID입니다.';
+  }
+
+  // 새로운 사용자 정보 저장
   users[userId] = { password, name };
   localStorage.setItem('users', JSON.stringify(users));
+  return '계정이 성공적으로 생성되었습니다.';
 }
 
-function initializeUserInfo() { //로그인 시 사용자 정보를 저장
+function initializeUserInfo() {
   // 예시로 초기 사용자 정보 설정 (실제로는 별도의 UI를 통해 입력받음)
   saveUserInfo('1', '1', 'User1');
   saveUserInfo('2', '2', 'User2');
+  saveUserInfo('Master','Master','Master')
 }
+
+
+// 계정 생성 폼 제출 처리
+function setupSignupForm() {
+  const signupForm = document.getElementById('signup-form');
+  if (signupForm) {
+    signupForm.addEventListener('submit', function (event) {
+      event.preventDefault(); // 폼 제출 기본 동작 방지
+
+      const userId = document.getElementById('signup-id').value;
+      const password = document.getElementById('signup-password').value;
+      const name = document.getElementById('signup-name').value;
+      const messageElement = document.getElementById('signup-message');
+
+      // 계정 생성 시도
+      const resultMessage = saveUserInfo(userId, password, name);
+
+      // 결과 메시지 표시
+      messageElement.textContent = resultMessage;
+    });
+  }
+}
+
+
+// 계정 생성 버튼 클릭 시 폼 표시
+function setupShowSignupFormButton() {
+  const showSignupFormButton = document.getElementById('show-signup-form');
+  if (showSignupFormButton) {
+    showSignupFormButton.addEventListener('click', function () {
+      const signupSection = document.getElementById('signup-section');
+      if (signupSection) {
+        signupSection.style.display = (signupSection.style.display === 'none' || signupSection.style.display === '') ? 'block' : 'none';
+      }
+    });
+  }
+}
+
+
+
+
+
+
+
+
 
 
 /* 로그인 */
@@ -30,11 +103,6 @@ function setuserType(userId, name) { // 로그인 상태를 localStorage에 저�
   localStorage.setItem('userName', name); // 이름 저장
   wishlist = loadWishList(); // 로그인 후 현재 사용자의 찜하기 목록 불러오기
   updateUI(); // UI 업데이트
-}
-
-
-function loaduserType() { // 로그인 상태를 localStorage에서 불러오기
-  return localStorage.getItem('userType') || 'Guest'; // 기본값을 'Guest'로 설정
 }
 
 
@@ -596,25 +664,6 @@ function clearCart() {
 
 
 /* 찜하기 */
-
-// 페이지 로드 시 초기화
-document.addEventListener('DOMContentLoaded', function () {
-  // 모든 localStorage 항목을 삭제하는 것이 맞는지 확인하세요.
-  clearLocalStorage(); // 주석 처리하거나 조건에 따라 호출
-
-  initializeUserInfo(); // 초기 사용자 정보 설정
-  userType = loaduserType(); // 현재 사용자 유형을 로드
-  wishlist = loadWishList(); // 로컬 스토리지에서 찜하기 목록 불러오기
-  updateUI(); // UI 업데이트
-
-  initializeData(); // 데이터 초기화
-
-});
-
-
-
-
-
 
 
 // 찜하기 버튼 클릭 시 상태 변경

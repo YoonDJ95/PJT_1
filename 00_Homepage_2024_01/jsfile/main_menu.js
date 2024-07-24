@@ -36,3 +36,20 @@ function toggleDropdown() {
   const menu = document.getElementById('login-menu');
   menu.classList.toggle('show');
 }
+
+
+//계정생성
+document.addEventListener('DOMContentLoaded', function() {
+  const triggerImage = document.getElementById('trigger-image');
+  const signupSection = document.getElementById('signup-section');
+  const overlay = document.getElementById('overlay');
+
+  function toggleSignupSection() {
+      const isActive = signupSection.style.display === 'block';
+      signupSection.style.display = isActive ? 'none' : 'block';
+      overlay.style.display = isActive ? 'none' : 'block';
+  }
+
+  triggerImage.addEventListener('click', toggleSignupSection);
+  overlay.addEventListener('click', toggleSignupSection);
+});
