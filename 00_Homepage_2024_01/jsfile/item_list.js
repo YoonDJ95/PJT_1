@@ -22,27 +22,24 @@ const RecentProducts = {                                      // 최근 본 상�
 };
 
 
-/** CSS 까지 로드 되고 출력 **/
-window.onload = function () {
-  initializeData();                                           // 계정 별 초기값 추가 및 기존값 읽기
-  updateUI();                                                 // UI 업데이트
-};
-
 /** HTML 문서가 완전히 로드되고 분석된 후 수행되는 구간 **/
 document.addEventListener('DOMContentLoaded', function () {
-  clearLocalStorage();                                        // 모든 로컬스토리지값을 삭제
-  createProducts();                                           // 상품 생성 및 표시
-  initializeUserInfo();                                       // 사용자 목록 새로고침
-  userType = loaduserType();                                  // 로컬 스토리지에서 userType 불러오기
-  wishlist = loadWishList();                                  // 로컬 스토리지에서 wishlist 불러오기
-  setupSignupForm();                                          // 회원가입 페이지 부문 생성
-  displayUserList();                                          // 사용자 목록 표시
+  initializeData();                                                   // 계정 별 초기값 추가 및 기존값 읽기
+  clearLocalStorage();                                                // 모든 로컬스토리지값을 삭제
+  createProducts();                                                   // 상품 생성 및 표시
+  initializeUserInfo();                                               // 사용자 목록 새로고침
+  userType = loaduserType();                                          // 로컬 스토리지에서 userType 불러오기
+  wishlist = loadWishList();                                          // 로컬 스토리지에서 wishlist 불러오기
+  setupSignupForm();                                                  // 회원가입 페이지 부문 생성
+  displayUserList();                                                  // 사용자 목록 표시
+  updateUI();                                                         // UI 업데이트
 
   /* 계정 생성 기능 */
   const triggerImage = document.getElementById('trigger-image');
   const signupSection = document.getElementById('signup-section');
   const overlay = document.getElementById('overlay');
   triggerImage.addEventListener('click', toggleSignupSection);
+  triggerImage.addEventListener('click', removetext_signup);
 
   function toggleSignupSection() {                                    // trigger-image를 누르면 관련 style이 none, block으로 변하도록
     const isActive = signupSection.style.display === 'block';
@@ -83,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
     masterAdmin.style.display = 'none';
     overlay2.style.display = 'none';
   });
+
 });
 
 
@@ -162,7 +160,6 @@ function setupSignupForm() {
   if (signupForm) {                                           // 해당부분이 html에 존재 할 경우
     signupForm.addEventListener('submit', function (event) {  // submit 버튼 이벤트가 발생하면 실행한다.
       event.preventDefault();                                 // 창이 새로고침하여 실행되는것 방지
-
       const userId = document.getElementById('signup-id').value;          // html의 sigup-id의 값을 userId 변수로 지정
       const password = document.getElementById('signup-password').value;  // html의 sigup-의 password값을 password 변수로 지정
       const name = document.getElementById('signup-name').value;          // html의 sigup-name의 값을 name 변수로 지정
@@ -175,6 +172,13 @@ function setupSignupForm() {
   }
 }
 
+function removetext_signup() {                                         // ID와 PW 입력 필드 지우기
+  document.getElementById('signup-id').value = '';
+  document.getElementById('signup-password').value = '';
+  document.getElementById('signup-name').value = '';
+  document.getElementById('signup-message').value = '';
+}
+
 /* 계정생성부분 */
 function saveUserInfo(userId, password, name) {
   let users = JSON.parse(localStorage.getItem('users') || '{}');  // users 변수를 통해 로컬저장
@@ -185,12 +189,12 @@ function saveUserInfo(userId, password, name) {
     localStorage.setItem('users', JSON.stringify(users));  // 입력한 users값을 로컬스토리지에 저장
     displayUserList();                                     // 마스터 계정 생성 후 목록 업데이트
     console.log('마스터 계정이 성공적으로 생성되었습니다.');
-    return '마스터 계정이 성공적으로 생성되었습니다.';
+    return document.getElementById('signup-message').value = '마스터 계정이 성공적으로 생성되었습니다.';
   }
 
   if (users[userId]) {                                    // users목록에 userId가 이미 있는경우 출력 [중복확인]
     console.log('이미 존재하는 ID입니다.');
-    return '이미 존재하는 ID입니다.';
+    return document.getElementById('signup-message').value = '이미 존재하는 ID입니다.';
   }
 
 
@@ -198,9 +202,8 @@ function saveUserInfo(userId, password, name) {
   localStorage.setItem('users', JSON.stringify(users));   // 입력한 users값을 로컬스토리지에 저장
   displayUserList();                                      // 일반 계정 생성 후 목록 업데이트
   console.log('계정이 성공적으로 생성되었습니다.');
-  return '계정이 성공적으로 생성되었습니다.';
-
-
+  removetext_signup();
+  return document.getElementById('signup-message').value = '계정이 성공적으로 생성되었습니다.';
 }
 
 /* 초기 계정 생성 부문 */
@@ -690,7 +693,7 @@ function addToCart(productId) {
     }
   }
 
-  saveCart();                                                                  // userCart[userType]을 로컬 스토리지에 저장                     
+  saveCart();                                                                 // userCart[userType]을 로컬 스토리지에 저장                     
   updateCartUI();                                                              // 장바구니 UI를 업데이트합니다.
   updateCartIcon();                                                            // 장바구니 아이콘 UI를 업데이트 합니다.
 }
@@ -725,7 +728,7 @@ function updateCartUI() {
                 <p>가격: ${item.price.toLocaleString()}원</p> <!-- 가격에 천단위 구분기호 추가 -->                 <!-- 가격 표기 -->
                 <div class="quantity-controls">
                     <button class="quantity-decrease" onclick="changeQuantity(${index}, -1)">-</button>         <!-- 수량 감소 버튼 -->
-                    <input type="text" class="quantity" value="${item.quantity}" readonly>                      <!-- 현재 수량 -->
+                    <input type="text" class="quantity" value="${item.quantity}" oninput="updateQuantity(${index}, this.value)">                               <!-- 현재 수량 -->
                     <button class="quantity-increase" onclick="changeQuantity(${index}, 1)">+</button>          <!-- 수량 추가 버튼 -->
                 </div>
             </div>
@@ -745,10 +748,22 @@ function changeQuantity(index, change) {
   const item = userCart[userType][index];
   item.quantity += change;
   if (item.quantity <= 0) {
-    item.quantity = 1;                                       // 최소값은 1로 고정
+    item.quantity = 1;                      // 최소값은 1로 고정
   }
-  localStorage.setItem('cart', JSON.stringify(cart));        // 로컬스토리지에 변경값을 저장
-  updateCartUI();                                            // 장바구니 UI 업데이트
+  saveCart();                               // 로컬스토리지에 변경값을 저장
+  updateCartUI();                           // 장바구니 UI 업데이트
+}
+function updateQuantity(index, value) {
+  const newQuantity = parseInt(value, 10); // 입력 값을 정수로 변환
+
+  if (!isNaN(newQuantity) && newQuantity > 0) { // 유효한 값인지 확인
+    userCart[userType][index].quantity = newQuantity; // 수량 업데이트
+    saveCart(); // 장바구니를 로컬 스토리지에 저장
+    updateCartUI(); // 장바구니 UI를 업데이트
+  } else {
+    // 유효하지 않은 값일 경우 알림 또는 원래 값을 복원하는 로직을 추가할 수 있음
+    console.error('Invalid quantity:', value);
+  }
 }
 
 /* 장바구니 삭제 */
