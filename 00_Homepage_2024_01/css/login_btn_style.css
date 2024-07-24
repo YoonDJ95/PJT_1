@@ -61,7 +61,7 @@
 /* 11. hover-border-1 */
 .btn.hover-border-1::before,
 .btn.hover-border-1::after {
-  width: 10%; height: 25%;
+  width: 10%; height: 30px;
   transition: 0.35s;
 }
 .btn.hover-border-1::before {

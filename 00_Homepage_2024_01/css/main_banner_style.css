@@ -187,7 +187,6 @@ main > div > a:hover {
 
 @media screen and (min-width: 48rem) {
   main {
-    display: flex;
     align-items: center;
   }
 

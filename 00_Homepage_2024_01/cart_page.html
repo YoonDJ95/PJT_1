@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>메인페이지 상단 메뉴</title>
+    <link rel="stylesheet" href="C:\PJT_1\css\main_menu.css">
+    <link rel="stylesheet" href="C:\PJT_1\css\main_banner.css">
+    <link rel="stylesheet" href="C:\PJT_1\css\main_login.css">
+    <link rel="stylesheet" href="C:\PJT_1\css\login_btn_style.css">
+    <link rel="stylesheet" href="C:\PJT_1\css\main_basic.css">
+    <link rel='stylesheet' href='C:\PJT_1\css\main_banner_style_drive.css'>
+    <link rel="stylesheet" href="C:\PJT_1\css\main_banner_style.css">
+    <link rel="stylesheet" href="C:\PJT_1\css\item_list.css">
+    <style>
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .quantity-controls button {
+            font-size: 16px;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        .quantity-controls input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        #quantity-message {
+            display: none;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- 제품 메뉴란 -->
+    <div>
+        <div id="project-container">
+            <a href="mall_main_guest.html"><img src="C:\PJT_1\img\Logo.png" class="logo"></a>
+            <div style="width: 200px;"></div>
+            <nav>
+                <p>베스트셀러&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p id="kor_book">국내도서 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <div id="s-d" class="dropdown">
+                    <p>국내도서 장르 1</p>
+                    <p>국내도서 장르 2</p>
+                    <p>국내도서 장르 3</p>
+                    <p>국내도서 장르 4</p>
+                    <p>국내도서 장르 5</p>
+                </div>
+                <p id="eng_book">해외도서 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <div id="s-d2" class="dropdown2">
+                    <p>해외도서 장르 1</p>
+                    <p>해외도서 장르 2</p>
+                    <p>해외도서 장르 3</p>
+                    <p>해외도서 장르 4</p>
+                </div>
+                <p>신간도서&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p id="goods_book">굿즈 ▼</p>
+                <div id="s-d3" class="dropdown3">
+                    <p>굿즈 장르 1</p>
+                    <p>굿즈 장르 2</p>
+                    <p>굿즈 장르 3</p>
+                    <p>굿즈 장르 4</p>
+                </div>
+                <div style="width: 150px;"></div>
+            </nav>
+            <!-- 비로그인 상태 -->
+            <nav>
+                <!--로그인 메뉴 -->
+                <p id="login_space"><button class="btn btn-3 hover-border-1">로그인메뉴</button></p>
+                <div id="s-d4" class="dropdown4">
+                    <p style="font-size: 30px;">
+                        <label for="inp" class="inp">
+                            <input type="text" id="inp" placeholder="&nbsp;">
+                            <span class="label">ID</span>
+                            <svg width="120px" height="30px" viewBox="0 0 120 26">
+                                <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                            </svg>
+                            <span class="border"></span>
+                        </label>
+                    </p>
+                    <p>
+                        <label for="pwr" class="pwr">
+                            <input type="password" id="pw" placeholder="&nbsp;">
+                            <span class="label">PW</span>
+                            <svg width="120px" height="30px" viewBox="0 0 120 26">
+                                <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                            </svg>
+                            <span class="border"></span>
+                        </label>
+                    </p>
+                    <!--로그인 팝업 내 로그인 버튼-->
+                    <nav>
+                        <a href="http://www.naver.com"><button class="btn btn-3 hover-border-1">로그인</button></a>
+                        <a href="http://www.daum.net"><button class="btn btn-3 hover-border-1">취소</button></a>
+                    </nav>
+                </div>
+                <p id="market_guest"><button class="btn btn-3 hover-border-1" onclick="openCart()">장바구니</button></p>
+            </nav>
+            <div style="width: 200px;"></div>
+        </div>
+        <!-- 메인배너 -->
+        <div>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide swiper-slide--one">
+                        <div>
+                            <h2>추천도서1</h2>
+                            <p>추천도서 1의 내용이다.</p>
+                            <a href="https://en.wikipedia.org/wiki/Jellyfish" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiper-slide--two">
+                        <div>
+                            <h2>추천도서2</h2>
+                            <p>추천도서 2의 내용이다.</p>
+                            <a href="https://en.wikipedia.org/wiki/Seahorse" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiper-slide--three">
+                        <div>
+                            <h2>추천도서3</h2>
+                            <p>추천도서 3의 내용이다.</p>
+                            <a href="https://en.wikipedia.org/wiki/Octopus" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiper-slide--four">
+                        <div>
+                            <h2>추천도서4</h2>
+                            <p>
+                                추천도서 4의 내용이다.
+                            </p>
+                            <a href="https://en.wikipedia.org/wiki/Shark" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiper-slide--five">
+                        <div>
+                            <h2>추천도서5</h2>
+                            <p>
+                                추천도서5의 내용이다.
+                            </p>
+                            <a href="https://en.wikipedia.org/wiki/Dolphin" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 상품란 -->
+    <div style="height: 1000px; background-color: skyblue;">
+        <main>
+            <section class="container">
+                <h2>인기 도서</h2>
+                <div class="product-list">
+                    <!-- 제품 아이템들 -->
+                    <div class="product-item" data-price="10000">
+                        <img src="C:/PJT_1/img/book1.jpg" alt="Book 1">
+                        <div class="rating">⭐⭐⭐⭐</div>
+                        <h3>도서 1</h3>
+                        <p>도서 1 설명</p>
+                        <button onclick="addToCart('도서 1', 'C:/PJT_1/img/book1.jpg', this.parentNode.dataset.price)">장바구니에 담기</button>
+                    </div>
+                    <div class="product-item" data-price="15000">
+                        <img src="C:/PJT_1/img/book2.jpg" alt="Book 2">
+                        <div class="rating">⭐⭐⭐⭐</div>
+                        <h3>도서 2</h3>
+                        <p>도서 2 설명</p>
+                        <button onclick="addToCart('도서 2', 'C:/PJT_1/img/book2.jpg', this.parentNode.dataset.price)">장바구니에 담기</button>
+                    </div>
+                    <!-- Add more product items as needed -->
+                </div>
+            </section>
+        </main>
+        <aside class="recent-products">
+            <h3>최근 본 상품</h3>
+            <!-- 최근 본 상품 이미지들 -->
+        </aside>
+    </div>
+
+    <div id="cart-overlay" class="cart-overlay">
+        <div class="cart-container">
+            <h2>장바구니</h2>
+            <div id="cart-items">
+                <!-- 장바구니 아이템 -->
+                <div class="cart-item" data-id="1">
+                    <img src="C:/PJT_1/img/book1.jpg" alt="Book 1">
+                    <div class="cart-item-details">
+                        <h4>도서 1</h4>
+                        <p>가격: 10000 원</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-decrease">-</button>
+                            <input type="text" class="quantity" value="1" readonly>
+                            <button class="quantity-increase">+</button>
+                        </div>
+                    </div>
+                </div>
+                <p id="quantity-message">최소 수량은 1권 입니다!</p>
+            </div>
+            <div class="cart-footer">
+                <p>총합계: <span id="total-price">0</span> 원</p>
+                <button onclick="clearCart()">장바구니 비우기</button>
+                <button onclick="closeCart()">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src='C:\PJT_1\jsfile\main_menu_drop.js'></script>
+    <script src="C:\PJT_1\jsfile\main_menu.js"></script>
+    <script src="C:\PJT_1\jsfile\login_button_script.js"></script>
+    <script src='C:\PJT_1\jsfile\main_banner_script_drive.js'></script>
+    <script src="C:\PJT_1\jsfile\main_banner_script.js"></script>
+    <script src="C:\PJT_1\jsfile\item_list.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityDecreaseButtons = document.querySelectorAll('.quantity-decrease');
+            const quantityIncreaseButtons = document.querySelectorAll('.quantity-increase');
+            const quantityInputs = document.querySelectorAll('.quantity');
+            const quantityMessage = document.getElementById('quantity-message');
+            
+            function updateQuantity() {
+                quantityMessage.style.display = 'none';
+                const items = document.querySelectorAll('.cart-item');
+                items.forEach(item => {
+                    const quantityInput = item.querySelector('.quantity');
+                    const quantity = parseInt(quantityInput.value, 10);
+                    const minQuantity = 1;
+                    
+                    if (quantity < minQuantity) {
+                        quantityInput.value = minQuantity;
+                        quantityMessage.style.display = 'block';
+                    }
+                });
+                updateCartTotal();  // Assume this function recalculates the total price
+            }
+
+            quantityDecreaseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const quantityInput = this.nextElementSibling;
+                    let quantity = parseInt(quantityInput.value, 10);
+                    if (quantity > 1) {
+                        quantity--;
+                        quantityInput.value = quantity;
+                    }
+                    updateQuantity();
+                });
+            });
+
+            quantityIncreaseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const quantityInput = this.previousElementSibling;
+                    let quantity = parseInt(quantityInput.value, 10);
+                    quantity++;
+                    quantityInput.value = quantity;
+                    updateQuantity();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
