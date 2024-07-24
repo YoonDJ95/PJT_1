@@ -25,34 +25,7 @@
 
 </head>
 <style>
-    .notification {
-        position: fixed;
-        /* 화면에 고정 */
-        top: 0%;
-        right: 5%;
-        width: 200px;
-        background-color: #6788ff;
-        color: #000;
-        padding: 10px;
-        border-radius: 5px;
-        z-index: 3000;
-        /* 다른 요소 위에 표시되도록 설정 */
-        display: none;
-        /* 기본적으로 숨기기 */
-        opacity: 0;
-        /* 기본적으로 투명하게 설정 */
-        transition: opacity 0.3s ease-out;
-        /* 부드러운 전환 효과 */
-    }
 
-    .show {
-        display: block;
-        opacity: 1;
-    }
-
-    .hide {
-        opacity: 0;
-    }
 </style>
 
 <body>
@@ -184,7 +157,7 @@
                         <span class="border"></span>
                     </label>
                     <br>
-                    <button type="submit">계정 생성</button>
+                    <button type="submit" class="btn btn-3 hover-border-1">계정 생성</button>
                 </form>
                 <p id="signup-message"></p>
             </div>
@@ -286,7 +259,7 @@
         <div class="modal-content">
             <div>
                 <button onclick="closePreview()">
-                    <span class="close-btn" >취소</span>
+                    <span class="close-btn">취소</span>
                 </button>
             </div>
             <br><br>
@@ -311,14 +284,16 @@
             <p id="quantity-message" style="display: none;">최소 수량은 1권 입니다!</p>
             <div class="cart-footer">
                 <p>총합계:<br><span id="total-price">0</span> 원</p>
-                <button style="max-height:50px; min-width: 60px; border-color: white;"
-                    onclick="clearCart()">비우기</button>
-                <button style="max-height:50px; min-width: 50px; border-color: white;" onclick="closeCart()">닫기</button>
+                <button class="coupon-button" onclick="clearCart()">비우기</button>
+                <button class="coupon-button" onclick="closeCart()">닫기</button>
             </div>
             <!-- 쿠폰 코드 입력 필드와 적용 버튼 추가 -->
             <div>
-                <input type="text" id="coupon-input" placeholder="쿠폰 코드 입력">
-                <button onclick="applyCoupon()">쿠폰 적용</button>
+                <nav>
+                    <br>
+                    <input type="text" id="coupon-input"  style="width: 130px; height: 35px; font-size: 18px;" placeholder="쿠폰 코드 입력"> &nbsp;&nbsp;&nbsp;
+                    <button onclick="applyCoupon()" class="coupon-button">쿠폰 적용</button>
+                </nav>
             </div>
         </div>
     </div>
