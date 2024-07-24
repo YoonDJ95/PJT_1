@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {  // 상단 메뉴리스트에 대한 드롭다운메뉴 토글 함수
   const korBook = document.getElementById('kor_book');
   const engBook = document.getElementById('eng_book');
   const goodsBook = document.getElementById('goods_book');
@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-// 로그인 드롭박스 토글 함수
-function toggleDropdown() {
+
+function toggleDropdown() {         // 로그인 팝업에 대한 드롭다운메뉴 토글 함수
   const menu = document.getElementById('login-menu');
   menu.classList.toggle('show');
 }

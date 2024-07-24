@@ -3,29 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>메인페이지 상단 메뉴</title>
-    <link rel="stylesheet" href="C:\PJT_1\css\main_menu.css">
-    <link rel="stylesheet" href="C:\PJT_1\css\main_banner.css">
-    <link rel="stylesheet" href="C:\PJT_1\css\main_login.css">
-    <link rel="stylesheet" href="C:\PJT_1\css\login_btn_style.css">
-    <link rel="stylesheet" href="C:\PJT_1\css\main_basic.css">
+    <title>homepage_name</title>
 
-    <link rel='stylesheet' href='C:\PJT_1\css\main_banner_style_drive.css'>
-    <link rel="stylesheet" href="C:\PJT_1\css\main_banner_style.css">
-    <!-- 책 리스트 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\item_list.css">
-    <!-- 장바구니 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\cart_page.css">
-    <!-- 책 미리보기 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\page_preview.css">
+    <!-- CSS 코드 -->
     <!-- 계정 생성 -->
     <link rel="stylesheet" href="C:\PJT_1\css\account_add.css">
-
-
+    <!-- 버튼 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\btn_style.css">
+    <!-- 장바구니 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\cart_page.css">
+    <!-- 쿠폰 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\coupon.css">
+    <!-- 로고 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\Logo.css">
+    <!-- 메인 배너 -->
+    <link rel='stylesheet' href='C:\PJT_1\css\main_banner_style_drive.css'>
+    <link rel="stylesheet" href="C:\PJT_1\css\main_banner_style.css">
+    <!-- 로그인 드롭다운 메뉴 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\main_login.css">
+    <!-- 상단 드롭다운 메뉴 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\main_menu.css">
+    <!-- 최근상품 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\recent_item.css">
+    <!-- 미리보기 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\page_preview.css">
+    <!-- 최상단 버튼 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\scroll_top.css">
+    <!-- 알림 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\notification.css">
 
 </head>
 
 <body>
+    <!-- 장바구니 추가 알람 -->
+    <div id="notification" class="notification"></div>
     <!-- 제품 메뉴란 -->
     <div>
         <div id="project-container">
@@ -69,10 +80,10 @@
                     <img id="trigger-image" src="C:\PJT_1\img\add-photo_2961348.png" alt="계정 생성"
                         style="width: 48px; height: 48px;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <div id="management-icon">
+                <div id="management-icon">
                     <img id="show-management" src="C:\PJT_1\img\cogwheel_13480555.png" alt="계정 관리 아이콘" title="계정 관리"
                         style="width: 50px; height: 50px;" />
-                    </div>
+                </div>
                 </p>
                 <!-- 이미지 클릭 시 팝업 나타나기 -->
                 <p></p>
@@ -87,7 +98,7 @@
                             <span class="border"></span>
                         </label>
                     </p>
-                    <p>
+                    <p style="font-size: 30px; padding-top:20px">
                         <label for="pwr" class="pwr">
                             <input type="password" id="login-password" placeholder="&nbsp;">
                             <span class="label">PW</span>
@@ -97,7 +108,7 @@
                             <span class="border"></span>
                         </label>
                     </p>
-                    <nav>
+                    <nav style="margin-top:10px">
                         <button class="btn btn-3 hover-border-1" onclick="login()">로그인</button>
                         <button class="btn btn-3 hover-border-1" onclick="removetext()">취소</button>
                     </nav>
@@ -105,7 +116,7 @@
 
                 <div class="login-status" id="login-status" style="display: none;">
                     <p id="welcome-message"></p>
-                    <P><button id="logout-btn" style="display: none;" onclick="logout()">로그아웃</button></P>
+                    <P><button id="logout-btn" class="btn btn-3 hover-border-1" onclick="logout()">로그아웃</button></P>
 
                 </div>
                 <div>
@@ -152,9 +163,11 @@
                         <span class="border"></span>
                     </label>
                     <br>
-                    <button type="submit">계정 생성</button>
+                    <button type="submit" class="btn btn-3 hover-border-1">계정 생성</button>
                 </form>
-                <p id="signup-message"></p>
+                <p style="text-align: center;"><input id="signup-message" type="text" value=""
+                        style="font-style: bold; color: #6788ff; border-color: transparent; width:300px; font-size: 17px;">
+                </p>
             </div>
 
             <div id="overlay2"></div>
@@ -249,9 +262,15 @@
     </div>
 
     <!-- 미리보기 팝업 모달 -->
+    <div id="overlay3" class="overlay3"></div>
     <div class="preview-modal" style="display: none;">
         <div class="modal-content">
-            <span class="close-btn" onclick="closePreview()">&times;</span>
+            <div>
+                <button onclick="closePreview()">
+                    <span class="close-btn">취소</span>
+                </button>
+            </div>
+            <br><br>
             <img id="preview-image" src="" alt="미리보기 이미지" style="width: 1000px; height: 400px;">
             <div class="page-navigation">
                 <button id="prev-page-btn" onclick="prevPage()">이전</button>
@@ -273,23 +292,32 @@
             <p id="quantity-message" style="display: none;">최소 수량은 1권 입니다!</p>
             <div class="cart-footer">
                 <p>총합계:<br><span id="total-price">0</span> 원</p>
-                <button style="max-height:50px; min-width: 60px; border-color: white;"
-                    onclick="clearCart()">비우기</button>
-                <button style="max-height:50px; min-width: 50px; border-color: white;" onclick="closeCart()">닫기</button>
+                <button class="coupon-button" onclick="clearCart()">비우기</button>
+                <button class="coupon-button" onclick="closeCart()">닫기</button>
+            </div>
+            <!-- 쿠폰 코드 입력 필드와 적용 버튼 추가 -->
+            <div>
+                <nav>
+                    <br>
+                    <input type="text" id="coupon-input" style="width: 130px; height: 35px; font-size: 18px;"
+                        placeholder="쿠폰 코드 입력"> &nbsp;&nbsp;&nbsp;
+                    <button onclick="applyCoupon()" class="coupon-button">쿠폰 적용</button>
+                </nav>
             </div>
         </div>
     </div>
 
 
     <!-- 스크립트 코드 -->
+    <!-- 책 리스트, 상세정보이동, 장바구니 -->
+    <script src="C:\PJT_1\jsfile\item_list.js"></script>
+    <!-- 상단메뉴 및 로그인 메뉴 드롭다운 -->
     <script src='C:\PJT_1\jsfile\main_menu_drop.js'></script>
     <script src="C:\PJT_1\jsfile\main_menu.js"></script>
-    <script src="C:\PJT_1\jsfile\login_button_script.js"></script>
-
+    <!-- 상단 배너 슬라이스 -->
     <script src='C:\PJT_1\jsfile\main_banner_script_drive.js'></script>
     <script src="C:\PJT_1\jsfile\main_banner_script.js"></script>
 
-    <script src="C:\PJT_1\jsfile\item_list.js"></script><!-- 책 리스트, 상세정보이동, 장바구니 -->
 
 </body>
 
