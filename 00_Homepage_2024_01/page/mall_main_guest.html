@@ -54,15 +54,16 @@
                 </div>
                 <div style="width: 150px;"></div>
             </nav>
-            <!-- 비로그인 상태 -->
+            <!-- 로그인영역 -->
             <nav style="display: flex; justify-content: space-between; align-items: center;">
-                <!--로그인 메뉴 -->
-                <p id="login_space" style="align-self: flex-end; margin-top: 10px;"><img src="C:\PJT_1\img\login_icon.png" style="width: 50px; height: 50px;"></p>
-                
-                <div id="s-d4" class="dropdown4">
+                <!-- 로그인 메뉴 -->
+                <p id="login_space">
+                    <img src="C:\PJT_1\img\login_icon.png" style="width: 50px; height: 50px;" onclick="toggleDropdown()">
+                </p>
+                <div id="login-menu" class="dropdown4">
                     <p style="font-size: 30px;">
                         <label for="inp" class="inp">
-                            <input type="text" id="inp" placeholder="&nbsp;">
+                            <input type="text" id="login-id" placeholder="&nbsp;">
                             <span class="label">ID</span>
                             <svg width="120px" height="30px" viewBox="0 0 120 26">
                                 <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
@@ -72,7 +73,7 @@
                     </p>
                     <p>
                         <label for="pwr" class="pwr">
-                            <input type="password" id="pw" placeholder="&nbsp;">
+                            <input type="password" id="login-password" placeholder="&nbsp;">
                             <span class="label">PW</span>
                             <svg width="120px" height="30px" viewBox="0 0 120 26">
                                 <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
@@ -80,17 +81,24 @@
                             <span class="border"></span>
                         </label>
                     </p>
-                    <!--로그인 팝업 내 로그인 버튼-->
                     <nav>
-                        <a href="http://www.naver.com"><button class="btn btn-3 hover-border-1">로그인</button></a>
-                        <a href="http://www.daum.net"><button class="btn btn-3 hover-border-1">취소</button></a>
+                        <button class="btn btn-3 hover-border-1" onclick="login()">로그인</button>
+                        <button class="btn btn-3 hover-border-1" onclick="removetext()">취소</button>
                     </nav>
                 </div>
-                <p id="market_guest" style="align-self: flex-end; margin-top: 10px;">
-                    <img id="cart-icon" onclick="openCart()" src="C:\PJT_1\img\basket_empty.png" style="width: 50px; height: 50px;">
-                </p>
-            </nav>
             
+                <div class="login-status" id="login-status" style="display: none;">
+                    <p id="welcome-message"></p>
+                    <P><button id="logout-btn" style="display: none;" onclick="logout()">로그아웃</button></P>
+
+                </div>
+                <div>
+                    <p id="market_guest" class="market_cart" style="align-self: flex-end; margin-top: 10px;">
+                        <img id="cart-icon" onclick="openCart()" src="C:\PJT_1\img\basket_empty.png" style="width: 50px; height: 50px;">
+                    </p>
+                </div>
+            </nav>
+
 
 
             <div style="width: 200px;"></div>
@@ -198,8 +206,9 @@
             <p id="quantity-message" style="display: none;">최소 수량은 1권 입니다!</p>
             <div class="cart-footer">
                 <p>총합계:<br><span id="total-price">0</span> 원</p>
-                <button style="max-height:50px; min-width: 60px; border-color: white;" onclick="clearCart()">비우기</button>
-                <button style="max-height:50px; min-width: 50px; border-color: white;"  onclick="closeCart()">닫기</button>
+                <button style="max-height:50px; min-width: 60px; border-color: white;"
+                    onclick="clearCart()">비우기</button>
+                <button style="max-height:50px; min-width: 50px; border-color: white;" onclick="closeCart()">닫기</button>
             </div>
         </div>
     </div>

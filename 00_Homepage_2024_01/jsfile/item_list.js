@@ -1,3 +1,258 @@
+let userType = 'Guest'; // 기본값을 'Guest'로 설정 
+
+
+let cartItems = [];  // 장바구니 아이템 리스트를 저장할 배열
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+let wishlist = {}; // 찜하기 상태를 저장할 전역 변수
+
+
+/* 계정 관리 */
+function saveUserInfo(userId, password, name) { // 사용자 정보 저장 함수
+  const users = JSON.parse(localStorage.getItem('users') || '{}');
+  users[userId] = { password, name };
+  localStorage.setItem('users', JSON.stringify(users));
+}
+
+function initializeUserInfo() { //로그인 시 사용자 정보를 저장
+  // 예시로 초기 사용자 정보 설정 (실제로는 별도의 UI를 통해 입력받음)
+  saveUserInfo('1', '1', 'User1');
+  saveUserInfo('2', '2', 'User2');
+}
+
+
+/* 로그인 */
+
+function setuserType(userId, name) { // 로그인 상태를 localStorage에 저장
+  userType = userId;
+  userName = name;
+  localStorage.setItem('userType', userId);
+  localStorage.setItem('userName', name); // 이름 저장
+  wishlist = loadWishList(); // 로그인 후 현재 사용자의 찜하기 목록 불러오기
+  updateUI(); // UI 업데이트
+}
+
+
+function loaduserType() { // 로그인 상태를 localStorage에서 불러오기
+  return localStorage.getItem('userType') || 'Guest'; // 기본값을 'Guest'로 설정
+}
+
+
+function getStorageKey(baseKey) { // 현재 사용자 유형에 따라 키를 설정
+  return userType === 'Guest' ? baseKey : `${baseKey}_${userType}`;
+}
+
+
+function getData(key) { // 데이터 가져오기
+  const data = localStorage.getItem(key);
+  return data ? JSON.parse(data) : {};
+}
+
+function saveData(key, data) { // 데이터 저장하기
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+// 장바구니 관리
+function getCart() {
+  const cartData = localStorage.getItem(`cart_${userType}`);
+  return cartData ? JSON.parse(cartData) : [];
+}
+
+// 장바구니를 로컬 스토리지에 저장하는 함수
+function saveCart(cart) {
+  localStorage.setItem(`cart_${userType}`, JSON.stringify(cart));
+}
+
+
+// 찜하기 상태를 로컬 스토리지에서 로드
+function loadWishList() {
+  return getData(`wishlist_${userType}`) || {}; // 현재 사용자 유형에 맞는 찜하기 상태 반환
+}
+
+// 찜하기 상태를 로컬 스토리지에 저장
+function saveWishList(list) {
+  saveData(`wishlist_${userType}`, list); // 현재 사용자 유형에 맞게 찜하기 상태 저장
+}
+
+// 최근본 상품을 로컬 스토리지에서 로드
+function getRecentItems() {
+  return getData(`recent_${userType}`) || []; // 현재 사용자 유형에 맞는 최근본 상품 목록 반환
+}
+
+// 최근본 상품을 로컬 스토리지에 저장
+function saveRecentItems() {
+  saveData(`recent_${userType}`, Array.from(RecentProducts[userType] || []));
+}
+
+//로컬스토리지모두 날리기
+function clearLocalStorage() {
+  localStorage.clear(); // 모든 localStorage 항목 삭제
+}
+
+// 로그인 시 데이터 불러오기
+function loaduserType() {
+  return localStorage.getItem('userType') || 'Guest';
+}
+
+
+// 로그인 상태를 확인하고 UI를 업데이트하는 함수
+function updateUI() {
+  const loginStatus = document.getElementById('login-status');
+  const loginSpace = document.getElementById('login_space');
+  const loginDropdown = document.getElementById('login-menu');
+  const martcart = document.getElementById('market_guest');
+  const welcomeMessage = document.getElementById('welcome-message');
+
+  const userType = loaduserType(); // 현재 사용자 유형을 로드
+  const userName = localStorage.getItem('userName') || '사용자'; // 저장된 사용자 이름 불러오기
+
+  if (userType === 'Guest') {
+    loginStatus.style.display = 'none'; // 로그아웃 상태에서는 보이지 않게
+    loginSpace.style.display = 'block'; // 로그인 아이콘 보이기
+    loginDropdown.classList.add('none'); // 로그인 드롭박스 보이기
+    martcart.style.display = 'none';
+
+    // 찜하기 UI 업데이트 (로그아웃 시 비어있는 상태로 표시)
+    wishlist = {}; // 로그인 후 새 사용자로 대체됨
+    updateWishlistUI();
+  } else {
+    loginStatus.style.display = 'block'; // 로그인 상태에서는 보이게
+    loginSpace.style.display = 'none'; // 로그인 아이콘 숨기기
+    martcart.style.display = 'block';
+    loginDropdown.classList.remove('show'); // 로그인 드롭박스 숨기기
+    welcomeMessage.textContent = `${userName}님, 반갑습니다.`; // 사용자 이름으로 환영 메시지 업데이트
+    document.getElementById('logout-btn').style.display = 'block'; // 로그아웃 버튼 보이기
+  }
+
+  // 로그인 상태에 따른 추가 UI 업데이트
+  updateCartIcon();         // 장바구니 아이콘업데이트
+  updateWishlistUI(); // 찜하기 UI 업데이트
+  updateRecentProductsUI(); // 최근본상품 UI 업데이트
+}
+
+
+
+
+
+
+
+
+// 로그인 함수
+function login(userType) {
+  this.userType = userType;
+  const id = document.getElementById('login-id').value;
+  const password = document.getElementById('login-password').value;
+
+  const users = JSON.parse(localStorage.getItem('users') || '{}');
+  const user = users[id];
+
+  if (user && user.password === password) {
+    setuserType(id, user.name);
+    alert(`${user.name}님, 로그인에 성공했습니다.`);
+    document.getElementById('login-menu').classList.remove('show'); // 로그인 폼 숨기기
+  } else {
+    alert('로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요.');
+    document.getElementById('login-menu').classList.add('show'); // 로그인 폼 보이기
+  }
+
+  initializeData(); // 로그인 후 데이터 초기화
+  //wishlist = loadWishList(); // 로컬 스토리지에서 찜하기 목록 불러오기
+  updateUI(); // UI 업데이트
+}
+
+
+/* 로그아웃 */
+// 로그아웃 시 데이터는 유지하며 사용자 유형만 'Guest'로 변경
+function logout() {
+  saveWishList(wishlist); // 현재 찜하기 상태를 저장
+  setuserType('Guest', ''); // 사용자 유형을 Guest로 설정하고 이름을 빈 문자열로 초기화
+  userCart['Guest'] = []; // 손님 장바구니를 빈 배열로 초기화
+  wishlist = {}; // 찜하기 리스트를 빈 객체로 초기화
+  RecentProducts['Guest'] = new Set(); // 최근 본 상품 목록을 빈 Set으로 초기화
+
+
+  alert('로그아웃되었습니다.');
+  document.getElementById('login-menu').classList.add('show'); // 로그인 드롭박스 보이기
+  closeCart();
+  updateUI(); // 로그아웃 후 UI 업데이트
+  removetext();
+}
+
+// 취소 버튼 함수
+function removetext() {
+  // ID와 PW 입력 필드 지우기
+  document.getElementById('login-id').value = '';
+  document.getElementById('login-password').value = '';
+}
+
+
+
+
+
+// 페이지 로드 시 로그인 상태 확인 및 처리
+function initialize() {
+  userType = loaduserType(); // 저장된 사용자 유형 불러오기
+  wishlist = loadWishList(); // 저장된 찜하기 리스트 불러오기
+  updateUI(); // UI 업데이트
+}
+
+// 로그인 시 데이터 초기화
+function initializeData() {
+  if (userType === 'Guest') {
+    userCart[userType] = []; // 빈 배열로 초기화
+    wishlist = {};
+    RecentProducts[userType] = new Set(); // 빈 Set으로 초기화
+  } else {
+    // 로그인 시 사용자의 장바구니, 찜하기 리스트, 최근 본 상품 목록 불러오기
+    userCart[userType] = getCart() || [];
+    wishlist = loadWishList();
+    loadRecentItems(); // 최근 본 상품 불러오기
+    // getRecentItems()가 배열을 반환한다고 가정
+    const recentItems = getRecentItems() || [];
+    if (Array.isArray(recentItems)) {
+      RecentProducts[userType] = new Set(recentItems);
+    } else {
+      console.error('getRecentItems() did not return an array');
+      RecentProducts[userType] = new Set(); // 빈 Set으로 초기화
+    }
+  }
+}
+
+
+
+// 페이지 로드 시 데이터 초기화
+window.onload = function () {
+  initialize();
+  initializeData();
+  createProducts();
+  updateUI(); // 페이지 로드 시 UI 업데이트
+};
+
+
+const wishListKey = `wishlist_${userType}`;
+const recentItemsKey = `recent_${userType}`;
+const cartKey = `cart_${userType}`;
+
+
+// 각 사용자별 데이터 저장 객체
+const userCart = {
+  Guest: [],
+  User1: [],
+  User2: []
+};
+
+const userWishlist = {
+  Guest: {},
+  User1: {},
+  User2: {}
+};
+
+const RecentProducts = {
+  Guest: new Set(),
+  User1: new Set(),
+  User2: new Set()
+};
+
 
 // 제품 목록 생성
 // 상품 목록 데이터 배열
@@ -56,13 +311,13 @@ function createProducts() {
 // 상세 정보 페이지 열기 함수
 function openInfoPage(productId) {
   console.log(`상품 ${productId.split('_')[1]}의 상세 정보 페이지를 엽니다.`);
+  if (userType === 'Guest') {
+    alert('로그인이 필요합니다.');
+    return;
+  }
   // 페이지 이동 로직 구현
   window.location.href = `C:\\PJT_1\\page\\book_${productId.split('_')[1]}_info.html`; // 예시: book_1_info.html
 }
-
-  // 초기 상품 목록 생성
-  createProducts();
-
 
 
 // 쿠폰 적용 기능
@@ -82,26 +337,32 @@ function applyCoupon() {
 
 
 /* 최근 본 상품 기능 */
-const recentProducts = new Set();
-
 function addToRecentProducts(productId) {
-  recentProducts.add(productId);
-  updateRecentProductsUI();
+  if (!RecentProducts[userType]) {
+    // 유저 타입에 대한 Set이 없으면 새로 생성
+    RecentProducts[userType] = new Set();
+  }
+  RecentProducts[userType].add(productId);
+  saveRecentItems(); // 최근 본 상품을 저장
+  updateRecentProductsUI(); // UI 업데이트
 }
 
 // 최근 본 상품 기능 수정
 function updateRecentProductsUI() {
   const recentProductsContainer = document.querySelector('.recent-products');
   recentProductsContainer.innerHTML = '<h3>최근 본 상품</h3>';
-  [...recentProducts].slice(-5).reverse().forEach(productId => {
+
+  // 최근 본 상품 목록을 가져옴
+  const recentProductIds = Array.from(RecentProducts[userType] || []);
+
+  recentProductIds.slice(-5).reverse().forEach(productId => {
     const product = products.find(p => p.id === productId);
     if (product) {
       const img = document.createElement('img');
-      img.src = product.image; // 실제 이미지 URL로 변경 필요
+      img.src = product.image || '/api/placeholder/50/75'; // 이미지 URL
       img.alt = product.title;
-      // 최근 본 페이지 이미지 크기
-      img.style.width = '20px';
-      img.style.height = '20px';
+      img.style.width = '50px'; // 최근 본 상품 이미지 크기
+      img.style.height = '75px';
       img.onclick = () => openInfoPage(productId); // 클릭 시 상세 페이지로 이동
       recentProductsContainer.appendChild(img);
     }
@@ -170,6 +431,16 @@ function nextPage() {
   updatePreviewImage();
 }
 
+// 최근 본 상품을 로컬 스토리지에서 로드하는 함수
+function loadRecentItems() {
+  const recentItems = getData(`recent_${userType}`);
+  if (Array.isArray(recentItems)) {
+    RecentProducts[userType] = new Set(recentItems);
+  } else {
+    RecentProducts[userType] = new Set();
+  }
+}
+
 function updatePreviewImage() {
   if (!currentPreviewBook) return;
   document.getElementById('preview-image').src = currentPreviewBook.previewPages[currentPreviewPage];
@@ -205,20 +476,23 @@ document.getElementById('next-page-btn').addEventListener('click', nextPage);
 
 
 /* 장바구니 기능*/
-// 장바구니 아이템 리스트를 저장할 배열
-let cartItems = [];
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function addToCart(productId) {
   console.log(`상품 ${productId.split('_')[1]}을 장바구니에 추가합니다.`);
-  const existingItem = cart.find(item => item.id === productId);
+
+  if (userType === 'Guest') {
+    alert('로그인이 필요합니다.');
+    return;
+  }
+
+  const existingItem = userCart[userType].find(item => item.id === productId);
   if (existingItem) {
     existingItem.quantity++;
   } else {
     // 상품 목록에서 상품을 찾아서 정보 추가
     const product = products.find(item => item.id === productId);
     if (product) {
-      cart.push({
+      userCart[userType].push({
         id: product.id,
         title: product.title,
         price: parseInt(product.price), // 가격을 숫자로 변환
@@ -227,32 +501,41 @@ function addToCart(productId) {
       });
     }
   }
-  localStorage.setItem('cart', JSON.stringify(cart)); // 장바구니를 로컬 스토리지에 저장합니다.
+
+  saveCart(userCart[userType]); // 장바구니를 로컬 스토리지에 저장합니다.
   updateCartUI(); // 장바구니 UI를 업데이트합니다.
   updateCartIcon();
 }
 
+
 function updateCartIcon() {
   let cartIcon = document.getElementById('cart-icon');
 
+  // userCart[userType]이 배열인지 확인합니다.
+  let cart = Array.isArray(userCart[userType]) ? userCart[userType] : [];
+
   // 현재 장바구니에 담긴 상품 개수를 가져옵니다.
-  let cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+  let cartItemCount = cart.reduce((total, item) => total + (item.quantity || 0), 0);
 
   // 장바구니에 상품이 있는지 여부에 따라 아이콘을 변경합니다.
-  if (cartItemCount > 0) {
-    cartIcon.src = 'C:\\PJT_1\\img\\basket_fill.png';
-  } else {
-    cartIcon.src = 'C:\\PJT_1\\img\\basket_empty.png';
-  }
+  cartIcon.src = cartItemCount > 0 ? 'C:\\PJT_1\\img\\basket_fill.png' : 'C:\\PJT_1\\img\\basket_empty.png';
 }
 
 function updateCartUI() {
   const cartItems = document.getElementById('cart-items');
   cartItems.innerHTML = '';
+
+  if (!Array.isArray(userCart[userType])) {
+    console.error('userCart[userType] is not an array. Initializing to an empty array.');
+    userCart[userType] = [];
+  }
+
   let total = 0;
-  cart.forEach((item, index) => {
+
+  userCart[userType].forEach((item, index) => {
     const cartItem = document.createElement('div');
     cartItem.className = 'cart-item';
+
     cartItem.innerHTML = `
             <img src="${item.image}" alt="${item.title}">
             <div class="cart-item-details">
@@ -275,7 +558,7 @@ function updateCartUI() {
 }
 
 function changeQuantity(index, change) {
-  const item = cart[index];
+  const item = userCart[userType][index];
   item.quantity += change;
   if (item.quantity <= 0) {
     item.quantity = 1;
@@ -285,7 +568,7 @@ function changeQuantity(index, change) {
 }
 
 function removeFromCart(index) {
-  cart.splice(index, 1);
+  userCart[userType].splice(index, 1);
   localStorage.setItem('cart', JSON.stringify(cart));
   updateCartUI();
   updateCartIcon();
@@ -301,7 +584,7 @@ function closeCart() {
 }
 
 function clearCart() {
-  cart = []; // 장바구니를 빈 배열로 초기화
+  userCart[userType] = []; // 장바구니를 빈 배열로 초기화
   localStorage.setItem('cart', JSON.stringify(cart)); // 로컬 스토리지에 빈 장바구니 저장
   updateCartUI(); // 장바구니 UI 업데이트
   alert('장바구니가 비워졌습니다.');
@@ -312,47 +595,68 @@ function clearCart() {
 
 
 
-
-
-
-
-
 /* 찜하기 */
-// 찜하기 상태를 저장할 객체
-const wishlist = {};
 
-// 초기에 모든 상품의 찜하기 아이콘을 하트(♡)로 설정
+// 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function () {
-  const wishlistButtons = document.querySelectorAll('.add-to-wishlist');
-  wishlistButtons.forEach(button => {
-    const productId = button.dataset.productId;
-    wishlist[productId] = false; // 초기 상태는 찜하지 않은(false) 상태
-    updateWishlistUI(productId);
-  });
+  // 모든 localStorage 항목을 삭제하는 것이 맞는지 확인하세요.
+  clearLocalStorage(); // 주석 처리하거나 조건에 따라 호출
+
+  initializeUserInfo(); // 초기 사용자 정보 설정
+  userType = loaduserType(); // 현재 사용자 유형을 로드
+  wishlist = loadWishList(); // 로컬 스토리지에서 찜하기 목록 불러오기
+  updateUI(); // UI 업데이트
+
+  initializeData(); // 데이터 초기화
+
 });
 
-// 찜하기 버튼 클릭 시 호출되는 함수
+
+
+
+
+
+
+// 찜하기 버튼 클릭 시 상태 변경
 function toggleWishlist(productId) {
-  wishlist[productId] = !wishlist[productId]; // 찜하기 상태를 토글
-  updateWishlistUI(productId);
-}
-
-// 찜하기 버튼의 UI를 업데이트하는 함수
-function updateWishlistUI(productId) {
-  const button = document.querySelector(`.add-to-wishlist[data-product-id="${productId}"]`);
-  if (wishlist[productId]) {
-    button.textContent = '찜한 상태 ♥';
-  } else {
-    button.textContent = '찜하기 ♡';
+  if (userType === 'Guest') {
+    alert('로그인이 필요합니다.');
+    return;
   }
+
+  console.log(`상품 ${productId}의 찜하기 버튼을 선택합니다.`);
+  wishlist[productId] = !wishlist[productId]; // 찜하기 상태 토글
+  saveWishList(wishlist); // 찜하기 상태를 로컬 스토리지에 저장
+  updateWishlistUI(); // UI 업데이트
 }
 
-// 초기에 모든 상품의 찜하기 아이콘을 하트(♡)로 설정
-document.addEventListener('DOMContentLoaded', function () {
+// 찜하기 상태를 로컬 스토리지에서 로드
+function loadWishList() {
+  return getData(`wishlist_${userType}`) || {}; // 현재 사용자 유형에 맞는 찜하기 상태 반환
+}
+
+// 찜하기 상태를 로컬 스토리지에 저장
+function saveWishList(list) {
+  saveData(`wishlist_${userType}`, list); // 현재 사용자 유형에 맞게 찜하기 상태 저장
+}
+
+// 찜하기 버튼의 UI를 업데이트
+function updateWishlistUI() {
   const wishlistButtons = document.querySelectorAll('.add-to-wishlist');
   wishlistButtons.forEach(button => {
     const productId = button.dataset.productId;
-    wishlist[productId] = false; // 초기 상태는 찜하지 않은(false) 상태
-    updateWishlistUI(productId);
+    if (productId) {
+      // 찜하기 상태가 undefined일 경우 false로 기본값 설정
+      const isWished = wishlist.hasOwnProperty(productId) ? wishlist[productId] : false;
+      button.textContent = isWished ? '찜한상태 ♥' : '찜하기 ♡'; // 버튼 텍스트 업데이트
+      button.classList.toggle('checked', isWished); // 체크 상태에 따라 클래스 토글
+    }
   });
-});
+}
+
+// 모든 찜하기 상태를 초기화하고 UI를 업데이트
+function clearWishlist() {
+  wishlist = {}; // 찜하기 상태를 빈 객체로 초기화
+  saveWishList(wishlist); // 로컬 스토리지에 초기화된 상태 저장
+  updateWishlistUI(); // UI 업데이트
+}
