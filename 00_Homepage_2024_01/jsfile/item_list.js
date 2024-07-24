@@ -5,37 +5,53 @@ let cartItems = [];  // 장바구니 아이템 리스트를 저장할 배열
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 let wishlist = {}; // 찜하기 상태를 저장할 전역 변수
-// 페이지 로드 시 초기화
 
-
-
-
-
+const isAdmin = false; // isAdmin 변수 선언
 
 /* 회원가입 */
 function saveUserInfo(userId, password, name) {
-  const users = JSON.parse(localStorage.getItem('users') || '{}');
-
-  // 이미 존재하는 ID 확인
+  let users = JSON.parse(localStorage.getItem('users') || '{}');
+  console.log('보유중인 계정을 읽습니다.')
+  // userId가 'Master'인 경우 userType을 'Master'로 설정
+  if (userId === 'Master') {
+    // 관리자 계정으로 설정
+    users[userId] = { password, name, isAdmin: true };
+    localStorage.setItem('users', JSON.stringify(users));
+    displayUserList(); // 마스터 계정 생성 후 목록 업데이트
+    console.log('마스터 계정이 성공적으로 생성되었습니다.');
+    return '마스터 계정이 성공적으로 생성되었습니다.';
+  }
   if (users[userId]) {
+    console.log('이미 존재하는 ID입니다.');
     return '이미 존재하는 ID입니다.';
   }
 
-  // 새로운 사용자 정보 저장
-  users[userId] = { password, name };
+  // 일반 사용자 계정으로 저장
+  users[userId] = { password, name, isAdmin: false };
   localStorage.setItem('users', JSON.stringify(users));
+  displayUserList(); // 일반 계정 생성 후 목록 업데이트
+  console.log('계정이 성공적으로 생성되었습니다.');
   return '계정이 성공적으로 생성되었습니다.';
+
+
 }
 
 function initializeUserInfo() {
   // 예시로 초기 사용자 정보 설정 (실제로는 별도의 UI를 통해 입력받음)
-  saveUserInfo('1', '1', 'User1');
-  saveUserInfo('2', '2', 'User2');
-  saveUserInfo('Master','Master','Master')
+  console.log('로컬 스토리지 데이터:', localStorage.getItem('users'));
+
+  // 이미 마스터 계정이 있는 경우에는 설정하지 않도록 확인
+  const users = getUserList();
+  if (!users['Master']) {
+    saveUserInfo('Master', 'Master', 'Master'); // 마스터 계정으로 설정
+    displayUserList(); // 사용자 목록 표시
+  } else {
+    displayUserList(); // 이미 마스터 계정이 있어도 사용자 목록 표시
+  }
 }
 
 
-// 계정 생성 폼 제출 처리
+// setupSignupForm 함수 수정
 function setupSignupForm() {
   const signupForm = document.getElementById('signup-form');
   if (signupForm) {
@@ -88,6 +104,7 @@ function deleteUser(userId) {
   return '사용자가 성공적으로 삭제되었습니다.';
 }
 
+
 // 사용자 정보 수정
 function updateUser(userId, newPassword, newName) {
   const users = getUserList();
@@ -104,38 +121,61 @@ function updateUser(userId, newPassword, newName) {
 function initializeMasterFeatures() {
   console.log('Master 기능 초기화 중'); // 디버깅용 로그 추가
 
-  const masterSection = document.getElementById('setup-section');
-  if (!masterSection) return;
+  const setupSection = document.getElementById('setup-section');
+  if (!setupSection) return;
+}
 
-  const userList = document.getElementById('user-list');
+// 사용자 목록을 화면에 표시
+function displayUserList() {
+  console.log('displayUserList 호출됨'); // 디버깅용 로그
   const users = getUserList();
-  userList.innerHTML = ''; // 기존 목록 지우기
+  console.log('사용자 데이터:', users); // 사용자 데이터 로그
+
+  const userList = document.getElementById('user-list'); // userList 변수 정의
+  userList.innerHTML = ''; // 기존의 목록을 초기화
 
   Object.keys(users).forEach(userId => {
-    const userItem = document.createElement('div');
-    userItem.textContent = `ID: ${userId}, Name: ${users[userId].name}`;
-    
+    console.log('userlist 불러온다.'); // 디버깅용 로그 추가
+
+    const userItem = document.createElement('div'); // 각 사용자 항목을 생성할 div 요소
+    userItem.style.paddingTop = '15px'; // 예시로 위쪽 여백을 10px로 설정
+    userItem.textContent = `ID: ${userId}, PW: ${users[userId].password}, Name: ${users[userId].name}`;
+
+    const buttonContainer = document.createElement('div'); // 버튼을 담을 컨테이너 div 요소
+    buttonContainer.style.marginTop = '5px'; // 버튼 컨테이너의 위 여백 추가
+
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '삭제';
     deleteButton.addEventListener('click', () => {
       const resultMessage = deleteUser(userId);
       alert(resultMessage);
-      initializeMasterFeatures(); // 목록 새로고침
+      initializeUserInfo(); // 사용자 목록 새로고침
     });
 
     const updateButton = document.createElement('button');
     updateButton.textContent = '수정';
+    updateButton.style.marginRight = '5px'; // 삭제 버튼과 수정 버튼 사이의 여백 추가
     updateButton.addEventListener('click', () => {
       const newPassword = prompt('새 비밀번호를 입력하세요:');
       const newName = prompt('새 이름을 입력하세요:');
       const resultMessage = updateUser(userId, newPassword, newName);
       alert(resultMessage);
-      initializeMasterFeatures(); // 목록 새로고침
+      initializeUserInfo(); // 사용자 목록 새로고침
     });
 
-    userItem.appendChild(deleteButton);
-    userItem.appendChild(updateButton);
-    userList.appendChild(userItem);
+    buttonContainer.appendChild(updateButton);
+    buttonContainer.appendChild(deleteButton);
+
+
+    userItem.appendChild(buttonContainer);
+    userItem.style.backgroundColor = 'rgba(103, 136, 255, 0.2)'
+    userItem.style.borderRadius = '10px'
+    userItem.style.width = '300px'
+    userItem.style.height = '80px'
+    userItem.style.marginTop = '10px'
+    userItem.style.textAlign = 'center'
+
+    userList.appendChild(userItem); // userList에 userItem 추가
   });
 }
 
@@ -144,22 +184,25 @@ document.addEventListener('DOMContentLoaded', function () {
   clearLocalStorage(); // 주석 처리하거나 조건에 따라 호출
 
   initializeUserInfo(); // 초기 사용자 정보 설정
-  setupSignupForm(); // 계정 생성 폼 설정
   setupShowSignupFormButton(); // 계정 생성 버튼 설정
 
   userType = loaduserType(); // 현재 사용자 유형을 로드
   wishlist = loadWishList(); // 로컬 스토리지에서 찜하기 목록 불러오기
   updateUI(); // UI 업데이트
+  initializeMasterFeatures(); // 섹션이 처음 표시될 때만 초기화
   initializeData(); // 데이터 초기화
-  initializeMasterFeatures(); // Master 기능 초기화
 
   // 계정 생성 및 관리자 계정 설정
   const triggerImage = document.getElementById('trigger-image');
-  const triggerImage2 = document.getElementById('show-management');
   const signupSection = document.getElementById('signup-section');
-  const masterAdmin = document.getElementById('setup-section');
   const overlay = document.getElementById('overlay');
+
+  const triggerImage2 = document.getElementById('show-management');
+  const masterAdmin = document.getElementById('setup-section');
   const overlay2 = document.getElementById('overlay2');
+
+  triggerImage.addEventListener('click', toggleSignupSection);
+  triggerImage2.addEventListener('click', toggleMasterSection);
 
   function toggleSignupSection() {
     const isActive = signupSection.style.display === 'block';
@@ -168,12 +211,20 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function toggleMasterSection() {
-    const isActive = masterAdmin.style.display === 'block';
-    masterAdmin.style.display = isActive ? 'none' : 'block';
-    overlay2.style.display = isActive ? 'none' : 'block';
+    const masterSection = document.getElementById('master-section');
 
-    if (!isActive) {
-      initializeMasterFeatures(); // 사용자 목록 표시
+    let isActive2 = masterAdmin.style.display === 'block';
+    masterAdmin.style.display = isActive2 ? 'none' : 'block';
+    overlay2.style.display = isActive2 ? 'none' : 'block';
+
+    if (!isActive2) {
+      masterSection.style.display = 'block';
+      isActive2 = true;
+      console.log('isSectionVisible : block으로 설정');
+    } else {
+      masterSection.style.display = 'none';
+      isActive2 = false;
+      console.log('isSectionVisible : none으로 설정');
     }
   }
 
@@ -187,12 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
     overlay2.style.display = 'none';
   });
 
-  triggerImage.addEventListener('click', toggleSignupSection);
-  triggerImage2.addEventListener('click', toggleMasterSection);
 });
-
-
-
 
 
 /* 로그인 */
@@ -271,6 +317,7 @@ function updateUI() {
   const loginDropdown = document.getElementById('login-menu');
   const martcart = document.getElementById('market_guest');
   const welcomeMessage = document.getElementById('welcome-message');
+  const managementIcon = document.getElementById('management-icon');
 
   const userType = loaduserType(); // 현재 사용자 유형을 로드
   const userName = localStorage.getItem('userName') || '사용자'; // 저장된 사용자 이름 불러오기
@@ -280,14 +327,28 @@ function updateUI() {
     loginSpace.style.display = 'block'; // 로그인 아이콘 보이기
     loginDropdown.classList.add('none'); // 로그인 드롭박스 보이기
     martcart.style.display = 'none';
+    managementIcon.style.display = 'none';
 
     // 찜하기 UI 업데이트 (로그아웃 시 비어있는 상태로 표시)
     wishlist = {}; // 로그인 후 새 사용자로 대체됨
     updateWishlistUI();
-  } else {
+  } else if (userType === 'Master') {
+    console.log('관리자 계정 접속')
+    loginStatus.style.display = 'block'; // 로그인 상태에서는 보이게
+    loginSpace.style.display = 'none'; // 로그인 아이콘 숨기기
+    martcart.style.display = 'none';
+    managementIcon.style.display = 'block'
+    loginDropdown.classList.remove('show'); // 로그인 드롭박스 숨기기
+    welcomeMessage.textContent = `관리자계정님, 반갑습니다.`; // 사용자 이름으로 환영 메시지 업데이트
+    document.getElementById('logout-btn').style.display = 'block'; // 로그아웃 버튼 보이기
+
+  }
+  else {
+    console.log('일반 계정 접속')
     loginStatus.style.display = 'block'; // 로그인 상태에서는 보이게
     loginSpace.style.display = 'none'; // 로그인 아이콘 숨기기
     martcart.style.display = 'block';
+    managementIcon.style.display = 'none';
     loginDropdown.classList.remove('show'); // 로그인 드롭박스 숨기기
     welcomeMessage.textContent = `${userName}님, 반갑습니다.`; // 사용자 이름으로 환영 메시지 업데이트
     document.getElementById('logout-btn').style.display = 'block'; // 로그아웃 버튼 보이기
@@ -298,11 +359,6 @@ function updateUI() {
   updateWishlistUI(); // 찜하기 UI 업데이트
   updateRecentProductsUI(); // 최근본상품 UI 업데이트
 }
-
-
-
-
-
 
 
 
@@ -391,9 +447,16 @@ function initializeData() {
 
 // 페이지 로드 시 데이터 초기화
 window.onload = function () {
-  initialize();
-  initializeData();
-  createProducts();
+
+  initializeUserInfo(); // 초기 사용자 정보 설정
+  setupSignupForm(); // 회원가입 폼 설정
+  setupShowSignupFormButton(); // 회원가입 폼 표시 버튼 설정
+
+  initialize(); // 초기화 작업 수행
+  initializeData(); // 데이터 초기화 수행
+  createProducts(); // 상품 생성 및 표시
+  displayUserList(); // 사용자 목록 표시
+
   updateUI(); // 페이지 로드 시 UI 업데이트
 };
 
