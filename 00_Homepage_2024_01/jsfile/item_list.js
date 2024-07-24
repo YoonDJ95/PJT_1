@@ -4,7 +4,7 @@ let userName = '';                                          // 최초 로그인�
 let cartItems = [];                                         // 장바구니 아이템 리스트를 저장할 배열선언
 let cart = {};                                              // cart 변수를 통해 로컬저장
 let wishlist = {};                                          // 찜하기 상태를 저장할 변수선언
-                                                            // 아래 선언은 배열 이름이 저래야 할까 싶은 부분이 있음.
+// 아래 선언은 배열 이름이 저래야 할까 싶은 부분이 있음.
 const userCart = {                                          // 장바구니
   Guest: [],
   User1: [],
@@ -25,20 +25,20 @@ const RecentProducts = {                                      // 최근 본 상�
 /** CSS 까지 로드 되고 출력 **/
 window.onload = function () {
   initializeData();                                           // 계정 별 초기값 추가 및 기존값 읽기
-  createProducts();                                           // 상품 생성 및 표시
   updateUI();                                                 // UI 업데이트
 };
 
 /** HTML 문서가 완전히 로드되고 분석된 후 수행되는 구간 **/
 document.addEventListener('DOMContentLoaded', function () {
   clearLocalStorage();                                        // 모든 로컬스토리지값을 삭제
+  createProducts();                                           // 상품 생성 및 표시
   initializeUserInfo();                                       // 사용자 목록 새로고침
   userType = loaduserType();                                  // 로컬 스토리지에서 userType 불러오기
   wishlist = loadWishList();                                  // 로컬 스토리지에서 wishlist 불러오기
   setupSignupForm();                                          // 회원가입 페이지 부문 생성
   displayUserList();                                          // 사용자 목록 표시
 
-  /* 로그인 버튼 선택시 기능 */
+  /* 계정 생성 기능 */
   const triggerImage = document.getElementById('trigger-image');
   const signupSection = document.getElementById('signup-section');
   const overlay = document.getElementById('overlay');
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
     overlay.style.display = isActive ? 'none' : 'block';
   }
 
-  /* 회원가입 버튼 선택시 기능 */
+  /* 관리자 메뉴 선택시 기능 */
   const triggerImage2 = document.getElementById('show-management');
   const masterAdmin = document.getElementById('setup-section');
   const overlay2 = document.getElementById('overlay2');
@@ -113,10 +113,10 @@ function saveCart() {
 
 /* 찜하기 */
 function loadWishList() {
-  return getData(`wishlist_${userType}`) || {}; 
+  return getData(`wishlist_${userType}`) || {};
 }
 function saveWishList(list) {
-  saveData(`wishlist_${userType}`, list); 
+  saveData(`wishlist_${userType}`, list);
 }
 
 /* 최근 본 상품 */
@@ -176,12 +176,12 @@ function setupSignupForm() {
 }
 
 /* 계정생성부분 */
-function saveUserInfo(userId, password, name) {             
+function saveUserInfo(userId, password, name) {
   let users = JSON.parse(localStorage.getItem('users') || '{}');  // users 변수를 통해 로컬저장
   console.log('보유중인 계정을 읽습니다.')                          // 디버깅
 
   if (userId === 'Master') {                               // userId가 'Master'인 경우 userType을 'Master'로 설정
-    users[userId] = { password, name};
+    users[userId] = { password, name };
     localStorage.setItem('users', JSON.stringify(users));  // 입력한 users값을 로컬스토리지에 저장
     displayUserList();                                     // 마스터 계정 생성 후 목록 업데이트
     console.log('마스터 계정이 성공적으로 생성되었습니다.');
@@ -194,7 +194,7 @@ function saveUserInfo(userId, password, name) {
   }
 
 
-  users[userId] = { password, name};                      // 일반 사용자 계정으로 저장
+  users[userId] = { password, name };                      // 일반 사용자 계정으로 저장
   localStorage.setItem('users', JSON.stringify(users));   // 입력한 users값을 로컬스토리지에 저장
   displayUserList();                                      // 일반 계정 생성 후 목록 업데이트
   console.log('계정이 성공적으로 생성되었습니다.');
@@ -209,9 +209,9 @@ function initializeUserInfo() {                                       // 계정 
 
   const users = getUserList();                                        // 로컬 스토리지에 저장한 사용자 목록을 users 변수로 선언
 
-  if (!users['Master']) {                                               
+  if (!users['Master']) {
     saveUserInfo('Master', 'Master', 'Master');                        // Master 계정이 초기에 로컬에 없는 경우 마스터 계정 생성
-                                                                       // saveUserInfo('ID', 'Pw', 'Name') 양식으로 기존에 계정을 추가 가능.
+    // saveUserInfo('ID', 'Pw', 'Name') 양식으로 기존에 계정을 추가 가능.
     displayUserList();                                                 // 목록 업데이트
   } else {
     displayUserList();                                                 // 이미 마스터 계정이 있어도 사용자 목록 표시
@@ -223,7 +223,7 @@ function initializeUserInfo() {                                       // 계정 
 
 /** 마스터 계정 **/
 /* 계정 불러오기 */
-function getUserList() {    
+function getUserList() {
   return JSON.parse(localStorage.getItem('users') || '{}');          // 로컬스토리지 users에서 사용자 목록을 getUserList()로 리턴한다.
 }
 
@@ -244,10 +244,11 @@ function displayUserList() {                                          // 사용�
     userItem.textContent = `ID: ${userId}, PW: ${users[userId].password}, Name: ${users[userId].name}`;
 
     const buttonContainer = document.createElement('div');            // 버튼을 담을 컨테이너 div 요소
-    buttonContainer.style.marginTop = '5px';                          // 버튼 컨테이너의 위 여백 추가
+    buttonContainer.style.marginTop = '15px';                          // 버튼 컨테이너의 위 여백 추가
 
     const deleteButton = document.createElement('button');            // button 객체 생성 deleteButton 변수 선언
     deleteButton.textContent = '삭제';                                // 삭제 문구 저장
+    deleteButton.className = 'btn btn-3 hover-border-1';
     deleteButton.addEventListener('click', () => {                    // 해당 버튼 클릭시 이벤트 동작
       const resultMessage = deleteUser(userId);                       // 할당 userId 에대하여 deleteUser() 기능 수행
       alert(resultMessage);                                           // 삭제 후 알람.
@@ -256,6 +257,7 @@ function displayUserList() {                                          // 사용�
 
     const updateButton = document.createElement('button');            // button 객체 생성하여 updateButton 변수 선언
     updateButton.textContent = '수정';                                // 수정 문구 저장
+    updateButton.className = 'btn btn-3 hover-border-1';
     updateButton.style.marginRight = '5px';                           // 삭제 버튼과 수정 버튼 사이의 여백 추가
     updateButton.addEventListener('click', () => {                    // 해당 버튼 클릭시 이벤트 동작
       const newPassword = prompt('새 비밀번호를 입력하세요:');          // 프롬프트를 띄우고 입력한 값을 newPassword에 저장
@@ -272,7 +274,7 @@ function displayUserList() {                                          // 사용�
     userItem.style.backgroundColor = 'rgba(103, 136, 255, 0.2)'       // userItem 별 스타일 지정
     userItem.style.borderRadius = '10px'
     userItem.style.width = '300px'
-    userItem.style.height = '80px'
+    userItem.style.height = '100px'
     userItem.style.marginTop = '10px'
     userItem.style.textAlign = 'center'
 
@@ -284,7 +286,7 @@ function displayUserList() {                                          // 사용�
 function deleteUser(userId) {
   const users = getUserList();                                // 로컬스토리지에서 값을 불러와 users로 선언
   if (!users[userId]) {                                       // userId가 없는데 출력 할 경우 해단부분 수행
-    return '사용자가 존재하지 않습니다.';                             
+    return '사용자가 존재하지 않습니다.';
   }
 
   delete users[userId];                                       // userId 삭제
@@ -305,6 +307,25 @@ function updateUser(userId, newPassword, newName) {           // Id는 유지하
 }
 
 
+
+/** 알림창 표시 함수 **/
+function showNotification(message) {
+  const notification = document.getElementById('notification');
+
+  if (!notification) {
+    console.error('Notification element not found.');
+    return;
+  }
+
+  notification.textContent = message;
+  notification.classList.remove('hide');
+  notification.classList.add('show');
+
+  setTimeout(() => {
+    notification.classList.remove('show');
+    notification.classList.add('hide');
+  }, 3000);
+}
 
 
 /** 로그인 **/
@@ -337,7 +358,7 @@ function updateUI() {                                                    // 로�
     managementIcon.style.display = 'block'                               // 관리자버튼 block 설정
     welcomeMessage.textContent = `관리자계정님, 반갑습니다.`;              // 환영 메시지 출력
     document.getElementById('logout-btn').style.display = 'block';       // 로그아웃 버튼 보이기
-  }  else {                                            // 그 외
+  } else {                                            // 그 외
     console.log('일반 계정 접속')
     loginStatus.style.display = 'block';                                 // 로그인 상태 영역 block 설정
     loginSpace.style.display = 'none';                                   // 로그인 영역 none 설정
@@ -364,10 +385,12 @@ function login(userType) {
 
   if (user && user.password === password) {                               // users에 해당 id가 있고, password도 users에 등록된 password와 일치하면
     setuserType(id, user.name);                                           // seruserType() 기능을 통하여 id와 name 값을 불러옴
-    // alert(`${user.name}님, 로그인에 성공했습니다.`);                        // 알람
+    showNotification('로그인 되었습니다.');                                // 알람
     document.getElementById('login-menu').classList.remove('show');       // 로그인 화면 끄기
-  } else {                                                                // 일치하지 않으면 로그인하지 않도록 한다.
-    alert('로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요.');      // 알람
+  } else {                                                                // 일치하지 않으면 로그인하지 않도록 한다.             
+    showNotification('로그인에 실패했습니다. 아이디 또는 비밀번호를 확인해주세요..');
+    document.getElementById('login-id').value = '';
+    document.getElementById('login-password').value = '';
     document.getElementById('login-menu').classList.add('show');          // 로그인 화면 출력
   }
 
@@ -399,7 +422,7 @@ function logout() {
   wishlist = {};                                                // 찜하기 리스트를 빈 객체로 초기화
   RecentProducts['Guest'] = new Set();                          // 최근 본 상품 목록을 빈 Set으로 초기화
 
-  alert('로그아웃되었습니다.');                                   // 알람
+  showNotification('로그아웃 되었습니다.');                       // 알람
   document.getElementById('login-menu').classList.add('show');  // 로그인 드롭박스 보이기
   closeCart();                                                  // 장바구니 팝업 닫기
   updateUI();                                                   // UI 업데이트
@@ -447,14 +470,14 @@ function createProducts() {
           <button class="add-to-wishlist" data-product-id="${product.id}">찜하기 ♡</button>     <!-- 찜하기 버튼 -->
           <button class="add-to-cart">장바구니</button>                                          <!-- 장바구니 버튼 -->
           <button class="open-info-page">상세정보</button>                                       <!-- 상세정보 버튼 -->
-          <button class="open-preview">미리보기</button>                                         <!-- 미리보기 버튼 -->
+          <button class="open-preview" id="open-preview">미리보기</button>                                         <!-- 미리보기 버튼 -->
         </div>
       `;
 
     productList.appendChild(productItem);                                                       // productItem의 정보를 ProductList가 상속받는다.
 
     /* 각 버튼에 이벤트 추가 */
-    const toggleWishlistButton = productItem.querySelector('.add-to-wishlist'); 
+    const toggleWishlistButton = productItem.querySelector('.add-to-wishlist');
     const addToCartButton = productItem.querySelector('.add-to-cart');
     const openInfoPageButton = productItem.querySelector('.open-info-page');
     const openPreviewButton = productItem.querySelector('.open-preview');
@@ -464,6 +487,8 @@ function createProducts() {
     openInfoPageButton.addEventListener('click', () => openInfoPage(product.id));
     openPreviewButton.addEventListener('click', () => openPreview(product.id));
   });
+
+
 }
 
 
@@ -481,7 +506,7 @@ function openInfoPage(productId) {                                              
 /** 최근 본 상품 **/
 /* 최근 본 상품 목록 추가 */
 function addToRecentProducts(productId) {
-  if (!RecentProducts[userType]) {          
+  if (!RecentProducts[userType]) {
     RecentProducts[userType] = new Set();    // userType에 대한 저장값이 없으면 새로 생성
   }
   RecentProducts[userType].add(productId);
@@ -499,7 +524,7 @@ function updateRecentProductsUI() {
   recentProductIds.slice(-5).reverse().forEach(productId => {             // '최대 5개'에 대하여 '가장 최근의 이미지를 상단에 출력'하도록 반복
     const product = products.find(p => p.id === productId);
     if (product) {                                                        // productId가 존재하는 경우
-      const img = document.createElement('img');                          
+      const img = document.createElement('img');
       img.src = product.image || '/api/placeholder/50/75';                // 이미지 출력
       img.alt = product.title;                                            // 제목 출력
       img.style.width = '50px';                                           // 최근 본 상품 이미지 가로 길이
@@ -508,7 +533,7 @@ function updateRecentProductsUI() {
       recentProductsContainer.appendChild(img);                           // 이미지값을 recentProductsContainer에 상속
     }
     else {                                                                // 그 외
-      const title = document.createElement('p');              
+      const title = document.createElement('p');
       title.textContent = product.title;                                  // 제목 출력
       title.onclick = () => openInfoPage(productId);                      // 클릭 시 상세 페이지로 이동
       recentProductsContainer.appendChild(title);                         // 제목을 recentProductsContainer에 상속
@@ -532,10 +557,11 @@ function loadRecentItems() {
 function applyCoupon() {
   const couponCode = document.getElementById('coupon-input').value;
   if (couponCode === 'DISCOUNT10') {
-    const totalPrice = parseInt(document.getElementById('total-price').textContent);
+    const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace(/,/g, ''));
     const discountedPrice = totalPrice * 0.9; // 10% 할인
-    document.getElementById('total-price').textContent = discountedPrice.toFixed(0);
+    document.getElementById('total-price').textContent = discountedPrice.toLocaleString(); // 천 단위 구분 쉼표 추가
     alert('쿠폰이 적용되었습니다. 10% 할인이 적용됩니다.');
+    document.getElementById('coupon-input').value = '';
   } else {
     alert('유효하지 않은 쿠폰 코드입니다.');
   }
@@ -575,6 +601,8 @@ function closePreview() {
   document.querySelector('.preview-modal').style.display = 'none';    // preview-modal class를 none으로 변경
 }
 
+
+
 /* 이전페이지 */
 function prevPage() {
   if (currentPreviewPage > 0) {                                       // 페이지 수치가 0보다 크다면
@@ -594,7 +622,7 @@ function nextPage() {
     currentPreviewPage++;                                                // 페이지 수치를 1개 증가
   } else {                                                               // 그 외
     currentPreviewPage = 0;                                              // 첫 번째 페이지로 이동
-  } 
+  }
   updatePreviewImage();                                                  // 페이지 이미지 업데이트
 }
 
@@ -642,12 +670,13 @@ function addToCart(productId) {
   if (!Array.isArray(userCart[userType])) {
     console.error('userCart[userType] is not an array. Initializing to an empty array.');
     userCart[userType] = [];
-}
+  }
 
   const existingItem = userCart[userType].find(item => item.id === productId); // productId를 item으로 지정하여 userType별 userCart에서 찾고 existingItem으로 지정
   if (existingItem) {                                                          // existingItem이 이미 존재하면
-    existingItem.quantity++;                                                   // 해당 아이탬의 수량을 1 증가.
-  } else {                                                                     
+    existingItem.quantity++;
+    showNotification('장바구니에 기존 상품 수량 추가!');                                                     // 해당 아이탬의 수량을 1 증가.
+  } else {
     const product = products.find(item => item.id === productId);              // productId를 item으로 지정하여 product로 선언
     if (product) {                                                             // product가 존재할 경우
       userCart[userType].push({                                                // userCart[userType] 에 id, title, price, image, quantity를 삽입한다.
@@ -657,6 +686,7 @@ function addToCart(productId) {
         image: product.image || '/api/placeholder/50/75',                      // 이미지 URL
         quantity: 1
       });
+      showNotification('장바구니에 새 상품 추가!');
     }
   }
 
@@ -706,7 +736,8 @@ function updateCartUI() {
     cartItems.appendChild(cartItem);                                                                            // cartItem을 cartItems에 상속
     total += item.price * item.quantity;                                                                        // 아이탬별 가격 및 수량에 따른 가격을 total에 누적시킴
   });
-  document.getElementById('total-price').textContent = total.toLocaleString();                                  // 총 가격에 천단위 구분기호 추가
+  document.getElementById('total-price').textContent = total.toLocaleString();
+  console.log(total)                               // 총 가격에 천단위 구분기호 추가
 }
 
 /* 장바구니 수량 변경 */
@@ -730,13 +761,13 @@ function removeFromCart(index) {
 
 /* 장바구니 팝업 열기 */
 function openCart() {
-  document.querySelector('.cart-overlay').style.display = 'flex'; 
+  document.querySelector('.cart-overlay').style.display = 'flex';
   updateCartUI();                                                  // 장바구니 UI 업데이트
 }
 
 /* 장바구니 팝업 닫기 */
 function closeCart() {
-  document.querySelector('.cart-overlay').style.display = 'none'; 
+  document.querySelector('.cart-overlay').style.display = 'none';
 }
 
 /* 장바구니 초기화 */
@@ -759,6 +790,7 @@ function toggleWishlist(productId) {
   }
 
   console.log(`상품 ${productId}의 찜하기 버튼을 선택합니다.`);  // 디버깅
+  showNotification('찜하기를 선택하셨습니다.');
   wishlist[productId] = !wishlist[productId];                 // 찜하기 상태 토글 false면 true로, true면 false로
   saveWishList(wishlist);                                     // 찜하기 상태를 로컬 스토리지에 저장
   updateWishlistUI();                                         // 찜하기 UI 업데이트

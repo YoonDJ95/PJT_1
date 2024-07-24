@@ -24,8 +24,40 @@
 
 
 </head>
+<style>
+    .notification {
+        position: fixed;
+        /* 화면에 고정 */
+        top: 0%;
+        right: 5%;
+        width: 200px;
+        background-color: #6788ff;
+        color: #000;
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 3000;
+        /* 다른 요소 위에 표시되도록 설정 */
+        display: none;
+        /* 기본적으로 숨기기 */
+        opacity: 0;
+        /* 기본적으로 투명하게 설정 */
+        transition: opacity 0.3s ease-out;
+        /* 부드러운 전환 효과 */
+    }
+
+    .show {
+        display: block;
+        opacity: 1;
+    }
+
+    .hide {
+        opacity: 0;
+    }
+</style>
 
 <body>
+    <!-- 장바구니 추가 알람 -->
+    <div id="notification" class="notification"></div>
     <!-- 제품 메뉴란 -->
     <div>
         <div id="project-container">
@@ -69,10 +101,10 @@
                     <img id="trigger-image" src="C:\PJT_1\img\add-photo_2961348.png" alt="계정 생성"
                         style="width: 48px; height: 48px;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <div id="management-icon">
+                <div id="management-icon">
                     <img id="show-management" src="C:\PJT_1\img\cogwheel_13480555.png" alt="계정 관리 아이콘" title="계정 관리"
                         style="width: 50px; height: 50px;" />
-                    </div>
+                </div>
                 </p>
                 <!-- 이미지 클릭 시 팝업 나타나기 -->
                 <p></p>
@@ -105,7 +137,7 @@
 
                 <div class="login-status" id="login-status" style="display: none;">
                     <p id="welcome-message"></p>
-                    <P><button id="logout-btn" style="display: none;" onclick="logout()">로그아웃</button></P>
+                    <P><button id="logout-btn" class="btn btn-3 hover-border-1" onclick="logout()">로그아웃</button></P>
 
                 </div>
                 <div>
@@ -249,9 +281,15 @@
     </div>
 
     <!-- 미리보기 팝업 모달 -->
+    <div id="overlay3" class="overlay3"></div>
     <div class="preview-modal" style="display: none;">
         <div class="modal-content">
-            <span class="close-btn" onclick="closePreview()">&times;</span>
+            <div>
+                <button onclick="closePreview()">
+                    <span class="close-btn" >취소</span>
+                </button>
+            </div>
+            <br><br>
             <img id="preview-image" src="" alt="미리보기 이미지" style="width: 1000px; height: 400px;">
             <div class="page-navigation">
                 <button id="prev-page-btn" onclick="prevPage()">이전</button>
@@ -276,6 +314,11 @@
                 <button style="max-height:50px; min-width: 60px; border-color: white;"
                     onclick="clearCart()">비우기</button>
                 <button style="max-height:50px; min-width: 50px; border-color: white;" onclick="closeCart()">닫기</button>
+            </div>
+            <!-- 쿠폰 코드 입력 필드와 적용 버튼 추가 -->
+            <div>
+                <input type="text" id="coupon-input" placeholder="쿠폰 코드 입력">
+                <button onclick="applyCoupon()">쿠폰 적용</button>
             </div>
         </div>
     </div>
