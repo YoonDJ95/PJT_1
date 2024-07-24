@@ -1,15 +1,3 @@
-// 로그인 여부에 따라 사용자 구분 및 초기화 함수 호출
-let currentUser = 'Guest'; // 기본적으로 Guest로 설정
-let inp = false; // 예시 변수 (실제로는 로그인 여부를 판단하는 로직이 필요)
-let pw = true; // 예시 변수 (실제로는 로그인 여부를 판단하는 로직이 필요)
-
-if (inp && pw) {
-  currentUser = 'user1'; // 로그인 상태일 때 user1으로 설정
-} else if (!inp && pw) {
-  currentUser = 'user2'; // 예시: 로그인 상태일 때 user2로 설정
-}
-
-
 
 // 제품 목록 생성
 // 상품 목록 데이터 배열
@@ -30,7 +18,7 @@ const products = [
 function createProducts() {
   const productList = document.querySelector('.product-list');
 
-  products.forEach((product, index) => {
+  products.forEach(product => {
     const productItem = document.createElement('div');
     productItem.className = 'product-item';
     productItem.id = 'product-${product.id}';
@@ -42,11 +30,12 @@ function createProducts() {
         <p style="text-size:50%; color:gray;">${product.style}</p>
         <div class="actions">
           <button class="add-to-wishlist" data-product-id="${product.id}">찜하기 ♡</button>
-          <button class="add-to-cart" onclick="addToCart('${product.id}">장바구니</button>
-          <button class="open-info-page" onclick="openInfoPage('${product.id}')">상세정보</button>
-          <button class="open-preview" onclick="openPreview('${product.id}')">미리보기</button>
+          <button class="add-to-cart">장바구니</button>
+          <button class="open-info-page">상세정보</button>
+          <button class="open-preview">미리보기</button>
         </div>
       `;
+
     productList.appendChild(productItem);
 
     // 각 버튼에 이벤트 리스너 추가
@@ -56,12 +45,12 @@ function createProducts() {
     const openPreviewButton = productItem.querySelector('.open-preview');
 
     toggleWishlistButton.addEventListener('click', () => toggleWishlist(product.id));
-    addToCartButton.addEventListener('click', () => addToCart(product.id)); // addToCart 함수에 상품 id 전달
-    openInfoPageButton.addEventListener('click', () => openInfoPage(product.id)); // openInfoPage 함수에 상품 id 전달
-    openPreviewButton.addEventListener('click', () => openPreview(product.id)); // openPreview 함수에 상품 id 전달
-
+    addToCartButton.addEventListener('click', () => addToCart(product.id));
+    openInfoPageButton.addEventListener('click', () => openInfoPage(product.id));
+    openPreviewButton.addEventListener('click', () => openPreview(product.id));
   });
 }
+
 
 
 // 상세 정보 페이지 열기 함수
@@ -71,11 +60,10 @@ function openInfoPage(productId) {
   window.location.href = `C:\\PJT_1\\page\\book_${productId.split('_')[1]}_info.html`; // 예시: book_1_info.html
 }
 
+  // 초기 상품 목록 생성
+  createProducts();
 
 
-
-// 초기 상품 목록 생성
-createProducts();
 
 // 쿠폰 적용 기능
 function applyCoupon() {
@@ -213,6 +201,9 @@ document.getElementById('prev-page-btn').addEventListener('click', prevPage);
 document.getElementById('next-page-btn').addEventListener('click', nextPage);
 
 
+
+
+
 /* 장바구니 기능*/
 // 장바구니 아이템 리스트를 저장할 배열
 let cartItems = [];
@@ -316,6 +307,14 @@ function clearCart() {
   alert('장바구니가 비워졌습니다.');
   updateCartIcon();
 }
+
+
+
+
+
+
+
+
 
 
 /* 찜하기 */

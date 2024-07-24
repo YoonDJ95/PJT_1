@@ -18,20 +18,7 @@
     <link rel="stylesheet" href="C:\PJT_1\css\cart_page.css">
     <!-- 책 미리보기 -->
     <link rel="stylesheet" href="C:\PJT_1\css\page_preview.css">
-    
 
-    <style>
-        #notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px;
-            border-radius: 4px;
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
@@ -68,40 +55,41 @@
                 <div style="width: 150px;"></div>
             </nav>
             <!-- 비로그인 상태 -->
-                <nav style="display: flex; justify-content: space-between; align-items: center;">
-                    <p id="login_space" style="align-self: flex-end; margin-top: 10px;"><img src="C:\PJT_1\img\login_icon.png" style="width: 50px; height: 50px;"></p>
-                    
-                    <div id="s-d4" class="dropdown4">
-                        <p style="font-size: 30px;">
-                            <label for="inp" class="inp">
-                                <input type="text" id="inp" placeholder="&nbsp;">
-                                <span class="label">ID</span>
-                                <svg width="120px" height="30px" viewBox="0 0 120 26">
-                                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
-                                </svg>
-                                <span class="border"></span>
-                            </label>
-                        </p>
-                        <p>
-                            <label for="pwr" class="pwr">
-                                <input type="password" id="pw" placeholder="&nbsp;">
-                                <span class="label">PW</span>
-                                <svg width="120px" height="30px" viewBox="0 0 120 26">
-                                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
-                                </svg>
-                                <span class="border"></span>
-                            </label>
-                        </p>
-                        <nav>
-                            <button class="btn btn-3 hover-border-1" onclick="login()">로그인</button>
-                            <button class="btn btn-3 hover-border-1" onclick="closeLoginPopup()">취소</button>
-                        </nav>
-                    </div>
-                    <p id="market_guest" style="align-self: flex-end; margin-top: 10px;">
-                        <img id="cart-icon" onclick="openCart()" src="C:\PJT_1\img\basket_empty.png" style="width: 50px; height: 50px;">
+            <nav style="display: flex; justify-content: space-between; align-items: center;">
+                <!--로그인 메뉴 -->
+                <p id="login_space" style="align-self: flex-end; margin-top: 10px;"><img src="C:\PJT_1\img\login_icon.png" style="width: 50px; height: 50px;"></p>
+                
+                <div id="s-d4" class="dropdown4">
+                    <p style="font-size: 30px;">
+                        <label for="inp" class="inp">
+                            <input type="text" id="inp" placeholder="&nbsp;">
+                            <span class="label">ID</span>
+                            <svg width="120px" height="30px" viewBox="0 0 120 26">
+                                <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                            </svg>
+                            <span class="border"></span>
+                        </label>
                     </p>
-                </nav>
-
+                    <p>
+                        <label for="pwr" class="pwr">
+                            <input type="password" id="pw" placeholder="&nbsp;">
+                            <span class="label">PW</span>
+                            <svg width="120px" height="30px" viewBox="0 0 120 26">
+                                <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                            </svg>
+                            <span class="border"></span>
+                        </label>
+                    </p>
+                    <!--로그인 팝업 내 로그인 버튼-->
+                    <nav>
+                        <a href="http://www.naver.com"><button class="btn btn-3 hover-border-1">로그인</button></a>
+                        <a href="http://www.daum.net"><button class="btn btn-3 hover-border-1">취소</button></a>
+                    </nav>
+                </div>
+                <p id="market_guest" style="align-self: flex-end; margin-top: 10px;">
+                    <img id="cart-icon" onclick="openCart()" src="C:\PJT_1\img\basket_empty.png" style="width: 50px; height: 50px;">
+                </p>
+            </nav>
             
 
 
@@ -200,8 +188,6 @@
     <!-- 최상단으로 이동하는 버튼-->
     <button class="scroll-top" onclick="scrollToTop()">↑</button>
 
-    <div id="notification">장바구니에 상품이 추가되었습니다!</div>
-
     <!-- 장바구니-->
     <div id="cart-overlay" class="cart-overlay">
         <div class="cart-container">
@@ -229,27 +215,6 @@
 
     <script src="C:\PJT_1\jsfile\item_list.js"></script><!-- 책 리스트, 상세정보이동, 장바구니 -->
 
-    <script>
-        function login() {
-            // In a real application, you would validate the credentials here
-            window.location.href = "mall_main_user1.html";
-        }
-
-        function closeLoginPopup() {
-            document.getElementById("s-d4").style.display = "none";
-        }
-
-        function addToCart(product) {
-            // Existing addToCart logic here
-            // ...
-
-            // Show notification
-            const notification = document.getElementById("notification");
-            notification.style.display = "block";
-            setTimeout(() => {
-                notification.style.display = "none";
-            }, 3000);
-        }
-    </script>
 </body>
-</html> 
+
+</html>
