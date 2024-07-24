@@ -61,14 +61,16 @@
             <!-- 로그인영역 -->
             <nav style="display: flex; justify-content: space-between; align-items: center;">
 
-                <!-- 로그인 메뉴 -->
+                <!-- 로그인 메뉴, 회원가입, 설정 메뉴 -->
                 <p id="login_space">
                     <img src="C:\PJT_1\img\login_icon.png" style="width: 50px; height: 50px;"
                         onclick="toggleDropdown()">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <img id="trigger-image" src="C:\PJT_1\img\add-photo_2961348.png" alt="계정 생성"
                         style="width: 48px; height: 48px;">
-
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img id="show-management" src="C:\PJT_1\img\cogwheel_13480555.png" alt="계정 관리 아이콘" title="계정 관리"
+                        style="width: 50px; height: 50px;" />
                 </p>
                 <!-- 이미지 클릭 시 팝업 나타나기 -->
                 <p></p>
@@ -153,8 +155,16 @@
                 <p id="signup-message"></p>
             </div>
 
-
-
+            <div id="overlay2"></div>
+            <div id="setup-section" style="display: none;">
+                <h2 style="text-align: center;">Master 계정 관리</h2>
+                <form id="setup-form" class="setup-form">
+                    <div id="master-section">
+                        <h2>사용자 목록</h2>
+                        <div id="user-list"></div> <!-- 사용자 목록이 표시될 곳 -->
+                    </div>
+                </form>
+            </div>
 
             <div style="width: 200px;"></div>
         </div>

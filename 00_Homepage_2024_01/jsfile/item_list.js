@@ -9,21 +9,6 @@ let wishlist = {}; // 찜하기 상태를 저장할 전역 변수
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-  // 모든 localStorage 항목을 삭제하는 것이 맞는지 확인하세요.
-  clearLocalStorage(); // 주석 처리하거나 조건에 따라 호출
-
-  initializeUserInfo(); // 초기 사용자 정보 설정
-
-  setupSignupForm(); // 계정 생성 폼 설정
-  setupShowSignupFormButton(); // 계정 생성 버튼 설정
-
-  userType = loaduserType(); // 현재 사용자 유형을 로드
-  wishlist = loadWishList(); // 로컬 스토리지에서 찜하기 목록 불러오기
-  updateUI(); // UI 업데이트
-  initializeData(); // 데이터 초기화
-
-});
 
 
 
@@ -85,10 +70,126 @@ function setupShowSignupFormButton() {
   }
 }
 
+/* 마스터 계정 */
+// 사용자 목록을 가져오는 함수
+function getUserList() {
+  return JSON.parse(localStorage.getItem('users') || '{}');
+}
 
+// 사용자 삭제
+function deleteUser(userId) {
+  const users = getUserList();
+  if (!users[userId]) {
+    return '사용자가 존재하지 않습니다.';
+  }
 
+  delete users[userId];
+  localStorage.setItem('users', JSON.stringify(users));
+  return '사용자가 성공적으로 삭제되었습니다.';
+}
 
+// 사용자 정보 수정
+function updateUser(userId, newPassword, newName) {
+  const users = getUserList();
+  if (!users[userId]) {
+    return '사용자가 존재하지 않습니다.';
+  }
 
+  users[userId] = { password: newPassword, name: newName };
+  localStorage.setItem('users', JSON.stringify(users));
+  return '사용자 정보가 성공적으로 수정되었습니다.';
+}
+
+// Master 계정 기능 초기화
+function initializeMasterFeatures() {
+  console.log('Master 기능 초기화 중'); // 디버깅용 로그 추가
+
+  const masterSection = document.getElementById('setup-section');
+  if (!masterSection) return;
+
+  const userList = document.getElementById('user-list');
+  const users = getUserList();
+  userList.innerHTML = ''; // 기존 목록 지우기
+
+  Object.keys(users).forEach(userId => {
+    const userItem = document.createElement('div');
+    userItem.textContent = `ID: ${userId}, Name: ${users[userId].name}`;
+    
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = '삭제';
+    deleteButton.addEventListener('click', () => {
+      const resultMessage = deleteUser(userId);
+      alert(resultMessage);
+      initializeMasterFeatures(); // 목록 새로고침
+    });
+
+    const updateButton = document.createElement('button');
+    updateButton.textContent = '수정';
+    updateButton.addEventListener('click', () => {
+      const newPassword = prompt('새 비밀번호를 입력하세요:');
+      const newName = prompt('새 이름을 입력하세요:');
+      const resultMessage = updateUser(userId, newPassword, newName);
+      alert(resultMessage);
+      initializeMasterFeatures(); // 목록 새로고침
+    });
+
+    userItem.appendChild(deleteButton);
+    userItem.appendChild(updateButton);
+    userList.appendChild(userItem);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // 모든 localStorage 항목을 삭제하는 것이 맞는지 확인하세요.
+  clearLocalStorage(); // 주석 처리하거나 조건에 따라 호출
+
+  initializeUserInfo(); // 초기 사용자 정보 설정
+  setupSignupForm(); // 계정 생성 폼 설정
+  setupShowSignupFormButton(); // 계정 생성 버튼 설정
+
+  userType = loaduserType(); // 현재 사용자 유형을 로드
+  wishlist = loadWishList(); // 로컬 스토리지에서 찜하기 목록 불러오기
+  updateUI(); // UI 업데이트
+  initializeData(); // 데이터 초기화
+  initializeMasterFeatures(); // Master 기능 초기화
+
+  // 계정 생성 및 관리자 계정 설정
+  const triggerImage = document.getElementById('trigger-image');
+  const triggerImage2 = document.getElementById('show-management');
+  const signupSection = document.getElementById('signup-section');
+  const masterAdmin = document.getElementById('setup-section');
+  const overlay = document.getElementById('overlay');
+  const overlay2 = document.getElementById('overlay2');
+
+  function toggleSignupSection() {
+    const isActive = signupSection.style.display === 'block';
+    signupSection.style.display = isActive ? 'none' : 'block';
+    overlay.style.display = isActive ? 'none' : 'block';
+  }
+
+  function toggleMasterSection() {
+    const isActive = masterAdmin.style.display === 'block';
+    masterAdmin.style.display = isActive ? 'none' : 'block';
+    overlay2.style.display = isActive ? 'none' : 'block';
+
+    if (!isActive) {
+      initializeMasterFeatures(); // 사용자 목록 표시
+    }
+  }
+
+  overlay.addEventListener('click', () => {
+    signupSection.style.display = 'none';
+    overlay.style.display = 'none';
+  });
+
+  overlay2.addEventListener('click', () => {
+    masterAdmin.style.display = 'none';
+    overlay2.style.display = 'none';
+  });
+
+  triggerImage.addEventListener('click', toggleSignupSection);
+  triggerImage2.addEventListener('click', toggleMasterSection);
+});
 
 
 

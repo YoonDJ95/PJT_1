@@ -1,4 +1,5 @@
-#signup-section {
+#signup-section, 
+#setup-section {
   display: none;
   /* 기본적으로 숨기기 */
   position: fixed;
@@ -16,19 +17,21 @@
   /* 테두리 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   /* 그림자 */
-  z-index: 1000;
+  z-index: 1001;
   /* 다른 요소 위에 표시 */
   width: 400px;
   height: 500px;
 }
 
-#signup-section.active {
+#signup-section.active,
+#setup-section.active{
   display: block;
   /* 표시 */
 }
 
 /* 배경 클릭 시 닫기 */
-#overlay {
+#overlay,
+#overlay2 {
   display: none;
   /* 기본적으로 숨기기 */
   position: fixed;
@@ -43,28 +46,18 @@
   /* 팝업보다 아래 */
 }
 
-#overlay.active {
-  display: block;
-  /* 표시 */
-}
-
 /* 이미지 스타일 */
 #trigger-image {
   cursor: pointer;
   /* 클릭할 수 있는 커서 */
-  -index: 999;
+  -index: 1000;
   /* 팝업보다 아래 */
 }
 
+#overlay.active,
 #overlay.active {
   display: block;
   /* 표시 */
-}
-
-/* 이미지 스타일 */
-#trigger-image {
-  cursor: pointer;
-  /* 클릭할 수 있는 커서 */
 }
 
 
@@ -81,6 +74,40 @@
   top: 50%;
   width: 100%;
 }
+
+
+#setup-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 50px; /* 상단 여백 추가 */
+}
+
+.setup-form input {
+  top: 50%;
+  width: 100%;
+}
+
+#master-section {
+  margin: 20px;
+  display: none; /* 초기에는 숨김 */
+}
+#user-list {
+  background-color: black;
+  width: 500px;
+  height: 500px;
+  margin-top: 20px;
+  z-index: 1002;
+}
+.user-item {
+  margin-bottom: 10px;
+}
+#show-management {
+  cursor: pointer;
+}
+
 
 /* 입력 칸 스타일 수정 */
 .inp_add,
