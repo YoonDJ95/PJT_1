@@ -1,0 +1,12 @@
+/* 추가 기능 스타일 */
+.scroll-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    padding: 10px;
+    background-color: #6788FF;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
