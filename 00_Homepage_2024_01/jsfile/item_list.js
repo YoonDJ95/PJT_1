@@ -1,9 +1,22 @@
+// 로그인 여부에 따라 사용자 구분 및 초기화 함수 호출
+let currentUser = 'Guest'; // 기본적으로 Guest로 설정
+let inp = false; // 예시 변수 (실제로는 로그인 여부를 판단하는 로직이 필요)
+let pw = true; // 예시 변수 (실제로는 로그인 여부를 판단하는 로직이 필요)
+
+if (inp && pw) {
+  currentUser = 'user1'; // 로그인 상태일 때 user1으로 설정
+} else if (!inp && pw) {
+  currentUser = 'user2'; // 예시: 로그인 상태일 때 user2로 설정
+}
+
+
+
 // 제품 목록 생성
 // 상품 목록 데이터 배열
 const products = [
   { id: 'book_1', image: '', title: '도서 제목 1', author: '저자1', publisher: '출판사1', style: '장르', star: '★☆☆☆☆', price: '15000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
   { id: 'book_2', image: '', title: '스릴러제목', author: '윤동주', publisher: '서동탄 출판', style: '장르', star: '★★☆☆☆', price: '30000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_3', image: '', title: '판타지제목', author: '김태영', publisher: '평택 출판', style: '장르', star: '★★★★☆', price: '7000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5']},
+  { id: 'book_3', image: '', title: '판타지제목', author: '김태영', publisher: '평택 출판', style: '장르', star: '★★★★☆', price: '7000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
   { id: 'book_4', image: '', title: '그냥그런제목', author: '임정호', publisher: '오산 출판', style: '장르', star: '★★★★☆', price: '22000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
   { id: 'book_5', image: '', title: '도서 제목 5', author: '저자5', publisher: '출판사5', style: '장르', star: '★★★★☆', price: '22500', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
   { id: 'book_6', image: '', title: '도서 제목 6', author: '저자6', publisher: '출판사6', style: '장르', star: '★★★★☆', price: '30000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
@@ -28,21 +41,25 @@ function createProducts() {
         <p>${product.author} | ${product.publisher}</p>
         <p style="text-size:50%; color:gray;">${product.style}</p>
         <div class="actions">
-            <button class="add-to-cart" onclick="addToCart('${product.id}">장바구니</button>
-            <button class="open-info-page">상세정보</button>
-             <button class="open-preview" onclick="openPreview('${product.id}')">미리보기</button>
+          <button class="add-to-wishlist" data-product-id="${product.id}">찜하기 ♡</button>
+          <button class="add-to-cart" onclick="addToCart('${product.id}">장바구니</button>
+          <button class="open-info-page" onclick="openInfoPage('${product.id}')">상세정보</button>
+          <button class="open-preview" onclick="openPreview('${product.id}')">미리보기</button>
         </div>
       `;
     productList.appendChild(productItem);
 
     // 각 버튼에 이벤트 리스너 추가
+    const toggleWishlistButton = productItem.querySelector('.add-to-wishlist');
     const addToCartButton = productItem.querySelector('.add-to-cart');
     const openInfoPageButton = productItem.querySelector('.open-info-page');
     const openPreviewButton = productItem.querySelector('.open-preview');
 
+    toggleWishlistButton.addEventListener('click', () => toggleWishlist(product.id));
     addToCartButton.addEventListener('click', () => addToCart(product.id)); // addToCart 함수에 상품 id 전달
     openInfoPageButton.addEventListener('click', () => openInfoPage(product.id)); // openInfoPage 함수에 상품 id 전달
     openPreviewButton.addEventListener('click', () => openPreview(product.id)); // openPreview 함수에 상품 id 전달
+
   });
 }
 
@@ -94,7 +111,7 @@ function updateRecentProductsUI() {
       const img = document.createElement('img');
       img.src = product.image; // 실제 이미지 URL로 변경 필요
       img.alt = product.title;
-       // 최근 본 페이지 이미지 크기
+      // 최근 본 페이지 이미지 크기
       img.style.width = '20px';
       img.style.height = '20px';
       img.onclick = () => openInfoPage(productId); // 클릭 시 상세 페이지로 이동
@@ -135,11 +152,11 @@ function openPreview(bookId) {
   updatePreviewImage();
   document.querySelector('.preview-modal').style.display = 'block';
 
-    // 최근 본 상품에 추가
-    addToRecentProducts(bookId);
+  // 최근 본 상품에 추가
+  addToRecentProducts(bookId);
 
-    // 최근 본 상품 UI 업데이트
-    updateRecentProductsUI();
+  // 최근 본 상품 UI 업데이트
+  updateRecentProductsUI();
 
 }
 
@@ -196,32 +213,32 @@ document.getElementById('prev-page-btn').addEventListener('click', prevPage);
 document.getElementById('next-page-btn').addEventListener('click', nextPage);
 
 
-/* 장바구니 기능*/ 
+/* 장바구니 기능*/
 // 장바구니 아이템 리스트를 저장할 배열
 let cartItems = [];
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function addToCart(productId) {
   console.log(`상품 ${productId.split('_')[1]}을 장바구니에 추가합니다.`);
-    const existingItem = cart.find(item => item.id === productId);
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        // 상품 목록에서 상품을 찾아서 정보 추가
-        const product = products.find(item => item.id === productId);
-        if (product) {
-            cart.push({
-                id: product.id,
-                title: product.title,
-                price: parseInt(product.price), // 가격을 숫자로 변환
-                image: product.image || '/api/placeholder/50/75', // 이미지 URL
-                quantity: 1
-            });
-        }
+  const existingItem = cart.find(item => item.id === productId);
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    // 상품 목록에서 상품을 찾아서 정보 추가
+    const product = products.find(item => item.id === productId);
+    if (product) {
+      cart.push({
+        id: product.id,
+        title: product.title,
+        price: parseInt(product.price), // 가격을 숫자로 변환
+        image: product.image || '/api/placeholder/50/75', // 이미지 URL
+        quantity: 1
+      });
     }
-    localStorage.setItem('cart', JSON.stringify(cart)); // 장바구니를 로컬 스토리지에 저장합니다.
-    updateCartUI(); // 장바구니 UI를 업데이트합니다.
-    updateCartIcon();
+  }
+  localStorage.setItem('cart', JSON.stringify(cart)); // 장바구니를 로컬 스토리지에 저장합니다.
+  updateCartUI(); // 장바구니 UI를 업데이트합니다.
+  updateCartIcon();
 }
 
 function updateCartIcon() {
@@ -239,13 +256,13 @@ function updateCartIcon() {
 }
 
 function updateCartUI() {
-    const cartItems = document.getElementById('cart-items');
-    cartItems.innerHTML = '';
-    let total = 0;
-    cart.forEach((item, index) => {
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
+  const cartItems = document.getElementById('cart-items');
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    const cartItem = document.createElement('div');
+    cartItem.className = 'cart-item';
+    cartItem.innerHTML = `
             <img src="${item.image}" alt="${item.title}">
             <div class="cart-item-details">
                 <h4>${item.title}</h4>
@@ -260,66 +277,83 @@ function updateCartUI() {
                 <button onclick="removeFromCart(${index})">삭제</button>
             </div>
         `;
-        cartItems.appendChild(cartItem);
-        total += item.price * item.quantity;
-    });
-    document.getElementById('total-price').textContent = total.toLocaleString(); // 총 가격에 천단위 구분기호 추가
+    cartItems.appendChild(cartItem);
+    total += item.price * item.quantity;
+  });
+  document.getElementById('total-price').textContent = total.toLocaleString(); // 총 가격에 천단위 구분기호 추가
 }
 
 function changeQuantity(index, change) {
-    const item = cart[index];
-    item.quantity += change;
-    if (item.quantity <= 0) {
-        item.quantity = 1;
-    }
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartUI();
+  const item = cart[index];
+  item.quantity += change;
+  if (item.quantity <= 0) {
+    item.quantity = 1;
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartUI();
 }
 
 function removeFromCart(index) {
-    cart.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartUI();
-    updateCartIcon();
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartUI();
+  updateCartIcon();
 }
 
 function openCart() {
-    document.querySelector('.cart-overlay').style.display = 'flex'; // 장바구니 오버레이 표시
-    updateCartUI();
+  document.querySelector('.cart-overlay').style.display = 'flex'; // 장바구니 오버레이 표시
+  updateCartUI();
 }
 
 function closeCart() {
-    document.querySelector('.cart-overlay').style.display = 'none'; // 장바구니 오버레이 숨기기
+  document.querySelector('.cart-overlay').style.display = 'none'; // 장바구니 오버레이 숨기기
 }
 
 function clearCart() {
-    cart = []; // 장바구니를 빈 배열로 초기화
-    localStorage.setItem('cart', JSON.stringify(cart)); // 로컬 스토리지에 빈 장바구니 저장
-    updateCartUI(); // 장바구니 UI 업데이트
-    alert('장바구니가 비워졌습니다.');
-    updateCartIcon();
+  cart = []; // 장바구니를 빈 배열로 초기화
+  localStorage.setItem('cart', JSON.stringify(cart)); // 로컬 스토리지에 빈 장바구니 저장
+  updateCartUI(); // 장바구니 UI 업데이트
+  alert('장바구니가 비워졌습니다.');
+  updateCartIcon();
 }
 
-// 상품 목록 생성 함수 (기존 코드 유지)
-function createProducts() {
-  const productList = document.querySelector('.product-list');
 
-  products.forEach((product, index) => {
-    const productItem = document.createElement('div');
-    productItem.className = 'product-item';
-    productItem.id = `product-${product.id}`; // 백틱(`)을 사용하여 문자열 템플릿을 활용합니다.
-    productItem.innerHTML = `
-        <img src="${product.image || '/api/placeholder/200/300'}">
-        <div class="rating">${product.star}</div>
-        <h3>${product.title}</h3>
-        <p>${product.author} | ${product.publisher}</p>
-        <p style="text-size:50%; color:gray;">${product.style}</p>
-        <div class="actions">
-            <button class="add-to-cart" onclick="addToCart('${product.id}')">장바구니</button>
-            <button class="open-info-page" onclick="openInfoPage('${product.id}')">상세정보</button>
-            <button class="open-preview" onclick="openPreview('${product.id}')">미리보기</button>
-        </div>
-    `;
-    productList.appendChild(productItem);
+/* 찜하기 */
+// 찜하기 상태를 저장할 객체
+const wishlist = {};
+
+// 초기에 모든 상품의 찜하기 아이콘을 하트(♡)로 설정
+document.addEventListener('DOMContentLoaded', function () {
+  const wishlistButtons = document.querySelectorAll('.add-to-wishlist');
+  wishlistButtons.forEach(button => {
+    const productId = button.dataset.productId;
+    wishlist[productId] = false; // 초기 상태는 찜하지 않은(false) 상태
+    updateWishlistUI(productId);
   });
+});
+
+// 찜하기 버튼 클릭 시 호출되는 함수
+function toggleWishlist(productId) {
+  wishlist[productId] = !wishlist[productId]; // 찜하기 상태를 토글
+  updateWishlistUI(productId);
 }
+
+// 찜하기 버튼의 UI를 업데이트하는 함수
+function updateWishlistUI(productId) {
+  const button = document.querySelector(`.add-to-wishlist[data-product-id="${productId}"]`);
+  if (wishlist[productId]) {
+    button.textContent = '찜한 상태 ♥';
+  } else {
+    button.textContent = '찜하기 ♡';
+  }
+}
+
+// 초기에 모든 상품의 찜하기 아이콘을 하트(♡)로 설정
+document.addEventListener('DOMContentLoaded', function () {
+  const wishlistButtons = document.querySelectorAll('.add-to-wishlist');
+  wishlistButtons.forEach(button => {
+    const productId = button.dataset.productId;
+    wishlist[productId] = false; // 초기 상태는 찜하지 않은(false) 상태
+    updateWishlistUI(productId);
+  });
+});
