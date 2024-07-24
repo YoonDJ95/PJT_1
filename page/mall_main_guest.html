@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>메인페이지 상단 메뉴</title>
+    <link rel="stylesheet" href="C:\PJT_1\css\main_menu.css">
+    <link rel="stylesheet" href="C:\PJT_1\css\main_banner.css">
+    <link rel="stylesheet" href="C:\PJT_1\css\main_login.css">
+    <link rel="stylesheet" href="C:\PJT_1\css\login_btn_style.css">
+    <link rel="stylesheet" href="C:\PJT_1\css\main_basic.css">
+
+    <link rel='stylesheet' href='C:\PJT_1\css\main_banner_style_drive.css'>
+    <link rel="stylesheet" href="C:\PJT_1\css\main_banner_style.css">
+    <!-- 책 리스트 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\item_list.css">
+    <!-- 장바구니 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\cart_page.css">
+    <!-- 책 미리보기 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\page_preview.css">
+    <!-- 계정 생성 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\account_add.css">
+
+
+
+</head>
+
+<body>
+    <!-- 제품 메뉴란 -->
+    <div>
+        <div id="project-container">
+            <a href="mall_main_guest.html"><img src="C:\PJT_1\img\Logo.png" class="logo"></a>
+            <div style="width: 200px;"></div>
+            <nav>
+                <p>베스트셀러&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p id="kor_book">국내도서 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <div id="s-d" class="dropdown">
+                    <p>국내도서 장르 1</p>
+                    <p>국내도서 장르 2</p>
+                    <p>국내도서 장르 3</p>
+                    <p>국내도서 장르 4</p>
+                    <p>국내도서 장르 5</p>
+                </div>
+                <p id="eng_book">해외도서 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <div id="s-d2" class="dropdown2">
+                    <p>해외도서 장르 1</p>
+                    <p>해외도서 장르 2</p>
+                    <p>해외도서 장르 3</p>
+                    <p>해외도서 장르 4</p>
+                </div>
+                <p>신간도서&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p id="goods_book">굿즈 ▼</p>
+                <div id="s-d3" class="dropdown3">
+                    <p>굿즈 장르 1</p>
+                    <p>굿즈 장르 2</p>
+                    <p>굿즈 장르 3</p>
+                    <p>굿즈 장르 4</p>
+                </div>
+                <div style="width: 150px;"></div>
+            </nav>
+            <!-- 로그인영역 -->
+            <nav style="display: flex; justify-content: space-between; align-items: center;">
+
+                <!-- 로그인 메뉴, 회원가입, 설정 메뉴 -->
+                <p id="login_space">
+                    <img src="C:\PJT_1\img\login_icon.png" style="width: 50px; height: 50px;"
+                        onclick="toggleDropdown()">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img id="trigger-image" src="C:\PJT_1\img\add-photo_2961348.png" alt="계정 생성"
+                        style="width: 48px; height: 48px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div id="management-icon">
+                    <img id="show-management" src="C:\PJT_1\img\cogwheel_13480555.png" alt="계정 관리 아이콘" title="계정 관리"
+                        style="width: 50px; height: 50px;" />
+                    </div>
+                </p>
+                <!-- 이미지 클릭 시 팝업 나타나기 -->
+                <p></p>
+                <div id="login-menu" class="dropdown4">
+                    <p style="font-size: 30px;">
+                        <label for="inp" class="inp">
+                            <input type="text" id="login-id" placeholder="&nbsp;">
+                            <span class="label">ID</span>
+                            <svg width="120px" height="30px" viewBox="0 0 120 26">
+                                <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                            </svg>
+                            <span class="border"></span>
+                        </label>
+                    </p>
+                    <p>
+                        <label for="pwr" class="pwr">
+                            <input type="password" id="login-password" placeholder="&nbsp;">
+                            <span class="label">PW</span>
+                            <svg width="120px" height="30px" viewBox="0 0 120 26">
+                                <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                            </svg>
+                            <span class="border"></span>
+                        </label>
+                    </p>
+                    <nav>
+                        <button class="btn btn-3 hover-border-1" onclick="login()">로그인</button>
+                        <button class="btn btn-3 hover-border-1" onclick="removetext()">취소</button>
+                    </nav>
+                </div>
+
+                <div class="login-status" id="login-status" style="display: none;">
+                    <p id="welcome-message"></p>
+                    <P><button id="logout-btn" style="display: none;" onclick="logout()">로그아웃</button></P>
+
+                </div>
+                <div>
+                    <p id="market_guest" class="market_cart" style="align-self: flex-end; margin-top: 10px;">
+                        <img id="cart-icon" onclick="openCart()" src="C:\PJT_1\img\basket_empty.png"
+                            style="width: 50px; height: 50px;">
+                    </p>
+                </div>
+            </nav>
+
+            <!-- 오버레이 -->
+            <div id="overlay"></div>
+
+            <!-- 계정 생성 폼 -->
+            <div id="signup-section">
+                <h2 style="text-align: center;">계정 생성</h2>
+                <form id="signup-form" class="signup-form">
+                    <label for="signup-id" class="inp_add">
+                        <input type="text" id="signup-id" name="id" required>
+                        <span class="label">ID</span>
+                        <svg width="120px" height="30px" viewBox="0 0 120 26">
+                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                        </svg>
+                        <span class="border"></span>
+                    </label>
+                    <br>
+                    <br>
+                    <label for="signup-password" class="pwr_add">
+                        <input type="password" id="signup-password" name="password" required>
+                        <span class="label">Password</span>
+                        <svg width="120px" height="30px" viewBox="0 0 120 26">
+                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                        </svg>
+                        <span class="border"></span>
+                    </label>
+                    <br>
+                    <br>
+                    <label for="signup-name" class="name_add">
+                        <input type="text" id="signup-name" name="name" required>
+                        <span class="label">이름</span>
+                        <svg width="120px" height="30px" viewBox="0 0 120 26">
+                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                        </svg>
+                        <span class="border"></span>
+                    </label>
+                    <br>
+                    <button type="submit">계정 생성</button>
+                </form>
+                <p id="signup-message"></p>
+            </div>
+
+            <div id="overlay2"></div>
+            <div id="setup-section" style="display: none;">
+                <h2 style="text-align: center;">Master 계정 관리</h2>
+                <form id="setup-form" class="setup-form">
+                    <div id="master-section" class="master-section">
+                        <h2 style="text-align: center;">사용자 목록</h2>
+                        <div id="user-list" class="user-list"></div> <!-- 사용자 목록이 표시될 곳 -->
+                    </div>
+                </form>
+            </div>
+
+            <div style="width: 200px;"></div>
+        </div>
+        <!-- 메인배너 -->
+        <div>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide swiper-slide--one">
+                        <div>
+                            <h2>추천도서1</h2>
+                            <p>추천도서 1의 내용이다.</p>
+                            <a href="https://en.wikipedia.org/wiki/Jellyfish" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiper-slide--two">
+                        <div>
+                            <h2>추천도서2</h2>
+                            <p>추천도서 2의 내용이다.</p>
+                            <a href="https://en.wikipedia.org/wiki/Seahorse" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiper-slide--three">
+                        <div>
+                            <h2>추천도서3</h2>
+                            <p>추천도서 3의 내용이다.</p>
+                            <a href="https://en.wikipedia.org/wiki/Octopus" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiper-slide--four">
+                        <div>
+                            <h2>추천도서4</h2>
+                            <p>
+                                추천도서 4의 내용이다.
+                            </p>
+                            <a href="https://en.wikipedia.org/wiki/Shark" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiper-slide--five">
+                        <div>
+                            <h2>추천도서5</h2>
+                            <p>
+                                추천도서5의 내용이다.
+                            </p>
+                            <a href="https://en.wikipedia.org/wiki/Dolphin" target="_blank">
+                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 상품란 -->
+    <div>
+        <main>
+            <section class="container">
+                <h2>인기 도서</h2>
+                <h2>　</h2>
+                <div class="product-list">
+                    <!-- 제품 아이템들 -->
+                </div>
+            </section>
+        </main>
+
+        <aside class="recent-products">
+            <h3>최근<br>상품</h3>
+            <!-- 최근 본 상품 이미지들 -->
+        </aside>
+
+    </div>
+
+    <!-- 미리보기 팝업 모달 -->
+    <div class="preview-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePreview()">&times;</span>
+            <img id="preview-image" src="" alt="미리보기 이미지" style="width: 1000px; height: 400px;">
+            <div class="page-navigation">
+                <button id="prev-page-btn" onclick="prevPage()">이전</button>
+                <button id="next-page-btn" onclick="nextPage()">다음</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 최상단으로 이동하는 버튼-->
+    <button class="scroll-top" onclick="scrollToTop()">↑</button>
+
+    <!-- 장바구니-->
+    <div id="cart-overlay" class="cart-overlay">
+        <div class="cart-container">
+            <h2>장바구니</h2>
+            <div id="cart-items">
+                <!-- 장바구니 아이템이 동적으로 추가될 위치 -->
+            </div>
+            <p id="quantity-message" style="display: none;">최소 수량은 1권 입니다!</p>
+            <div class="cart-footer">
+                <p>총합계:<br><span id="total-price">0</span> 원</p>
+                <button style="max-height:50px; min-width: 60px; border-color: white;"
+                    onclick="clearCart()">비우기</button>
+                <button style="max-height:50px; min-width: 50px; border-color: white;" onclick="closeCart()">닫기</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 스크립트 코드 -->
+    <script src='C:\PJT_1\jsfile\main_menu_drop.js'></script>
+    <script src="C:\PJT_1\jsfile\main_menu.js"></script>
+    <script src="C:\PJT_1\jsfile\login_button_script.js"></script>
+
+    <script src='C:\PJT_1\jsfile\main_banner_script_drive.js'></script>
+    <script src="C:\PJT_1\jsfile\main_banner_script.js"></script>
+
+    <script src="C:\PJT_1\jsfile\item_list.js"></script><!-- 책 리스트, 상세정보이동, 장바구니 -->
+
+</body>
+
+</html>

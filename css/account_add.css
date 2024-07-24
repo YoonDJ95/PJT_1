@@ -1,0 +1,254 @@
+#signup-section, 
+#setup-section {
+  display: none;
+  /* 기본적으로 숨기기 */
+  position: fixed;
+  /* 화면에 고정 */
+  top: 50%; /* 중앙에서 아래로 이동 */
+  left: 50%;
+  /* 화면 중앙 */
+  transform: translate(-50%, -50%);
+  /* 화면 중앙 정렬 */
+  background-color: white;
+  /* 배경색 */
+  padding: 20px;
+  /* 여백 */
+  border: 1px solid #ccc;
+  /* 테두리 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* 그림자 */
+  z-index: 1001;
+  /* 다른 요소 위에 표시 */
+  width: 400px;
+  height: 500px;
+}
+
+#signup-section.active,
+#setup-section.active{
+  display: block;
+  /* 표시 */
+}
+
+/* 배경 클릭 시 닫기 */
+#overlay,
+#overlay2 {
+  display: none;
+  /* 기본적으로 숨기기 */
+  position: fixed;
+  /* 화면에 고정 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 배경색 */
+  z-index: 999;
+  /* 팝업보다 아래 */
+}
+
+/* 이미지 스타일 */
+#trigger-image {
+  cursor: pointer;
+  /* 클릭할 수 있는 커서 */
+  -index: 1000;
+  /* 팝업보다 아래 */
+}
+
+#overlay.active,
+#overlay.active {
+  display: block;
+  /* 표시 */
+}
+
+
+#signup-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 50px; /* 상단 여백 추가 */
+}
+
+.signup-form input {
+  top: 50%;
+  width: 100%;
+}
+
+
+#setup-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 50px; /* 상단 여백 추가 */
+}
+
+.setup-form input {
+  top: 50%;
+  width: 100%;
+}
+
+#user-list {
+  text-align: left;
+  width: 300px;
+  height: 300px;
+  margin-top: 20px;
+  z-index: 2000;
+}
+
+#show-management {
+  cursor: pointer;
+}
+
+
+/* 입력 칸 스타일 수정 */
+.inp_add,
+.pwr_add,
+.name_add {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  max-width: 300px; /* 입력 필드의 최대 너비 설정 */
+  margin-bottom: 20px; /* 입력 필드들 간의 간격 조정 */
+}
+
+.inp_add .label,
+.pwr_add .label,
+.name_add .label {
+  position: absolute;
+  top: 130;
+  left: 0;
+  font-size: 16px;
+  color: #9098a9;
+  font-weight: 500;
+  transform-origin: 0 0;
+  transition: all 0.2s ease;
+  
+}
+
+.inp_add svg,
+.pwr_add svg,
+.name_add svg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 26px;
+  fill: none;
+}
+
+.inp_add svg path,
+.pwr_add svg path,
+.name_add svg path {
+  stroke: #c8ccd4;
+  stroke-width: 2;
+  transition: all 0.2s ease;
+}
+
+.inp_add svg path d,
+.pwr_add svg path d,
+.name_add svg path d {
+  transition: all 0.2s ease;
+}
+
+.inp_add .border,
+.pwr_add .border,
+.name_add .border {
+  position: absolute;
+  bottom: 0;
+  left: 120px; /* 왼쪽 여백을 줄여서 바닥 선의 왼쪽 부분을 줄임 */
+  height: 2px;
+  width: calc(100% - 150px); /* 오른쪽 여백을 유지하고 왼쪽 여백을 반영하여 전체 너비를 조정 */
+  background: #c8ccd4;
+  transition: background 0.15s ease; /* 배경색의 전환 효과 추가 */
+}
+
+.inp_add input,
+.pwr_add input,
+.name_add input {
+  width: 30%;
+  border: 0;
+  font-family: inherit;
+  padding: 12px 0;
+  height: 48px;
+  font-size: 19px;
+  font-weight: 500;
+  background: none;
+  border-radius: 0;
+  color: #223254;
+  transition: all 0.15s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.inp_add input:not(:placeholder-shown)+span,
+.pwr_add input:not(:placeholder-shown)+span,
+.name_add input:not(:placeholder-shown)+span {
+  color: #5a667f;
+  transform: translateY(-26px) scale(0.75);
+}
+
+.inp_add input:focus,
+.pwr_add input:focus,
+.name_add input:focus {
+  background: none;
+  outline: none;
+}
+
+.inp_add input:focus+span,
+.pwr_add input:focus+span,
+.name_add input:focus+span {
+  color: #07f;
+  transform: translateY(-26px) scale(0.75);
+  transition-delay: 0.1s;
+}
+
+.inp_add input:focus+span+svg path,
+.pwr_add input:focus+span+svg path,
+.name_add input:focus+span+svg path {
+  stroke: #07f;
+  animation: elasticInput 0.4s ease forwards;
+}
+
+.inp_add input:focus+span+svg+.border,
+.pwr_add input:focus+span+svg+.border,
+.name_add input:focus+span+svg+.border {
+  background: #07f;
+}
+
+.dribbble {
+  position: fixed;
+  right: 20px;
+  bottom: 15px;
+  transition: all 0.2s ease;
+}
+
+.dribbble span {
+  font-size: 28px;
+  color: #9098a9;
+}
+
+@-moz-keyframes elasticInput {
+  50% {
+    d: path("M2,2 C21,17 46,25 74,25 C102,25 118,25 120,25");
+  }
+}
+
+@-webkit-keyframes elasticInput {
+  50% {
+    d: path("M2,2 C21,17 46,25 74,25 C102,25 118,25 120,25");
+  }
+}
+
+@-o-keyframes elasticInput {
+  50% {
+    d: path("M2,2 C21,17 46,25 74,25 C102,25 118,25 120,25");
+  }
+}
+
+@keyframes elasticInput {
+  50% {
+    d: path("M2,2 C21,17 46,25 74,25 C102,25 118,25 120,25");
+  }
+}
