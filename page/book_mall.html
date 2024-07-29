@@ -6,6 +6,7 @@
     <title>homepage_name</title>
 
     <!-- CSS 코드 그룹 -->
+
     <!-- 계정 생성 -->
     <link rel="stylesheet" href="C:\PJT_1\css\account_add.css">
     <!-- 버튼 -->
@@ -14,6 +15,8 @@
     <link rel="stylesheet" href="C:\PJT_1\css\cart_page.css">
     <!-- 쿠폰 -->
     <link rel="stylesheet" href="C:\PJT_1\css\coupon.css">
+    <!-- 팝업 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\detail_page.css">
     <!-- 로고 -->
     <link rel="stylesheet" href="C:\PJT_1\css\Logo.css">
     <!-- 메인 배너 -->
@@ -31,6 +34,7 @@
     <link rel="stylesheet" href="C:\PJT_1\css\page_preview.css">
     <!-- 최상단 버튼 -->
     <link rel="stylesheet" href="C:\PJT_1\css\scroll_top.css">
+
 
 
 </head>
@@ -191,7 +195,8 @@
                     <div class="swiper-slide swiper-slide--one">
                         <div>
                             <h2>나는 얼마짜리입니까?</h2>
-                            <p>전국 방방곡곡 다양한 현장에서 땀 흘리는 일흔다섯명의 노동자가 자신에게 익숙한 도구를 잠시 놓고 펜을 들었다. 그리고 각자가 일하며 겪은 이야기를 써내려가기 시작했다</p>
+                            <p>전국 방방곡곡 다양한 현장에서 땀 흘리는 일흔다섯명의 노동자가 자신에게 익숙한 도구를 잠시 놓고 펜을 들었다. 그리고 각자가 일하며 겪은 이야기를 써내려가기
+                                시작했다</p>
                             <a href="https://en.wikipedia.org/wiki/Jellyfish" target="_blank">
                                 <button style="background-color: white; opacity: 50%;">더보기</button>
                             </a>
@@ -200,7 +205,8 @@
                     <div class="swiper-slide swiper-slide--two">
                         <div>
                             <h2>갈매기의 꿈</h2>
-                            <p>전직 비행사였던 작가가 비행에 대한 꿈과 신념을 실현하고자 끊임없이 노력하는 갈매기 조나단 리빙스턴의 일생을 통해 모든 존재의 초월적 능력을 일깨운 우화 형식의 신비주의 소설</p>
+                            <p>전직 비행사였던 작가가 비행에 대한 꿈과 신념을 실현하고자 끊임없이 노력하는 갈매기 조나단 리빙스턴의 일생을 통해 모든 존재의 초월적 능력을 일깨운 우화 형식의
+                                신비주의 소설</p>
                             <a href="https://en.wikipedia.org/wiki/Seahorse" target="_blank">
                                 <button style="background-color: white; opacity: 50%;">더보기</button>
                             </a>
@@ -218,7 +224,8 @@
                     <div class="swiper-slide swiper-slide--four">
                         <div>
                             <h2>마녀와의 7일</h2>
-                            <p>히가시노가 2015년 자신의 작가 생활 30주년 기념작으로 발표한 『라플라스의 마녀』와 2018년 프리퀄에 해당하는 『마력의 태동』에 이어 5년 만에 선보이는 〈라플라스 시리즈〉 세 번째 작품이다.</p>
+                            <p>히가시노가 2015년 자신의 작가 생활 30주년 기념작으로 발표한 『라플라스의 마녀』와 2018년 프리퀄에 해당하는 『마력의 태동』에 이어 5년 만에 선보이는
+                                〈라플라스 시리즈〉 세 번째 작품이다.</p>
                             <a href="https://en.wikipedia.org/wiki/Shark" target="_blank">
                                 <button style="background-color: white; opacity: 50%;">더보기</button>
                             </a>
@@ -252,11 +259,37 @@
         </main>
 
         <aside class="recent-products">
-            <h3>최근<br>상품</h3>
             <!-- 최근 본 상품 이미지들 -->
         </aside>
 
     </div>
+
+    <!-- 팝업 구조 -->
+    <div id="popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <span class="popup-close" onclick="closePopup()">&times;</span>
+            <img id="popup-book-cover" src="" alt="책 표지" class="popup-book-cover">
+            <h1 id="popup-book-title"></h1>
+            <p id="popup-book-author"></p>
+            <p id="popup-book-publisher"></p>
+            <p id="popup-book-genre"></p>
+            <p id="popup-book-rating"></p>
+            <p id="popup-book-price"></p>
+            <div id="popup-summary" class="popup-section">
+                <h2>책 소개</h2>
+                <p id="popup-summary-text"></p>
+            </div>
+            <div id="popup-description" class="popup-section">
+                <h2>줄거리</h2>
+                <p id="popup-description-text"></p>
+            </div>
+            <div id="popup-related-articles" class="popup-section">
+                <h2>관련 기사</h2>
+                <ul id="popup-articles-list"></ul>
+            </div>
+        </div>
+    </div>
+
 
     <!-- 미리보기 팝업 모달 -->
     <div id="overlay3" class="overlay3"></div>
@@ -306,6 +339,8 @@
 
 
     <!-- 스크립트 코드 -->
+    <!-- 팝업 -->
+    <script src="C:\PJT_1\jsfile\detail_page.js"></script>
     <!-- 상품목록 -->
     <script src="C:\PJT_1\jsfile\Products.js"></script>
     <!-- 책 리스트, 상세정보이동, 장바구니 -->

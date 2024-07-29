@@ -151,8 +151,6 @@ function initializeData() {
 }
 
 
-
-
 /** 회원가입 **/
 /* 회원가입 페이지 부문 */
 function setupSignupForm() {
@@ -203,11 +201,11 @@ function saveUserInfo(userId, password, name) {
   displayUserList();                                      // 일반 계정 생성 후 목록 업데이트
   console.log('계정이 성공적으로 생성되었습니다.');
   removetext_signup();
-  setTimeout(function() {                                 // 2초 뒤에 메시지 숨기기
-  document.getElementById('signup-section').style.display = 'none';
-  document.getElementById('overlay').style.display = 'none';
+  setTimeout(function () {                                 // 2초 뒤에 메시지 숨기기
+    document.getElementById('signup-section').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
   }, 2000);
-  
+
   return document.getElementById('signup-message').value = '계정이 성공적으로 생성되었습니다.';
 }
 
@@ -406,7 +404,6 @@ function login(userType) {
   //wishlist = loadWishList();                                            // 로컬 스토리지에서 찜하기 목록 불러오기 (현재 미수행시키기 위해 주석처리)
   updateUI();                                                             // UI 업데이트
 }
-
 /* 로그인 계정값 저장 */
 function setuserType(userId, name) {
   userType = userId;
@@ -467,9 +464,10 @@ function createProducts() {
         <div class="actions">
           <button class="add-to-wishlist" data-product-id="${product.id}">찜하기 ♡</button>     <!-- 찜하기 버튼 -->
           <button class="add-to-cart">장바구니</button>                                          <!-- 장바구니 버튼 -->
-          <button class="open-info-page">상세정보</button>                                       <!-- 상세정보 버튼 -->
+           <button class="open-info-page" data-product-id="${product.id}">상세정보</button> <!-- 상세정보 버튼 -->
           <button class="open-preview" id="open-preview">미리보기</button>                                         <!-- 미리보기 버튼 -->
         </div>
+
       `;
 
     productList.appendChild(productItem);                                                       // productItem의 정보를 ProductList가 상속받는다.
@@ -482,25 +480,62 @@ function createProducts() {
 
     toggleWishlistButton.addEventListener('click', () => toggleWishlist(product.id));
     addToCartButton.addEventListener('click', () => addToCart(product.id));
-    openInfoPageButton.addEventListener('click', () => openInfoPage(product.id));
+    openInfoPageButton.addEventListener('click', () => {
+      openPopup(product.id);               // 팝업을 열고 해당 상품의 ID를 전달
+      addToRecentProducts(product.id);    // 최근 본 상품에 product.id를 추가
+      updateRecentProductsUI();           // 최근 본 상품 UI 업데이트
+    });
     openPreviewButton.addEventListener('click', () => openPreview(product.id));
+
   });
 
+}
+/* 추가 */
+// 팝업 열기 함수
+function openPopup(productId) {
+  const product = products.find(p => p.id === productId);
 
+  if (product) {
+    // 팝업에 상품 정보를 로드합니다.
+    document.getElementById('popup-book-cover').src = product.image;
+    document.getElementById('popup-book-title').textContent = product.title;
+    document.getElementById('popup-book-author').textContent = `작가: ${product.author}`;
+    document.getElementById('popup-book-publisher').textContent = `출판사: ${product.publisher}`;
+    document.getElementById('popup-book-genre').textContent = `장르: ${product.style}`;
+    document.getElementById('popup-book-rating').textContent = `별점: ${product.star}`;
+    document.getElementById('popup-book-price').textContent = `가격: ₩${product.price}`;
+
+    document.getElementById('popup-summary-text').textContent = product.summary || '정보 없음';
+    document.getElementById('popup-description-text').textContent = product.description || '정보 없음';
+
+    const articlesList = document.getElementById('popup-articles-list');
+    articlesList.innerHTML = (product.relatedArticles || []).map(article =>
+      `<li><a href="${article.url}" target="_blank">${article.title}</a></li>`
+    ).join('');
+
+    // 팝업을 표시합니다.
+    document.getElementById('popup').style.display = 'flex'; // display를 'block'에서 'flex'로 변경
+  } else {
+    console.error('상품을 찾을 수 없습니다. 상품 ID:', productId);
+  }
 }
 
+// 팝업 닫기 함수
+function closePopup() {
+  document.getElementById('popup').style.display = 'none';
+}
+
+// 팝업 외부 클릭 시 닫기
+document.getElementById('popup').addEventListener('click', function (event) {
+  if (event.target === this) {
+    closePopup();
+  }
+});
+/* 끝 */
 
 
 
 /*** 주요 기능***/
-/** 상세 정보 페이지 열기 **/
-function openInfoPage(productId) {                                                    // Guest에 상관없이 이용 할 수 있도록
-  console.log(`상품 ${productId.split('_')[1]}의 상세 정보 페이지를 엽니다.`);
-  window.location.href = `C:\\PJT_1\\page\\book_${productId.split('_')[1]}_info.html`; // 예시: book_1_info.html 페이지로 이동.
-}
-
-
-
 /** 최근 본 상품 **/
 /* 최근 본 상품 목록 추가 */
 function addToRecentProducts(productId) {
