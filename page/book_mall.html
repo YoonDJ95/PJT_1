@@ -23,14 +23,15 @@
     <link rel="stylesheet" href="C:\PJT_1\css\main_login.css">
     <!-- 상단 드롭다운 메뉴 -->
     <link rel="stylesheet" href="C:\PJT_1\css\main_menu.css">
+    <!-- 알림 -->
+    <link rel="stylesheet" href="C:\PJT_1\css\notification.css">
     <!-- 최근상품 -->
     <link rel="stylesheet" href="C:\PJT_1\css\recent_item.css">
     <!-- 미리보기 -->
     <link rel="stylesheet" href="C:\PJT_1\css\page_preview.css">
     <!-- 최상단 버튼 -->
     <link rel="stylesheet" href="C:\PJT_1\css\scroll_top.css">
-    <!-- 알림 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\notification.css">
+
 
 </head>
 
@@ -189,8 +190,8 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide swiper-slide--one">
                         <div>
-                            <h2>추천도서1</h2>
-                            <p>추천도서 1의 내용이다.</p>
+                            <h2>나는 얼마짜리입니까?</h2>
+                            <p>전국 방방곡곡 다양한 현장에서 땀 흘리는 일흔다섯명의 노동자가 자신에게 익숙한 도구를 잠시 놓고 펜을 들었다. 그리고 각자가 일하며 겪은 이야기를 써내려가기 시작했다</p>
                             <a href="https://en.wikipedia.org/wiki/Jellyfish" target="_blank">
                                 <button style="background-color: white; opacity: 50%;">더보기</button>
                             </a>
@@ -198,8 +199,8 @@
                     </div>
                     <div class="swiper-slide swiper-slide--two">
                         <div>
-                            <h2>추천도서2</h2>
-                            <p>추천도서 2의 내용이다.</p>
+                            <h2>갈매기의 꿈</h2>
+                            <p>전직 비행사였던 작가가 비행에 대한 꿈과 신념을 실현하고자 끊임없이 노력하는 갈매기 조나단 리빙스턴의 일생을 통해 모든 존재의 초월적 능력을 일깨운 우화 형식의 신비주의 소설</p>
                             <a href="https://en.wikipedia.org/wiki/Seahorse" target="_blank">
                                 <button style="background-color: white; opacity: 50%;">더보기</button>
                             </a>
@@ -207,8 +208,8 @@
                     </div>
                     <div class="swiper-slide swiper-slide--three">
                         <div>
-                            <h2>추천도서3</h2>
-                            <p>추천도서 3의 내용이다.</p>
+                            <h2>크리피</h2>
+                            <p>현대인의 고립된 환경을 배경으로 일상 가까이에 도사린 공포와 상상을 초월하는 악행의 연쇄를 오싹하게 그린다.</p>
                             <a href="https://en.wikipedia.org/wiki/Octopus" target="_blank">
                                 <button style="background-color: white; opacity: 50%;">더보기</button>
                             </a>
@@ -216,10 +217,8 @@
                     </div>
                     <div class="swiper-slide swiper-slide--four">
                         <div>
-                            <h2>추천도서4</h2>
-                            <p>
-                                추천도서 4의 내용이다.
-                            </p>
+                            <h2>마녀와의 7일</h2>
+                            <p>히가시노가 2015년 자신의 작가 생활 30주년 기념작으로 발표한 『라플라스의 마녀』와 2018년 프리퀄에 해당하는 『마력의 태동』에 이어 5년 만에 선보이는 〈라플라스 시리즈〉 세 번째 작품이다.</p>
                             <a href="https://en.wikipedia.org/wiki/Shark" target="_blank">
                                 <button style="background-color: white; opacity: 50%;">더보기</button>
                             </a>
@@ -227,10 +226,8 @@
                     </div>
                     <div class="swiper-slide swiper-slide--five">
                         <div>
-                            <h2>추천도서5</h2>
-                            <p>
-                                추천도서5의 내용이다.
-                            </p>
+                            <h2>죽은자의 결혼식</h2>
+                            <p>친구 모두를 협박해 원하는 바를 이루고자 했던 소시오패스 신랑과 그에 맞서는 친구들의 민낯을 섬세한 시선으로 그린 범죄 스릴러물</p>
                             <a href="https://en.wikipedia.org/wiki/Dolphin" target="_blank">
                                 <button style="background-color: white; opacity: 50%;">더보기</button>
                             </a>
@@ -271,7 +268,7 @@
                 </button>
             </div>
             <br><br>
-            <img id="preview-image" src="" alt="미리보기 이미지" style="width: 1000px; height: 400px;">
+            <img id="preview-image" src="" alt="미리보기 이미지" style="width: 1000px; height: 600px;">
             <div class="page-navigation">
                 <button id="prev-page-btn" onclick="prevPage()">이전</button>
                 <button id="next-page-btn" onclick="nextPage()">다음</button>
@@ -309,6 +306,8 @@
 
 
     <!-- 스크립트 코드 -->
+    <!-- 상품목록 -->
+    <script src="C:\PJT_1\jsfile\Products.js"></script>
     <!-- 책 리스트, 상세정보이동, 장바구니 -->
     <script src="C:\PJT_1\jsfile\item_list.js"></script>
     <!-- 상단메뉴 및 로그인 메뉴 드롭다운 -->

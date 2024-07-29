@@ -7,6 +7,7 @@ var swiper = new Swiper(".swiper", {
   effect: "coverflow",
   grabCursor: true,
   centeredSlides: true,
+  slidesPerView: 3, // 화면에 표시될 슬라이드 수를 3으로 설정
   coverflowEffect: {
     rotate: 0,
     stretch: 0,
@@ -25,10 +26,10 @@ var swiper = new Swiper(".swiper", {
   },
   breakpoints: {
     640: {
-      slidesPerView: 2
+      slidesPerView: 1
     },
     768: {
-      slidesPerView: 1
+      slidesPerView: 2
     },
     1024: {
       slidesPerView: 2

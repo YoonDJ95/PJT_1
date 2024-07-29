@@ -203,6 +203,11 @@ function saveUserInfo(userId, password, name) {
   displayUserList();                                      // 일반 계정 생성 후 목록 업데이트
   console.log('계정이 성공적으로 생성되었습니다.');
   removetext_signup();
+  setTimeout(function() {                                 // 2초 뒤에 메시지 숨기기
+  document.getElementById('signup-section').style.display = 'none';
+  document.getElementById('overlay').style.display = 'none';
+  }, 2000);
+  
   return document.getElementById('signup-message').value = '계정이 성공적으로 생성되었습니다.';
 }
 
@@ -441,19 +446,7 @@ function removetext() {                                         // ID와 PW 입�
 
 
 /** 제품 목록 생성 **/
-/* 상품 목록 데이터 배열 */
-const products = [  // 순서대로 항목 Id, Img, 제목, 저자, 출판사, 장르, 별점, 가격, 미리보기 이미지를 지정하도록
-  { id: 'book_1', image: '', title: '도서 제목 1', author: '저자1', publisher: '출판사1', style: '장르', star: '★☆☆☆☆', price: '15000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_2', image: '', title: '스릴러제목', author: '윤동주', publisher: '서동탄 출판', style: '장르', star: '★★☆☆☆', price: '30000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_3', image: '', title: '판타지제목', author: '김태영', publisher: '평택 출판', style: '장르', star: '★★★★☆', price: '7000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_4', image: '', title: '그냥그런제목', author: '임정호', publisher: '오산 출판', style: '장르', star: '★★★★☆', price: '22000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_5', image: '', title: '도서 제목 5', author: '저자5', publisher: '출판사5', style: '장르', star: '★★★★☆', price: '22500', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_6', image: '', title: '도서 제목 6', author: '저자6', publisher: '출판사6', style: '장르', star: '★★★★☆', price: '30000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_7', image: '', title: '도서 제목 7', author: '저자7', publisher: '출판사7', style: '장르', star: '★★★★☆', price: '10000', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_8', image: '', title: '도서 제목 8', author: '저자8', publisher: '출판사8', style: '장르', star: '★★★★☆', price: '9900', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_9', image: '', title: '도서 제목 9', author: '저자9', publisher: '출판사9', style: '장르', star: '★★★★☆', price: '9900', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] },
-  { id: 'book_10', image: '', title: '도서 제목 10', author: '저자10', publisher: '출판사10', style: '장르', star: '★★★★☆', price: '7500', previewPages: ['/api/book1/page1', '/api/book1/page2', '/api/book1/page3', '/api/book1/page4', '/api/book1/page5'] }
-];
+
 
 /* 상품 목록 생성 함수 */
 function createProducts() {
@@ -464,11 +457,13 @@ function createProducts() {
     productItem.className = 'product-item';
     productItem.id = 'product-${product.id}';
     productItem.innerHTML = `
-        <img src="/api/placeholder/200/300">                                                    <!-- 이미지의 사이즈 -->
+        <img style="width:218px; height:300px" src="${product.image}">                                                            <!-- 이미지의 사이즈 -->
         <div class="rating">${product.star}</div>                                               <!-- 별점 출력 -->
         <h3>${product.title}</h3>                                                               <!-- 제목 출력 -->
-        <p>${product.author} | ${product.publisher}</p>                                         <!-- 저자 | 출판사 출력 -->
+        <p>작가 : ${product.author}</p>
+        <p>출판사 : ${product.publisher}</p>                                         <!-- 저자 | 출판사 출력 -->
         <p style="text-size:50%; color:gray;">${product.style}</p>                              <!-- 장르 출력 -->
+        <p style="text-size:50%;">￦ ${product.price}원</P>                                          <!-- 금액 출력 -->
         <div class="actions">
           <button class="add-to-wishlist" data-product-id="${product.id}">찜하기 ♡</button>     <!-- 찜하기 버튼 -->
           <button class="add-to-cart">장바구니</button>                                          <!-- 장바구니 버튼 -->
@@ -644,7 +639,7 @@ const previewModalHTML = `
         <div class="modal-content">
         <p id="book-title"></p> <!-- 책의 제목을 출력할 요소 -->
             <span class="close-btn" onclick="closePreview()">&times;</span>
-            <img id="preview-image" src="" alt="미리보기 이미지" style="width: 1000px; height: 400px;">
+            <img id="preview-image" src="" alt="미리보기 이미지" style="width: 1000px; height: 700px;">
             <div class="page-navigation">
                 <button id="prev-page-btn" onclick="prevPage()">이전</button>
                 <button id="next-page-btn" onclick="nextPage()">다음</button>
