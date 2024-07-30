@@ -22,6 +22,8 @@ const RecentProducts = {                                      // 최근 본 상�
 };
 
 
+
+
 /** HTML 문서가 완전히 로드되고 분석된 후 수행되는 구간 **/
 document.addEventListener('DOMContentLoaded', function () {
   initializeData();                                                   // 계정 별 초기값 추가 및 기존값 읽기
@@ -149,6 +151,8 @@ function initializeData() {
     }
   }
 }
+
+
 
 
 /** 회원가입 **/
@@ -314,25 +318,6 @@ function updateUser(userId, newPassword, newName) {           // Id는 유지하
 
 
 
-/** 알림창 표시 함수 **/
-function showNotification(message) {
-  const notification = document.getElementById('notification');
-
-  if (!notification) {
-    console.error('Notification element not found.');
-    return;
-  }
-
-  notification.textContent = message;
-  notification.classList.remove('hide');
-  notification.classList.add('show');
-
-  setTimeout(() => {
-    notification.classList.remove('show');
-    notification.classList.add('hide');
-  }, 3000);
-}
-
 
 /** 로그인 **/
 /* 계정 별 UI */
@@ -404,6 +389,7 @@ function login(userType) {
   //wishlist = loadWishList();                                            // 로컬 스토리지에서 찜하기 목록 불러오기 (현재 미수행시키기 위해 주석처리)
   updateUI();                                                             // UI 업데이트
 }
+
 /* 로그인 계정값 저장 */
 function setuserType(userId, name) {
   userType = userId;
@@ -443,8 +429,6 @@ function removetext() {                                         // ID와 PW 입�
 
 
 /** 제품 목록 생성 **/
-
-
 /* 상품 목록 생성 함수 */
 function createProducts() {
   const productList = document.querySelector('.product-list');                                  // html에서 product-list라는 class를 받아온다.
@@ -490,6 +474,7 @@ function createProducts() {
   });
 
 }
+
 /* 추가 */
 // 팝업 열기 함수
 function openPopup(productId) {
@@ -542,8 +527,9 @@ document.getElementById('popup').addEventListener('click', function (event) {
   }
 });
 
-// 수량 감소 및 증가 핸들러 함수
 /* 끝 */
+
+
 
 
 
@@ -574,13 +560,13 @@ function updateRecentProductsUI() {
       img.alt = product.title;                                            // 제목 출력
       img.style.width = '50px';                                           // 최근 본 상품 이미지 가로 길이
       img.style.height = '75px';                                          // 최근 본 상품 이미지 세로 길이
-      img.onclick = () => openInfoPage(productId);                        // 이미지 클릭 시 상세 페이지로 이동
+      img.onclick = () => openPopup(productId);                        // 이미지 클릭 시 상세 페이지로 이동
       recentProductsContainer.appendChild(img);                           // 이미지값을 recentProductsContainer에 상속
     }
     else {                                                                // 그 외
       const title = document.createElement('p');
       title.textContent = product.title;                                  // 제목 출력
-      title.onclick = () => openInfoPage(productId);                      // 클릭 시 상세 페이지로 이동
+      title.onclick = () => openPopup(productId);                      // 클릭 시 상세 페이지로 이동
       recentProductsContainer.appendChild(title);                         // 제목을 recentProductsContainer에 상속
     }
   });
@@ -596,28 +582,49 @@ function loadRecentItems() {
   }
 }
 
-
-
 /* 쿠폰 적용 기능 */  // 현재 반영 안되어잇음.
 function applyCoupon() {
   const couponCode = document.getElementById('coupon-input').value;
+  const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace(/,/g, ''));
+
   if (couponCode === 'DISCOUNT10') {
-    const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace(/,/g, ''));
-    const discountedPrice = totalPrice * 0.9; // 10% 할인
-    document.getElementById('total-price').textContent = discountedPrice.toLocaleString(); // 천 단위 구분 쉼표 추가
-    alert('쿠폰이 적용되었습니다. 10% 할인이 적용됩니다.');
-    document.getElementById('coupon-input').value = '';
+      const discountedPrice = totalPrice * 0.9; // 10% 할인
+      document.getElementById('total-price').textContent = discountedPrice.toLocaleString(); // 천 단위 구분 쉼표 추가
+      alert('쿠폰이 적용되었습니다. 10% 할인이 적용됩니다.');
+      document.getElementById('coupon-input').value = '';
+
+      // 총합계 텍스트를 할인적용 총합계로 변경
+      const totalPriceContainer = document.getElementById('total-price-container');
+      totalPriceContainer.innerHTML = `10%할인<br>총합계:<br><span id="total-price">${discountedPrice.toLocaleString()}</span> 원`;
   } else {
-    alert('유효하지 않은 쿠폰 코드입니다.');
+      alert('유효하지 않은 쿠폰 코드입니다.');
   }
 }
-
-
 
 /* 스크롤 탑 기능 */
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });        // top 0 지점까지 창의 스크롤을 부드럽게 이동시킨다.
 }
+
+/* 알림창 표시 함수 */
+function showNotification(message) {
+  const notification = document.getElementById('notification');
+
+  if (!notification) {
+    console.error('Notification element not found.');
+    return;
+  }
+
+  notification.textContent = message;
+  notification.classList.remove('hide');
+  notification.classList.add('show');
+
+  setTimeout(() => {
+    notification.classList.remove('show');
+    notification.classList.add('hide');
+  }, 3000);
+}
+
 
 
 
@@ -645,8 +652,6 @@ function openPreview(bookId) {
 function closePreview() {
   document.querySelector('.preview-modal').style.display = 'none';    // preview-modal class를 none으로 변경
 }
-
-
 
 /* 이전페이지 */
 function prevPage() {
@@ -700,6 +705,7 @@ document.body.insertAdjacentHTML('beforeend', previewModalHTML);
 
 
 
+
 /** 장바구니 기능 **/
 /* 장바구니 추가 */
 function addToCart(productId, quantity = 1) {
@@ -743,8 +749,6 @@ function addToCart(productId, quantity = 1) {
   updateCartUI(); // 장바구니 UI를 업데이트합니다.
   updateCartIcon(); // 장바구니 아이콘 UI를 업데이트합니다.
 }
-
-
 
 /* 장바구니 아이콘 UI */
 function updateCartIcon() {
@@ -790,7 +794,6 @@ function updateCartUI() {
 
   document.getElementById('total-price').textContent = total.toLocaleString();
 }
-
 
 /* 장바구니 수량 변경 */
 function changeQuantity(index, change) {
@@ -847,7 +850,6 @@ function clearCart() {
 }
 
 /*시작 */
-
 // 수량 증가 버튼 클릭 시 호출되는 함수
 document.getElementById('popup-quantity-increase').addEventListener('click', () => {
   const quantityField = document.getElementById('popup-quantity');
@@ -884,12 +886,6 @@ document.getElementById('popup-add-to-cart').addEventListener('click', () => {
   }
 });
 /*끝 */
-
-
-
-
-
-
 
 
 

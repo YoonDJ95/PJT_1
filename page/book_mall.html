@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>homepage_name</title>
+    <title>Best Book Store</title>
 
     <!-- CSS 코드 그룹 -->
-
     <!-- 계정 생성 -->
     <link rel="stylesheet" href="C:\PJT_1\css\account_add.css">
     <!-- 버튼 -->
@@ -34,9 +33,6 @@
     <link rel="stylesheet" href="C:\PJT_1\css\page_preview.css">
     <!-- 최상단 버튼 -->
     <link rel="stylesheet" href="C:\PJT_1\css\scroll_top.css">
-
-
-
 </head>
 
 <body>
@@ -192,57 +188,37 @@
         <div>
             <div class="swiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide swiper-slide--one">
+                    <div class="swiper-slide swiper-slide--one" onclick="openPopup('book_1'),addToRecentProducts('book_1')">
                         <div>
                             <h2>나는 얼마짜리입니까?</h2>
                             <p>전국 방방곡곡 다양한 현장에서 땀 흘리는 일흔다섯명의 노동자가 자신에게 익숙한 도구를 잠시 놓고 펜을 들었다. 그리고 각자가 일하며 겪은 이야기를 써내려가기
                                 시작했다</p>
-                            <a>
-                                <button style="background-color: white; opacity: 50%;" class="open-info-page"
-                                    onclick="openPopup('book_1'),addToRecentProducts('book_1')">더보기</button>
-                            </a>
                         </div>
                     </div>
-                    <div class="swiper-slide swiper-slide--two">
+                    <div class="swiper-slide swiper-slide--two" onclick="openPopup('book_4'),addToRecentProducts('book_4')">
                         <div>
                             <h2>갈매기의 꿈</h2>
                             <p>전직 비행사였던 작가가 비행에 대한 꿈과 신념을 실현하고자 끊임없이 노력하는 갈매기 조나단 리빙스턴의 일생을 통해 모든 존재의 초월적 능력을 일깨운 우화 형식의
                                 신비주의 소설</p>
-                            <a>
-                                <button style="background-color: white; opacity: 50%;"
-                                    onclick="openPopup('book_4'),addToRecentProducts('book_4')">더보기</button>
-                            </a>
                         </div>
                     </div>
-                    <div class="swiper-slide swiper-slide--three">
+                    <div class="swiper-slide swiper-slide--three" onclick="openPopup('book_6'),addToRecentProducts('book_6')">
                         <div>
                             <h2>크리피</h2>
                             <p>현대인의 고립된 환경을 배경으로 일상 가까이에 도사린 공포와 상상을 초월하는 악행의 연쇄를 오싹하게 그린다.</p>
-                            <a>
-                                <button style="background-color: white; opacity: 50%;"
-                                    onclick="openPopup('book_6'),addToRecentProducts('book_6')">더보기</button>
-                            </a>
                         </div>
                     </div>
-                    <div class="swiper-slide swiper-slide--four">
+                    <div class="swiper-slide swiper-slide--four" onclick="openPopup('book_8'),addToRecentProducts('book_8')">
                         <div>
                             <h2>마녀와의 7일</h2>
                             <p>히가시노가 2015년 자신의 작가 생활 30주년 기념작으로 발표한 『라플라스의 마녀』와 2018년 프리퀄에 해당하는 『마력의 태동』에 이어 5년 만에 선보이는
                                 〈라플라스 시리즈〉 세 번째 작품이다.</p>
-                            <a>
-                                <button style="background-color: white; opacity: 50%;"
-                                    onclick="openPopup('book_8'),addToRecentProducts('book_8')">더보기</button>
-                            </a>
                         </div>
                     </div>
-                    <div class="swiper-slide swiper-slide--five">
+                    <div class="swiper-slide swiper-slide--five" onclick="openPopup('book_9'),addToRecentProducts('book_9')">
                         <div>
                             <h2>죽은자의 결혼식</h2>
                             <p>친구 모두를 협박해 원하는 바를 이루고자 했던 소시오패스 신랑과 그에 맞서는 친구들의 민낯을 섬세한 시선으로 그린 범죄 스릴러물</p>
-                            <a>
-                                <button style="background-color: white; opacity: 50%;"
-                                    onclick="openPopup('book_9'),addToRecentProducts('book_9')">더보기</button>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -302,7 +278,7 @@
                 </div>
             </div>
             <div id="popup-actions" class="popup-section">
-                <button id="popup-add-to-cart">장바구니에 추가</button>
+                <button id="popup-add-to-cart" class="btn btn-3 hover-border-1">장바구니에 추가</button>
             </div>
         </div>
     </div>
@@ -338,7 +314,7 @@
             </div>
             <p id="quantity-message" style="display: none;">최소 수량은 1권 입니다!</p>
             <div class="cart-footer">
-                <p>총합계:<br><span id="total-price">0</span> 원</p>
+                <p id="total-price-container">총합계:<br><span id="total-price">0</span> 원</p>
                 <button class="coupon-button" onclick="clearCart()">비우기</button>
                 <button class="coupon-button" onclick="closeCart()">닫기</button>
             </div>
