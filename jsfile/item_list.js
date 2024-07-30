@@ -27,7 +27,7 @@ const RecentProducts = {                                      // 최근 본 상�
 /** HTML 문서가 완전히 로드되고 분석된 후 수행되는 구간 **/
 document.addEventListener('DOMContentLoaded', function () {
   initializeData();                                                   // 계정 별 초기값 추가 및 기존값 읽기
-  clearLocalStorage();                                                // 모든 로컬스토리지값을 삭제
+  //clearLocalStorage();                                                // 모든 로컬스토리지값을 삭제
   createProducts();                                                   // 상품 생성 및 표시
   initializeUserInfo();                                               // 사용자 목록 새로고침
   userType = loaduserType();                                          // 로컬 스토리지에서 userType 불러오기
@@ -246,6 +246,23 @@ function displayUserList() {                                          // 사용�
   const userList = document.getElementById('user-list');              // html의 user-list id를 불러와 userList로 선언
   userList.innerHTML = '';                                            // userList 변수 안의 내용을 지움
 
+  // 전체 초기화 버튼 추가
+  const clearAllButton = document.createElement('button');
+  clearAllButton.textContent = '전체 초기화'; // 버튼 문구 설정
+  clearAllButton.className = 'btn btn-3 hover-border-1'; // 버튼 스타일 설정
+  clearAllButton.style.marginBottom = '20px'; // 버튼 하단 여백 설정
+  clearAllButton.addEventListener('click', () => {
+    if (confirm('정말로 모든 데이터를 초기화하시겠습니까?')) { // 사용자 확인
+      clearLocalStorage(); // 로컬스토리지 초기화
+      alert('모든 데이터가 초기화되었습니다.');
+      initializeUserInfo(); // 사용자 목록 새로고침
+    }
+  });
+
+  userList.appendChild(clearAllButton); // userList에 전체 초기화 버튼 추가
+
+
+
   Object.keys(users).forEach(userId => {                              // users 객체의 모든 키에 대해 반복적으로 작업을 수행
     console.log('userlist 불러온다.');                                 // 디버깅
 
@@ -294,14 +311,33 @@ function displayUserList() {                                          // 사용�
 
 /* 계정 삭제 기능 */
 function deleteUser(userId) {
-  const users = getUserList();                                // 로컬스토리지에서 값을 불러와 users로 선언
-  if (!users[userId]) {                                       // userId가 없는데 출력 할 경우 해단부분 수행
+  const users = getUserList(); // 로컬스토리지에서 사용자 목록을 불러옴
+  if (!users[userId]) { // 사용자가 존재하지 않으면
     return '사용자가 존재하지 않습니다.';
   }
 
-  delete users[userId];                                       // userId 삭제
-  localStorage.setItem('users', JSON.stringify(users));       // 삭제 이후의 users 변수값을 다시 로컬스토리지에 저장
+  // 사용자 데이터 삭제
+  delete users[userId]; // 사용자의 데이터를 삭제
+  localStorage.setItem('users', JSON.stringify(users)); // 업데이트된 사용자 목록 저장
+
+  // 사용자 관련 데이터 삭제
+  removeUserRelatedData(userId);
+
   return '사용자가 성공적으로 삭제되었습니다.';
+}
+
+/** 사용자 관련 데이터 삭제 */
+function removeUserRelatedData(userId) {
+  // 사용자 장바구니 삭제
+  localStorage.removeItem(`cart_${userId}`);
+
+  // 사용자 찜하기 목록 삭제
+  localStorage.removeItem(`wishlist_${userId}`);
+
+  // 사용자 최근 본 상품 삭제
+  localStorage.removeItem(`recent_${userId}`);
+
+  // 추가로 사용자 관련 데이터를 저장하는 다른 키가 있을 경우 모두 삭제
 }
 
 /* 계정 수정 */
@@ -401,23 +437,42 @@ function setuserType(userId, name) {
   updateUI();                                   // userId에 해당되는 값으로 UI 업데이트
 }
 
+/** 로그인 상태 해제 함수 */
+function clearLoginState() {
+  // 로그인 상태와 관련된 데이터 초기화
+  localStorage.removeItem('userType');    // 로그인 상태 초기화
+  localStorage.removeItem('userName');    // 사용자 이름 초기화
 
+  userType = 'Guest'; 
+  console.log(`유저타입 : `,userType)
+  // 필요한 경우 다른 로그인 관련 데이터를 제거
+}
+
+window.addEventListener('load', function() {
+  const userType = loaduserType();    // 로컬스토리지에서 사용자 타입을 로드
+  if (userType !== 'Guest') {         // 사용자가 로그인 상태인 경우
+    console.log(userType)
+    clearLoginState();               // 로그인 상태를 초기화
+    updateUI();                      // UI를 업데이트하여 로그인 상태를 반영
+  }
+});
 
 
 /** 로그아웃 **/
 function logout() {
-  saveWishList(wishlist);                                       // 현재 찜하기 상태를 저장
-  saveCart(cart)                                                // 현재 장바구니 상태를 저장
-  setuserType('Guest', '');                                     // 사용자 유형을 Guest로 설정하고 이름을 빈 문자열로 초기화
-  userCart['Guest'] = [];                                       // 장바구니를 빈 배열로 초기화
-  wishlist = {};                                                // 찜하기 리스트를 빈 객체로 초기화
-  RecentProducts['Guest'] = new Set();                          // 최근 본 상품 목록을 빈 Set으로 초기화
+  saveWishList(wishlist);               // 현재 찜하기 상태를 저장
+  saveCart(cart);                       // 현재 장바구니 상태를 저장
+  clearLoginState();                   // 로그인 상태만 초기화
+  userCart['Guest'] = [];              // 장바구니를 빈 배열로 초기화
+  wishlist = {};                       // 찜하기 리스트를 빈 객체로 초기화
+  
+  RecentProducts['Guest'] = new Set(); // 최근 본 상품 목록을 빈 Set으로 초기화
 
-  showNotification('로그아웃 되었습니다.');                       // 알람
-  document.getElementById('login-menu').classList.add('show');  // 로그인 드롭박스 보이기
-  closeCart();                                                  // 장바구니 팝업 닫기
-  updateUI();                                                   // UI 업데이트
-  removetext();                                                 // 과거 로그인 창에 입력했던 Id, Pw 값을 지움.
+  showNotification('로그아웃 되었습니다.'); // 알림
+  document.getElementById('login-menu').classList.add('show'); // 로그인 드롭박스 보이기
+  closeCart();                      // 장바구니 팝업 닫기
+  updateUI();                      // UI 업데이트
+  removetext();                    // 로그인 창에 입력된 값 지우기
 }
 
 function removetext() {                                         // ID와 PW 입력 필드 지우기
