@@ -28,7 +28,7 @@ const RecentProducts = {                                      // 최근 본 상�
 document.addEventListener('DOMContentLoaded', function () {
   initializeData();                                                   // 계정 별 초기값 추가 및 기존값 읽기
   //clearLocalStorage();                                                // 모든 로컬스토리지값을 삭제
-  createProducts();                                                   // 상품 생성 및 표시
+  createProducts('전체');                                                   // 상품 생성 및 표시
   initializeUserInfo();                                               // 사용자 목록 새로고침
   userType = loaduserType();                                          // 로컬 스토리지에서 userType 불러오기
   wishlist = loadWishList();                                          // 로컬 스토리지에서 wishlist 불러오기
@@ -443,12 +443,12 @@ function clearLoginState() {
   localStorage.removeItem('userType');    // 로그인 상태 초기화
   localStorage.removeItem('userName');    // 사용자 이름 초기화
 
-  userType = 'Guest'; 
-  console.log(`유저타입 : `,userType)
+  userType = 'Guest';
+  console.log(`유저타입 : `, userType)
   // 필요한 경우 다른 로그인 관련 데이터를 제거
 }
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
   const userType = loaduserType();    // 로컬스토리지에서 사용자 타입을 로드
   if (userType !== 'Guest') {         // 사용자가 로그인 상태인 경우
     console.log(userType)
@@ -465,7 +465,7 @@ function logout() {
   clearLoginState();                   // 로그인 상태만 초기화
   userCart['Guest'] = [];              // 장바구니를 빈 배열로 초기화
   wishlist = {};                       // 찜하기 리스트를 빈 객체로 초기화
-  
+
   RecentProducts['Guest'] = new Set(); // 최근 본 상품 목록을 빈 Set으로 초기화
 
   showNotification('로그아웃 되었습니다.'); // 알림
@@ -484,34 +484,38 @@ function removetext() {                                         // ID와 PW 입�
 
 
 /** 제품 목록 생성 **/
+let currentCategory = '전체';
 /* 상품 목록 생성 함수 */
-function createProducts() {
-  const productList = document.querySelector('.product-list');                                  // html에서 product-list라는 class를 받아온다.
+function createProducts(category) {
+// 기존의 상품 리스트를 지우기
+const productList = document.querySelector('.product-list');
+productList.innerHTML = ''; // 모든 자식 요소 제거
 
-  products.forEach(product => {                                                                 // product에 대하여 products값 별 수행을 반복한다.
+// 새로운 카테고리에 맞는 상품들만 출력
+products.forEach(product => {
+  if (category === '전체' || product.Category === category) {
     const productItem = document.createElement('div');
     productItem.className = 'product-item';
-    productItem.id = 'product-${product.id}';
+    productItem.id = `product-${product.id}`;
     productItem.innerHTML = `
-        <img style="width:218px; height:300px" src="${product.image}">                                                            <!-- 이미지의 사이즈 -->
-        <div class="rating">${product.star}</div>                                               <!-- 별점 출력 -->
-        <h3>${product.title}</h3>                                                               <!-- 제목 출력 -->
-        <p>작가 : ${product.author}</p>
-        <p>출판사 : ${product.publisher}</p>                                         <!-- 저자 | 출판사 출력 -->
-        <p style="text-size:50%; color:gray;">${product.style}</p>                              <!-- 장르 출력 -->
-        <p style="text-size:50%;">￦ ${product.price}원</P>                                          <!-- 금액 출력 -->
-        <div class="actions">
-          <button class="add-to-wishlist" data-product-id="${product.id}">찜하기 ♡</button>     <!-- 찜하기 버튼 -->
-          <button class="add-to-cart">장바구니</button>                                          <!-- 장바구니 버튼 -->
-           <button class="open-info-page" data-product-id="${product.id}">상세정보</button> <!-- 상세정보 버튼 -->
-          <button class="open-preview" id="open-preview">미리보기</button>                                         <!-- 미리보기 버튼 -->
-        </div>
+      <img style="width:218px; height:300px" src="${product.image}">
+      <div class="rating">${product.star}</div>
+      <h3>${product.title}</h3>
+      <p>작가 : ${product.author}</p>
+      <p>출판사 : ${product.publisher}</p>
+      <p style="text-size:50%; color:gray;">${product.style}</p>
+      <p style="text-size:50%;">￦ ${product.price}원</p>
+      <div class="actions">
+        <button class="add-to-wishlist" data-product-id="${product.id}">찜하기 ♡</button>
+        <button class="add-to-cart">장바구니</button>
+        <button class="open-info-page" data-product-id="${product.id}">상세정보</button>
+        <button class="open-preview" data-product-id="${product.id}">미리보기</button>
+      </div>
+    `;
 
-      `;
+    productList.appendChild(productItem);
 
-    productList.appendChild(productItem);                                                       // productItem의 정보를 ProductList가 상속받는다.
-
-    /* 각 버튼에 이벤트 추가 */
+    // 각 버튼에 이벤트 추가
     const toggleWishlistButton = productItem.querySelector('.add-to-wishlist');
     const addToCartButton = productItem.querySelector('.add-to-cart');
     const openInfoPageButton = productItem.querySelector('.open-info-page');
@@ -520,15 +524,24 @@ function createProducts() {
     toggleWishlistButton.addEventListener('click', () => toggleWishlist(product.id));
     addToCartButton.addEventListener('click', () => addToCart(product.id));
     openInfoPageButton.addEventListener('click', () => {
-      openPopup(product.id);               // 팝업을 열고 해당 상품의 ID를 전달
-      addToRecentProducts(product.id);    // 최근 본 상품에 product.id를 추가
-      updateRecentProductsUI();           // 최근 본 상품 UI 업데이트
+      openPopup(product.id);
+      addToRecentProducts(product.id);
+      updateRecentProductsUI();
     });
     openPreviewButton.addEventListener('click', () => openPreview(product.id));
-
-  });
-
+  }
+});
 }
+
+// 초기 실행
+createProducts(currentCategory);
+
+// 카테고리가 변할 때 호출할 함수
+function changeCategory(newCategory) {
+currentCategory = newCategory;
+createProducts(currentCategory);
+}
+
 
 /* 추가 */
 // 팝업 열기 함수
@@ -643,16 +656,16 @@ function applyCoupon() {
   const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace(/,/g, ''));
 
   if (couponCode === 'DISCOUNT10') {
-      const discountedPrice = totalPrice * 0.9; // 10% 할인
-      document.getElementById('total-price').textContent = discountedPrice.toLocaleString(); // 천 단위 구분 쉼표 추가
-      alert('쿠폰이 적용되었습니다. 10% 할인이 적용됩니다.');
-      document.getElementById('coupon-input').value = '';
+    const discountedPrice = totalPrice * 0.9; // 10% 할인
+    document.getElementById('total-price').textContent = discountedPrice.toLocaleString(); // 천 단위 구분 쉼표 추가
+    alert('쿠폰이 적용되었습니다. 10% 할인이 적용됩니다.');
+    document.getElementById('coupon-input').value = '';
 
-      // 총합계 텍스트를 할인적용 총합계로 변경
-      const totalPriceContainer = document.getElementById('total-price-container');
-      totalPriceContainer.innerHTML = `10%할인<br>총합계:<br><span id="total-price">${discountedPrice.toLocaleString()}</span> 원`;
+    // 총합계 텍스트를 할인적용 총합계로 변경
+    const totalPriceContainer = document.getElementById('total-price-container');
+    totalPriceContainer.innerHTML = `10%할인<br>총합계:<br><span id="total-price">${discountedPrice.toLocaleString()}</span> 원`;
   } else {
-      alert('유효하지 않은 쿠폰 코드입니다.');
+    alert('유효하지 않은 쿠폰 코드입니다.');
   }
 }
 

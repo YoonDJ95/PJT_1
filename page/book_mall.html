@@ -44,29 +44,19 @@
             <a href="file:///C:/PJT_1/page/book_mall.html"><img src="C:\PJT_1\img\Logo.png" class="logo"></a>
             <div style="width: 200px;"></div>
             <nav>
-                <p>베스트셀러&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <p id="kor_book">국내도서 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p id="all_book" onclick="createProducts('전체')">전체도서&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p id="novel_book">소설 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <div id="s-d" class="dropdown">
-                    <p>국내도서 장르 1</p>
-                    <p>국내도서 장르 2</p>
-                    <p>국내도서 장르 3</p>
-                    <p>국내도서 장르 4</p>
-                    <p>국내도서 장르 5</p>
+                    <p id="long_novel" onclick="createProducts('장편소설');">장편 소설</p>
+                    <p id="fantasy" onclick="createProducts('판타지')">판타지 소설</p>
+                    <p id="action" onclick="createProducts('액션/스릴러')">액션/스릴러 소설</p>
+                    <p id="mystery" onclick="createProducts('추리/미스테리')">추리/미스테리 소설</p>
                 </div>
-                <p id="eng_book">해외도서 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p id="not_novel_book">비소설 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <div id="s-d2" class="dropdown2">
-                    <p>해외도서 장르 1</p>
-                    <p>해외도서 장르 2</p>
-                    <p>해외도서 장르 3</p>
-                    <p>해외도서 장르 4</p>
-                </div>
-                <p>신간도서&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <p id="goods_book">굿즈 ▼</p>
-                <div id="s-d3" class="dropdown3">
-                    <p>굿즈 장르 1</p>
-                    <p>굿즈 장르 2</p>
-                    <p>굿즈 장르 3</p>
-                    <p>굿즈 장르 4</p>
+                    <p id="sisa" onclick="createProducts('시사')">시사</p>
+                    <p id="jusik" onclick="createProducts('주식/펀드')">주식/펀드</p> 
+                    <p id="healing" onclick="createProducts('교양')">교양</p>
                 </div>
                 <div style="width: 150px;"></div>
             </nav>
