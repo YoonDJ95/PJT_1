@@ -19,7 +19,7 @@
     /* 너비 지정 */
     max-width: 100px;
     max-height: 500px;
-    z-index: 7000;
+    z-index: 1000;
 }
 
 .recent-products h3 {

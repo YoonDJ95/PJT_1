@@ -197,8 +197,9 @@
                             <h2>나는 얼마짜리입니까?</h2>
                             <p>전국 방방곡곡 다양한 현장에서 땀 흘리는 일흔다섯명의 노동자가 자신에게 익숙한 도구를 잠시 놓고 펜을 들었다. 그리고 각자가 일하며 겪은 이야기를 써내려가기
                                 시작했다</p>
-                            <a href="https://en.wikipedia.org/wiki/Jellyfish" target="_blank">
-                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            <a>
+                                <button style="background-color: white; opacity: 50%;" class="open-info-page"
+                                    onclick="openPopup('book_1'),addToRecentProducts('book_1')">더보기</button>
                             </a>
                         </div>
                     </div>
@@ -207,8 +208,9 @@
                             <h2>갈매기의 꿈</h2>
                             <p>전직 비행사였던 작가가 비행에 대한 꿈과 신념을 실현하고자 끊임없이 노력하는 갈매기 조나단 리빙스턴의 일생을 통해 모든 존재의 초월적 능력을 일깨운 우화 형식의
                                 신비주의 소설</p>
-                            <a href="https://en.wikipedia.org/wiki/Seahorse" target="_blank">
-                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            <a>
+                                <button style="background-color: white; opacity: 50%;"
+                                    onclick="openPopup('book_4'),addToRecentProducts('book_4')">더보기</button>
                             </a>
                         </div>
                     </div>
@@ -216,8 +218,9 @@
                         <div>
                             <h2>크리피</h2>
                             <p>현대인의 고립된 환경을 배경으로 일상 가까이에 도사린 공포와 상상을 초월하는 악행의 연쇄를 오싹하게 그린다.</p>
-                            <a href="https://en.wikipedia.org/wiki/Octopus" target="_blank">
-                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            <a>
+                                <button style="background-color: white; opacity: 50%;"
+                                    onclick="openPopup('book_6'),addToRecentProducts('book_6')">더보기</button>
                             </a>
                         </div>
                     </div>
@@ -226,8 +229,9 @@
                             <h2>마녀와의 7일</h2>
                             <p>히가시노가 2015년 자신의 작가 생활 30주년 기념작으로 발표한 『라플라스의 마녀』와 2018년 프리퀄에 해당하는 『마력의 태동』에 이어 5년 만에 선보이는
                                 〈라플라스 시리즈〉 세 번째 작품이다.</p>
-                            <a href="https://en.wikipedia.org/wiki/Shark" target="_blank">
-                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            <a>
+                                <button style="background-color: white; opacity: 50%;"
+                                    onclick="openPopup('book_8'),addToRecentProducts('book_8')">더보기</button>
                             </a>
                         </div>
                     </div>
@@ -235,8 +239,9 @@
                         <div>
                             <h2>죽은자의 결혼식</h2>
                             <p>친구 모두를 협박해 원하는 바를 이루고자 했던 소시오패스 신랑과 그에 맞서는 친구들의 민낯을 섬세한 시선으로 그린 범죄 스릴러물</p>
-                            <a href="https://en.wikipedia.org/wiki/Dolphin" target="_blank">
-                                <button style="background-color: white; opacity: 50%;">더보기</button>
+                            <a>
+                                <button style="background-color: white; opacity: 50%;"
+                                    onclick="openPopup('book_9'),addToRecentProducts('book_9')">더보기</button>
                             </a>
                         </div>
                     </div>
@@ -265,7 +270,7 @@
     </div>
 
     <!-- 팝업 구조 -->
-    <div id="popup" class="popup" style="display: none;">
+    <div id="popup" class="popup" style="display: none;" data-product-id="">
         <div class="popup-content">
             <span class="popup-close" onclick="closePopup()">&times;</span>
             <img id="popup-book-cover" src="" alt="책 표지" class="popup-book-cover">
@@ -286,6 +291,18 @@
             <div id="popup-related-articles" class="popup-section">
                 <h2>관련 기사</h2>
                 <ul id="popup-articles-list"></ul>
+            </div>
+            <!-- 수량 조절 추가 -->
+            <div id="popup-quantity-controls" class="popup-section">
+                <h2>수량</h2>
+                <div class="quantity-controls">
+                    <button id="popup-quantity-decrease">-</button>
+                    <input type="text" id="popup-quantity" class="quantity" value="1">
+                    <button id="popup-quantity-increase">+</button>
+                </div>
+            </div>
+            <div id="popup-actions" class="popup-section">
+                <button id="popup-add-to-cart">장바구니에 추가</button>
             </div>
         </div>
     </div>
