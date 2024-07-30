@@ -496,7 +496,7 @@ function openPopup(productId) {
   const product = products.find(p => p.id === productId);
 
   if (product) {
-    // 팝업에 상품 정보를 로드합니다.
+    // 팝업에 상품 정보 로드
     document.getElementById('popup-book-cover').src = product.image;
     document.getElementById('popup-book-title').textContent = product.title;
     document.getElementById('popup-book-author').textContent = `작가: ${product.author}`;
@@ -508,28 +508,26 @@ function openPopup(productId) {
     document.getElementById('popup-summary-text').textContent = product.summary || '정보 없음';
     document.getElementById('popup-description-text').textContent = product.description || '정보 없음';
 
-    // 수량 관련 정보 초기화
-    document.getElementById('popup-quantity').value = 1; // 기본값 1로 설정
-
-    // 이벤트 리스너 초기화
-    const decreaseButton = document.getElementById('popup-quantity-decrease');
-    const increaseButton = document.getElementById('popup-quantity-increase');
-    const addToCartButton = document.getElementById('popup-add-to-cart');
-    // 새 이벤트 리스너 추가
-    decreaseButton.addEventListener('click', handleDecreaseQuantity);
-    increaseButton.addEventListener('click', handleIncreaseQuantity);
-    addToCartButton.addEventListener('click', () => addToCartFromPopup(productId));
-
     const articlesList = document.getElementById('popup-articles-list');
     articlesList.innerHTML = (product.relatedArticles || []).map(article =>
       `<li><a href="${article.url}" target="_blank">${article.title}</a></li>`
     ).join('');
+
+    // 수량 입력 필드를 1로 초기화
+    document.getElementById('popup-quantity').value = 1;
+
+    // 현재 상품 ID를 팝업에 저장
+    document.getElementById('popup').dataset.productId = productId;
 
     // 팝업을 표시합니다.
     document.getElementById('popup').style.display = 'flex'; // display를 'block'에서 'flex'로 변경
   } else {
     console.error('상품을 찾을 수 없습니다. 상품 ID:', productId);
   }
+}
+
+function handleAddToCartFromPopup(productId) {
+  addToCartFromPopup(productId);
 }
 
 // 팝업 닫기 함수
@@ -545,13 +543,6 @@ document.getElementById('popup').addEventListener('click', function (event) {
 });
 
 // 수량 감소 및 증가 핸들러 함수
-function handleDecreaseQuantity() {
-  changePopupQuantity(-1);
-}
-
-function handleIncreaseQuantity() {
-  changePopupQuantity(1);
-}
 /* 끝 */
 
 
@@ -711,7 +702,7 @@ document.body.insertAdjacentHTML('beforeend', previewModalHTML);
 
 /** 장바구니 기능 **/
 /* 장바구니 추가 */
-function addToCart(productId) {
+function addToCart(productId, quantity = 1) {
   console.log(`상품 ${productId.split('_')[1]}을 장바구니에 추가합니다.`); // 디버깅
 
   if (userType === 'Guest') { // 게스트라면 로그인 하라는 알람 출력
@@ -729,7 +720,7 @@ function addToCart(productId) {
   // 장바구니에서 기존 아이템 찾기
   const existingItem = userCart[userType].find(item => item.id === productId);
   if (existingItem) { // 이미 존재하는 아이템이면 수량 증가
-    existingItem.quantity++;
+    existingItem.quantity += quantity;
     showNotification('장바구니에 기존 상품 수량 추가!');
   } else {
     // 새로운 상품이면 장바구니에 추가
@@ -740,7 +731,7 @@ function addToCart(productId) {
         title: product.title,
         price: parseInt(product.price), // 가격을 숫자로 변환
         image: product.image || '/api/placeholder/50/75', // 이미지 URL
-        quantity: 1 // 새로 추가할 때 기본 수량은 1
+        quantity: quantity // 새로 추가할 때 사용자가 입력한 수량
       });
       showNotification('장바구니에 새 상품 추가!');
     } else {
@@ -752,6 +743,7 @@ function addToCart(productId) {
   updateCartUI(); // 장바구니 UI를 업데이트합니다.
   updateCartIcon(); // 장바구니 아이콘 UI를 업데이트합니다.
 }
+
 
 
 /* 장바구니 아이콘 UI */
@@ -766,51 +758,55 @@ function updateCartIcon() {
 /* 장바구니 리스트 UI */
 function updateCartUI() {
   const cartItems = document.getElementById('cart-items');
-  cartItems.innerHTML = '';                                                                                     // cartItems의 내용을 지운다
+  cartItems.innerHTML = '';
 
-  if (!Array.isArray(userCart[userType])) {                                                                     // userCart[userType] 의 배열이 존재하지 않으면
-    console.error('userCart[userType] is not an array. Initializing to an empty array.');                       // 디버깅
-    userCart[userType] = [];                                                                                    // userCart[userType] 을 빈 배열로 지정
+  if (!Array.isArray(userCart[userType])) {
+    console.error('userCart[userType] is not an array. Initializing to an empty array.');
+    userCart[userType] = [];
   }
 
-  let total = 0;                                                                                                 // total 변수 초기값 0으로 선언
-  userCart[userType].forEach((item, index) => {                                                                  // 장바구니 내부 항목을 반복문을 통하여 추가
+  let total = 0;
+  userCart[userType].forEach((item, index) => {
     const cartItem = document.createElement('div');
     cartItem.className = 'cart-item';
     cartItem.innerHTML = `
-            <img src="${item.image}" alt="${item.title}">                                                       <!-- 이미지 출력 만약 이미지가 없다면 제목 표기 -->
-            <div class="cart-item-details">
-                <h4>${item.title}</h4>                                                                          <!-- 제목 표기 -->
-                <p>가격: ${item.price.toLocaleString()}원</p> <!-- 가격에 천단위 구분기호 추가 -->                 <!-- 가격 표기 -->
-                <div class="quantity-controls">
-                    <button class="quantity-decrease" onclick="changeQuantity(${index}, -1)">-</button>         <!-- 수량 감소 버튼 -->
-                    <input type="text" class="quantity" value="${item.quantity}" oninput="updateQuantity(${index}, this.value)">                               <!-- 현재 수량 -->
-                    <button class="quantity-increase" onclick="changeQuantity(${index}, 1)">+</button>          <!-- 수량 추가 버튼 -->
-                </div>
-            </div>
-            <div class="cart-item-actions">
-                <button onclick="removeFromCart(${index})">삭제</button>                                         <!-- 삭제 버튼 -->
-            </div>
-        `;
-    cartItems.appendChild(cartItem);                                                                            // cartItem을 cartItems에 상속
-    total += item.price * item.quantity;                                                                        // 아이탬별 가격 및 수량에 따른 가격을 total에 누적시킴
+      <img src="${item.image}" alt="${item.title}">
+      <div class="cart-item-details">
+        <h4>${item.title}</h4>
+        <p>가격: ${item.price.toLocaleString()}원</p>
+        <div class="quantity-controls">
+          <button class="quantity-decrease" onclick="changeQuantity(${index}, -1)">-</button>
+          <input type="text" class="quantity" value="${item.quantity}" oninput="updateQuantity(${index}, this.value)">
+          <button class="quantity-increase" onclick="changeQuantity(${index}, 1)">+</button>
+        </div>
+      </div>
+      <div class="cart-item-actions">
+        <button onclick="removeFromCart(${index})">삭제</button>
+      </div>
+    `;
+    cartItems.appendChild(cartItem);
+    total += item.price * item.quantity;
   });
+
   document.getElementById('total-price').textContent = total.toLocaleString();
-  console.log(total)                               // 총 가격에 천단위 구분기호 추가
 }
+
 
 /* 장바구니 수량 변경 */
 function changeQuantity(index, change) {
   const item = userCart[userType][index];
   if (item) {
+    console.log('변경 전 수량:', item.quantity);
     item.quantity += change;
-    if (item.quantity <= 0) {
-      item.quantity = 1; // 최소 수량을 1로 설정
+    if (item.quantity < 1) {
+      item.quantity = 1;
     }
-    saveCart(); // 변경된 장바구니 상태를 로컬 스토리지에 저장
-    updateCartUI(); // 장바구니 UI를 업데이트합니다.
+    console.log('변경 후 수량:', item.quantity);
+    saveCart();
+    updateCartUI();
   }
 }
+
 function updateQuantity(index, value) {
   const newQuantity = parseInt(value, 10);
   if (!isNaN(newQuantity) && newQuantity > 0) {
@@ -851,72 +847,42 @@ function clearCart() {
 }
 
 /*시작 */
-// 팝업에서 장바구니에 추가
-function addToCartFromPopup(productId) {
-  const quantityInput = document.getElementById('popup-quantity');
-  const quantity = parseInt(quantityInput.value, 10);
 
-  if (isNaN(quantity) || quantity <= 0) {
-    alert('유효한 수량을 입력하세요.');
-    return;
-  }
-
-  if (userType === 'Guest') {
-    alert('로그인 후 장바구니 기능을 이용할 수 있습니다.');
-    return;
-  }
-
-  const product = products.find(p => p.id === productId);
-  if (!product) {
-    console.error('상품을 찾을 수 없습니다. 상품 ID:', productId);
-    return;
-  }
-
-  if (!Array.isArray(userCart[userType])) {
-    userCart[userType] = [];
-  }
-
-  // 새 항목 객체를 만들고, 기존 항목과의 참조 문제를 방지합니다.
-  const newItem = {
-    id: product.id,
-    title: product.title,
-    price: parseInt(product.price, 10),
-    image: product.image || '/api/placeholder/50/75',
-    quantity: quantity
-  };
-
-  const existingItem = userCart[userType].find(item => item.id === productId);
-  if (existingItem) {
-    existingItem.quantity = quantity; // 기존 상품의 수량을 새로 입력된 수량으로 업데이트합니다.
-    showNotification('장바구니에 기존 상품 수량 업데이트!');
-  } else {
-    userCart[userType].push(newItem); // 새 항목을 추가합니다.
-    showNotification('장바구니에 새 상품 추가!');
-  }
-
-  // 장바구니 저장 및 UI 업데이트
-  saveCart();
-  updateCartUI();
-  updateCartIcon();
-
-  // 팝업 닫기
-  closePopup();
-}
-
-
-
-
-// 팝업에서 수량 조절
-function changePopupQuantity(change) {
-  const quantityInput = document.getElementById('popup-quantity');
-  let quantity = parseInt(quantityInput.value, 10);
+// 수량 증가 버튼 클릭 시 호출되는 함수
+document.getElementById('popup-quantity-increase').addEventListener('click', () => {
+  const quantityField = document.getElementById('popup-quantity');
+  let quantity = parseInt(quantityField.value, 10);
 
   if (!isNaN(quantity)) {
-    quantity += change;
-    if (quantity < 1) quantity = 1;
-    quantityInput.value = quantity;
+    quantity++;
+    quantityField.value = quantity;
   }
-}
+});
+
+document.getElementById('popup-quantity-decrease').addEventListener('click', () => {
+  const quantityField = document.getElementById('popup-quantity');
+  let quantity = parseInt(quantityField.value, 10);
+
+  if (!isNaN(quantity) && quantity > 1) {
+    quantity--;
+    quantityField.value = quantity;
+  }
+});
+
+// 장바구니에 추가 버튼 클릭 시 호출되는 함수
+document.getElementById('popup-add-to-cart').addEventListener('click', () => {
+  const popup = document.getElementById('popup');
+  const productId = popup.dataset.productId; // 데이터 속성에서 상품 ID 가져오기
+  const quantityField = document.getElementById('popup-quantity');
+  const quantity = parseInt(quantityField.value, 10);
+
+  if (!isNaN(quantity) && quantity > 0) {
+    addToCart(productId, quantity); // 장바구니에 추가하는 함수 호출
+    closePopup(); // 팝업 닫기
+  } else {
+    console.error('유효하지 않은 수량:', quantityField.value);
+  }
+});
 /*끝 */
 
 
