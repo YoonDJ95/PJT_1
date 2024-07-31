@@ -7,57 +7,64 @@
 
     <!-- CSS 코드 그룹 -->
     <!-- 계정 생성 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\account_add.css">
+    <link rel="stylesheet" href="css/account_add.css">
     <!-- 버튼 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\btn_style.css">
+    <link rel="stylesheet" href="css/btn_style.css">
     <!-- 장바구니 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\cart_page.css">
+    <link rel="stylesheet" href="css/cart_page.css">
     <!-- 쿠폰 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\coupon.css">
+    <link rel="stylesheet" href="css/coupon.css">
     <!-- 팝업 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\detail_page.css">
+    <link rel="stylesheet" href="css/detail_page.css">
     <!-- 로고 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\Logo.css">
+    <link rel="stylesheet" href="css/Logo.css">
     <!-- 메인 배너 -->
-    <link rel='stylesheet' href='C:\PJT_1\css\main_banner_style_drive.css'>
-    <link rel="stylesheet" href="C:\PJT_1\css\main_banner_style.css">
+    <link rel='stylesheet' href='css/main_banner_style_drive.css'>
+    <link rel="stylesheet" href="css/main_banner_style.css">
     <!-- 로그인 드롭다운 메뉴 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\main_login.css">
+    <link rel="stylesheet" href="css/main_login.css">
     <!-- 상단 드롭다운 메뉴 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\main_menu.css">
+    <link rel="stylesheet" href="css/main_menu.css">
     <!-- 알림 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\notification.css">
+    <link rel="stylesheet" href="css/notification.css">
     <!-- 최근상품 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\recent_item.css">
+    <link rel="stylesheet" href="css/recent_item.css">
     <!-- 미리보기 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\page_preview.css">
+    <link rel="stylesheet" href="css/page_preview.css">
     <!-- 최상단 버튼 -->
-    <link rel="stylesheet" href="C:\PJT_1\css\scroll_top.css">
+    <link rel="stylesheet" href="css/scroll_top.css">
 </head>
 
 <body>
     <!-- 장바구니 추가 알람 -->
     <div id="notification" class="notification"></div>
     <!-- 제품 메뉴란 -->
-    <div >
+    <div style="background: #6788ff10;">
         <div id="project-container">
-            <a href="file:///C:/PJT_1/page/book_mall.html"><img src="C:\PJT_1\img\Logo.png" class="logo"></a>
+            <a href="book_mall.html"><img src="img/Logo.png" class="logo"></a>
             <div style="width: 200px;"></div>
             <nav>
                 <p id="all_book" onclick="createProducts('전체')">전체도서&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <p id="novel_book">소설 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <div id="s-d" class="dropdown">
-                    <p id="long_novel" onclick="createProducts('장편소설');">장편 소설</p>
-                    <p id="fantasy" onclick="createProducts('판타지')">판타지 소설</p>
-                    <p id="action" onclick="createProducts('액션/스릴러')">액션/스릴러 소설</p>
-                    <p id="mystery" onclick="createProducts('추리/미스테리')">추리/미스테리 소설</p>
+                    <p onclick="createProducts('장편소설');">장편 소설</p>
+                    <p onclick="createProducts('판타지')">판타지 소설</p>
+                    <p onclick="createProducts('액션/스릴러')">액션/스릴러 소설</p>
+                    <p onclick="createProducts('추리/미스테리')">추리/미스테리 소설</p>
                 </div>
                 <p id="not_novel_book">비소설 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <div id="s-d2" class="dropdown2">
-                    <p id="sisa" onclick="createProducts('시사')">시사</p>
-                    <p id="jusik" onclick="createProducts('주식/펀드')">주식/펀드</p> 
-                    <p id="healing" onclick="createProducts('교양')">교양</p>
+                    <p onclick="createProducts('시사')">시사</p>
+                    <p onclick="createProducts('주식/펀드')">주식/펀드</p> 
+                    <p onclick="createProducts('교양')">교양</p>
                 </div>
+                <p id="not_korean_book">국외도서 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <div id="s-d3" class="dropdown3">
+                    <p onclick="createProducts('XX')">XX도서</p>
+                    <p onclick="createProducts('XXXX')">XX도서</p> 
+                    <p onclick="createProducts('XX')">XX도서</p>
+                </div>
+                <p id="sales_book" onclick="createProducts('할인')">할인도서</p>
                 <div style="width: 150px;"></div>
             </nav>
             <!-- 로그인영역 -->
@@ -65,14 +72,14 @@
 
                 <!-- 로그인 메뉴, 회원가입, 설정 메뉴 -->
                 <p id="login_space">
-                    <img src="C:\PJT_1\img\login_icon.png" style="width: 50px; height: 50px;"
+                    <img src="img/login_icon.png" style="width: 50px; height: 50px;"
                         onclick="toggleDropdown()">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img id="trigger-image" src="C:\PJT_1\img\add-photo_2961348.png" alt="계정 생성"
+                    <img id="trigger-image" src="img/add-photo_2961348.png" alt="계정 생성"
                         style="width: 48px; height: 48px;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div id="management-icon">
-                    <img id="show-management" src="C:\PJT_1\img\cogwheel_13480555.png" alt="계정 관리 아이콘" title="계정 관리"
+                    <img id="show-management" src="img/cogwheel_13480555.png" alt="계정 관리 아이콘" title="계정 관리"
                         style="width: 50px; height: 50px;" />
                 </div>
                 </p>
@@ -112,7 +119,7 @@
                 </div>
                 <div>
                     <p id="market_guest" class="market_cart" style="align-self: flex-end; margin-top: 10px;">
-                        <img id="cart-icon" onclick="openCart()" src="C:\PJT_1\img\basket_empty.png"
+                        <img id="cart-icon" onclick="openCart()" src="img/basket_empty.png"
                             style="width: 50px; height: 50px;">
                     </p>
                 </div>
@@ -176,7 +183,7 @@
         </div>
         <div style="height: 1px; background-color: #6788ff71;"></div>
         <!-- 메인배너 -->
-        <div>
+        <div style="background: #ffffff;">
             <div class="swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide swiper-slide--one" onclick="openPopup('book_1'),addToRecentProducts('book_1')">
@@ -222,7 +229,7 @@
     <div>
         <main>
             <section class="container">
-                <h2>인기 도서</h2>
+                <h2 id="category-heading">전체 도서</h2>
                 <h2>　</h2>
                 <div class="product-list">
                     <!-- 제품 아이템들 -->
@@ -285,7 +292,7 @@
                 </button>
             </div>
             <br><br>
-            <img id="preview-image" src="" alt="미리보기 이미지" style="width: 1000px; height: 600px;">
+            <img id="preview-image" src="" alt="미리보기 이미지" style="max-width: 1200px; width: auto; height: 600px;">
             <div class="page-navigation">
                 <button id="prev-page-btn" onclick="prevPage()">이전</button>
                 <button id="next-page-btn" onclick="nextPage()">다음</button>
@@ -324,17 +331,17 @@
 
     <!-- 스크립트 코드 -->
     <!-- 팝업 -->
-    <script src="C:\PJT_1\jsfile\detail_page.js"></script>
+    <script src="jsfile/detail_page.js"></script>
     <!-- 상품목록 -->
-    <script src="C:\PJT_1\jsfile\Products.js"></script>
+    <script src="jsfile/Products.js"></script>
     <!-- 책 리스트, 상세정보이동, 장바구니 -->
-    <script src="C:\PJT_1\jsfile\item_list.js"></script>
+    <script src="jsfile/item_list.js"></script>
     <!-- 상단메뉴 및 로그인 메뉴 드롭다운 -->
-    <script src='C:\PJT_1\jsfile\main_menu_drop.js'></script>
-    <script src="C:\PJT_1\jsfile\main_menu.js"></script>
+    <script src='jsfile/main_menu_drop.js'></script>
+    <script src="jsfile/main_menu.js"></script>
     <!-- 상단 배너 슬라이스 -->
-    <script src='C:\PJT_1\jsfile\main_banner_script_drive.js'></script>
-    <script src="C:\PJT_1\jsfile\main_banner_script.js"></script>
+    <script src='jsfile/main_banner_script_drive.js'></script>
+    <script src="jsfile/main_banner_script.js"></script>
 
 
 </body>

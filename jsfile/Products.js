@@ -203,7 +203,7 @@ const products = [  // 순서대로 항목 Id, Img, 제목, 저자, 출판사, �
 
     {
         id: 'book_19', image: 'C:\\PJT_1\\book\\book_19.jpg', title: '하루 한 장 나의 어휘력을 위한 필사 노트', author: '유선경', publisher: '위즈덤하우스',
-        style: '교양/인문학', star: '★★★★☆', price: '23800', Category: '교양',
+        style: '교양/인문학', star: '★★★☆☆', price: '23800', Category: '교양',
         previewPages: ['C:\\PJT_1\\book\\book_19_1.PNG', 'C:\\PJT_1\\book\\book_19_2.PNG', 'C:\\PJT_1\\book\\book_19_3.PNG', 'C:\\PJT_1\\book\\book_19_4.PNG', 'C:\\PJT_1\\book\\book_19_5.PNG'],
         summary: '‘어른의 어휘력‘으로 대중에게 어휘력과 문해력이라는 화두를 던진 유선경 작가의 첫 번째 필사한 책이다. 전작에서 ‘어휘력으로 세상을 인식하는 통찰을 제공’했다면 이 책에서는 어휘력과 문장력, 문해력을 끌어올리는 구체적인 방법 ‘필사’를 소개한다. 특히, 어휘력은 책 읽기만으로 향상되기 힘들다고 지적하며, 어휘력을 기르는 구체적인 방법과 그에 따른 필사 가이드를 단계별로 세세하게 공유한다.',
         description: '필사할 문장에 등장하는 중요한 어휘와 표현에 대한 해설이 제공되며, 이를 통해 독자는 단순히 베껴 쓰는 것이 아니라, 단어의 의미와 사용 방법을 깊이 이해할 수 있다. 또한, 필사한 내용을 기반으로 자신만의 문장을 만들어 보거나, 일상에서 어떻게 응용할 수 있을지 생각해 보는 연습을 권장한다. 이는 배운 어휘와 표현을 더욱 확실히 나의 것으로 만드는 데 도움 준다.',
@@ -227,5 +227,206 @@ const products = [  // 순서대로 항목 Id, Img, 제목, 저자, 출판사, �
             { title: '장마철 즐기기 좋은 시원하고 짜릿한 ‘추리소설’…‘당신이 누군가를 죽였다’ 外', link: 'https://www.kyeonggi.com/article/20240724580131' },
             { title: '다정한 이웃 外', link: 'https://www.khan.co.kr/culture/book/article/202407182016045' }
         ]
+    },
+
+    {
+        id: 'book_21', image: 'C:\\PJT_1\\book\\book_21.jpg', title: '(20% 할인가)<br>빨간 머리 앤 이야기 세트 - 전3권', author: '루시 모드 몽고메리', publisher: '시공주니어',
+        style: '동화', star: '★★★★★', price: '28800', Category: ['할인','동화'],
+        previewPages: ['C:\\PJT_1\\book\\book_21_1.PNG', 'C:\\PJT_1\\book\\book_21_2.PNG', 'C:\\PJT_1\\book\\book_21_3.PNG', 'C:\\PJT_1\\book\\book_21_4.PNG', 'C:\\PJT_1\\book\\book_21_5.PNG'],
+        summary: '동화로 뿐 아니라, 애니메이션이나 TV 드라마로도 많은 인기를 얻었던 바로 그 이야기, <빨간 머리 앤>과 <에이번리의 앤>, <레드먼드의 앤>이 새로운 옷을 갈아입고 나왔다. 400페이지 전후의 두툼한 무게감을 지니고, 편안한 미색 종이에 인쇄된 책은 언뜻 보기에도 무척이나 고급스러워 기쁨을 더한다',
+        description: '앤은 그 신문이 무엇인지 바로 알아차리고 벌떡 일어섰다. 합격자 명단이 나왔다! 머리가 빙빙 돌고 심장이 아프도록 쿵쾅거렸다. 앤은 한 발짝도 움직일 수 없었다. 다이내나가 복도를지나 너무 흥분해서 노크도 하지 않고 방으로 뛰어들어오기까지 한 시간이나 걸린 것처럼 느껴졌다.',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_22', image: 'C:\\PJT_1\\book\\book_22.jpg', title: '(37% 할인가)<br>내 아버지로부터의 꿈', author: '버락 H. 오바마', publisher: '랜덤하우스코리아',
+        style: '정치인', star: '★★★☆☆', price: '12000', Category: ['할인','시사'],
+        previewPages: ['C:\\PJT_1\\book\\book_22_1.PNG', 'C:\\PJT_1\\book\\book_22_2.PNG', 'C:\\PJT_1\\book\\book_22_3.PNG', 'C:\\PJT_1\\book\\book_22_4.PNG', 'C:\\PJT_1\\book\\book_22_5.PNG'],
+        summary: '아프리카계 혼혈미국인으로 태어나 세상의 편견과 차별을 딛고, 전세계가 주목하는 정치인이자 존경받는 리더가 된 검은 케네디 버락 오바마가 뜨겁게 써내려간 위대한 자기발견과 삶을 향한 끝없는 도전! 2007년 최고의 이슈이자 미국 최초의 강력한 흑인 대통령 후보, 오프라 윈프리,조지 소로스, 워렌 버핏 등 각계 명사들이 공개 지지하는 동시에, 가는 곳마다 록 스타를 방불케 하는 대중의 열광적 환호와 지지를 불러일으키는 인물인 버락 오바마의 자서전이다.',
+        description: '이 책의 저자이자 주인공인 버락 오바마는 뉴욕에서 자기 아버지가 교통사고로 사망했다는 슬픈 소식을 듣는다. 저자에게 아버지는 단순히 한 사람의 남자가 아니라 신화 속의 주인공과 같은 존재였다. 아버지의 갑작스런 죽음이 계기가 되어서 저자는 유별난 가족사를 거슬러 올라가며 파란만장한 여행을 떠난다.1960년대 초반 순수하고 열정적인 젊은이였던 백인 어머니와 인종차별 폐지론자이자 유망한 케냐 흑인 유학생이었던 아버지의 사랑, 의붓아버지와 함께 인도네시아에서 보낸 유년기, 세상의 모진 냉대와 차별 속에서 방황하던 청소년기를 지나, 시카고 빈민 지역에서 공동체 조직 활동을 하던 일들이 펼쳐진다.이처럼 특이한 출생 배경과 성장환경으로 인해 버락 오바마는 아메리카와 아프리카, 아시아계 인종의 가족과 다양한 문화적 체험을 자산으로 갖게 되는데, 오프라 윈프리는 자신의 토크쇼에서 오바마의 가족을 일컬어 ‘미니 UN’이라 표현하기도 했다.진정한 변화를 위해서는 지역 환경뿐만 아니라 국가의 법과 정치 체계를 바꿔야 한다는 사실을 깨닫고 뒤늦게 하버드 대학원에 진학하기로 결심한 오바마는 가슴속에 오래 간직한 질문, 즉 ‘나는 누구인가, 어떻게 살 것인가’에 대한 해답을 찾아 아버지의 고향 케냐에 도착한다. 그곳에서 그는 자기 가족의 아프리카 계보를 접하고, 잔인한 빈곤과 부족간 갈등으로 점철되어 있는 나라에서 아버지가 인내와 희망의 정신으로 더 나은 미래를 향해 힘겹게 나아가며 살고 부대껴야 했던 아픈 진실을 깨닫는다. 그리고 마침내, 분열된 선대의 유산과 감동적으로 화해한다.',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_23', image: 'C:\\PJT_1\\book\\book_23.jpg', title: '(56% 할인가)<br>인간 실격', author: '다자이 오사무', publisher: '코너스톤',
+        style: '고전소설', star: '☆☆☆☆☆', price: '3300', Category: ['할인','일본문학'],
+        previewPages: ['C:\\PJT_1\\book\\nopreview.png'],
+        summary: '누구보다 세상과 인간을 동경했으나 나약함과 순수함으로 인해 세상에서 버려지고 인간으로서의 자격마저 잃은 채 파멸되어가는 인물을 그려내며, 전 세계 독자들에게 많은 사랑을 받았던 다자이 오사무의 대표작 《인간 실격》. 인간의 내면 가장 깊숙한 곳의 존재 그 자체를 풀어낸 희유의 작품이라 평가받으며 오랫동안 세대와 국적을 뛰어넘으며 사랑받아온 이 책을, 코너스톤에서 1948년 오리지널 초판본 표지로 출간했다.',
+        description: '《인간 실격》은 주인공 오바 요조가 자신의 삶에 대해 이야기하는 수기 형식으로 되어 있다. 주인공은 부유한 집안에서 태어났지만 부모의 무관심 속에 방치되어 아무도 믿지 못하고 세상과 인간에 대한 두려움을 간직한 채 살아간다. 누구보다 순수했던 그는 그 순수함 때문에 세상에 적응하지 못한다. 특히나 아무렇지도 않게 다른 이를 속이면서도 어떤 상처도 받지 않고 살아가는 인간이라는 존재에 대해 그리고 그런 인간의 삶에 대해 두려움을 느낀다. 하지만 그는 세상을 외면하지 못한다. 오히려 끊임없이 인간의 삶에 구애하며, 세상에 적응하려고 발버둥 치다가 결국 세상에 배신당하고 인간으로서의 자격조차 박탈당한 채 파멸해 가고 만다',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_24', image: 'C:\\PJT_1\\book\\book_24.jpg', title: '(66% 할인가)<br>전기밥솥 레시피', author: '호시노 나나코', publisher: '참돌',
+        style: '생활요리', star: '★★★★★', price: '4400', Category: ['할인','요리'],
+        previewPages: ['C:\\PJT_1\\book\\nopreview.png'],
+        summary: '밥 짓기는 물론, 다양한 집밥 메뉴와 일품요리, 디저트까지 척척! 바쁠 때나 요리하기 귀찮을 때 전기밥솥에 맡겨만 주자. 재료를 넣고 취사 버튼만 꾹 누르면 놀라울 정도로 맛있고 다채로운 요리가 완성된다.《전기밥솥 레시피》는 누구에게나 사랑받는 레시피 20가지를 시작으로, 고기와 해산물 등 매일의 식사 준비에 유용한 재료별 레시피와 진공 저온 조리로 만드는 고급 요리와 건강식, 오래 두고 즐길 수 있는 보관 음식 레시피, 케이크와 푸딩 등 인기 디저트와 빵까지 71가지의 다양한 레시피를 소개하고 있어 여러분의 훌륭한 요리 가이드가 되어줄 것이다.',
+        description: '전기밥솥으로 만들 수 있는 메뉴는 정말 무궁무진합니다. 생활 속 다양한 식재료를 활용한 집밥 메뉴는 물론이고, 전문 셰프가 요리한 것 같은 멋진 일품요리에 다양한 디저트까지 실패 없이 손쉽게 만들 수 있습니다.야들야들한 삼겹살 조림, 도톰한 토마토소스 햄버그스테이크 등 친숙한 일상 요리에서부터 카오만까이, 루로우판, 해산물스튜, 파에야 등 일품요리에 치즈케이크, 요거트, 푸딩 등 인기 디저트까지, 잔손이 많이 가거나 불 조절이 까다로운 요리도 손쉽게 조리가 가능해집니다.특별히 이번 《전기밥솥 레시피》에는 식재료 본연의 맛과 풍미가 담겨 있어 사랑받는 조리법인 ‘진공 저온 조리’ 레시피도 수록되어 있습니다. 전문 기술이 필요한 홈메이드 로스햄, 닭고기 콩피, 연어 케이퍼 허브마리네, 연어 레몬 화이트와인찜, 감주, 요거트 등도 버튼만 누르면 실패 없이 손쉽게 완성됩니다.전기밥솥 요리가 생소하다고요? 이 책의 레시피대로 차근차근 따라 하다 보면 간편함에 맛까지 보장되는 전기밥솥 요리만의 매력에 푹 빠지게 될 것입니다',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_25', image: 'C:\\PJT_1\\book\\book_25.jpg', title: '(62% 할인가)<br>365일 소박한 레시피와 일상', author: '와타나베 유코', publisher: '디자인이음',
+        style: '생활요리', star: '★★★★★', price: '5000', Category: ['할인','요리'],
+        previewPages: ['C:\\PJT_1\\book\\book_25_1.PNG', 'C:\\PJT_1\\book\\book_25_2.PNG', 'C:\\PJT_1\\book\\book_25_3.PNG', 'C:\\PJT_1\\book\\book_25_4.PNG', 'C:\\PJT_1\\book\\book_25_5.PNG'],
+        summary: '일본 여성들의 대표 살림 선생님이자 요리 연구가인 와타나베 유코의 소박하고 따뜻한 일상이 담긴 요리 에세이다. 와타나베 유코는 무인양품에 칼럼을 기고하는 등 정갈하고 미니멀한 스타일링으로 일본에서 주목받고 있다. 일본에서 정월에 만들어 먹는 오세치 요리부터 한 해의 마지막 날에 먹는 메밀국수까지, 365일 동안의 소박한 레시피와 일상을 담았다. 시간의 흐름에 따라 책장을 넘기다보면, 그녀의 편안하고 소담한 일상을 오롯하게 경험할 수 있다. 와타나베 유코의 일상과 음식은 고즈넉하고 정갈하다. 음식과 사물, 인물에 대해 자연스럽고 다정한 글과 사진은 따뜻한 감동을 자아낸다.',
+        description: '회의에 참석할 때마다 고베의 유명 빵집 프로인드리브 Freundich의 쿠키를 선물로 가져오는 여성 스태프가 있다. 항상 변함없는 것을 마주하면 안도감이 느껴진다. 상대에게 변화를 원하거나 자신이 변하기를 바라거나 변화해야 좋다고 생각되는 일도 많지만, 변하지 않는 일도 마찬가지로 중요하다는 생각이 들었다. 뭐, 그건 그렇고, 맛있는 쿠키에 맞춰 아삼티를 끓여서 우선은티 타임을….. ',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_26', image: 'C:\\PJT_1\\book\\book_26.jpg', title: '(70% 할인가)<br>그래도 괜찮아', author: '사노 요코', publisher: '북로드',
+        style: '에세이', star: '★★☆☆☆', price: '3900', Category: ['할인','교양'],
+        previewPages: ['C:\\PJT_1\\book\\book_26_1.PNG', 'C:\\PJT_1\\book\\book_26_2.PNG', 'C:\\PJT_1\\book\\book_26_3.PNG', 'C:\\PJT_1\\book\\book_26_4.PNG', 'C:\\PJT_1\\book\\book_26_5.PNG'],
+        summary: '거침없고 솔직한 입담으로 수많은 한국 팬들의 마음을 사로잡은 에세이스트이자 그림책 작가 사노 요코의 초기 걸작 에세이집. 자기 자신에겐 시니컬하지만 타인은 속수무책으로 믿는 재치 넘치고 시원시원한 입담의 작가 사노 요코가 있기까지 그가 만났던 혹은 마주쳤던 사람들과의 다양한 추억담을 담고 있는 이 책은, 일상에서 쉽게 접할 수 있는 인물이나 사건임에도 그것을 특별하게 만드는 작가의 따뜻한 시선과 매력적인 화법이 인상적인 작품이다.',
+        description: '“이혼한 무렵에 너무 혼란스러워서 매일 집에 늦게 들어갔어. 할머니한테 맡겨뒀는데 그게 원인이라네. 아이는 내가 필요했던 거래. 정말이지 미안해서.”어쩔 수 없지 않은가. 인생의 일대사인데 미동조차 하지 말라는 건가. 십 년도 더 지난 일을 어떻게 만회하라는 건가. 누군들 좋아서 이혼을 할까.',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_27', image: 'C:\\PJT_1\\book\\book_27.jpg', title: '(50% 할인가)<br>피너츠 포스터 북', author: '찰스 M. 슐츠', publisher: '영진닷컴',
+        style: '애니메이션', star: '★★★☆☆', price: '9000', Category: ['할인','애니메이션'],
+        previewPages: ['C:\\PJT_1\\book\\book_27_1.PNG', 'C:\\PJT_1\\book\\book_27_2.PNG', 'C:\\PJT_1\\book\\book_27_3.PNG', 'C:\\PJT_1\\book\\book_27_4.PNG', 'C:\\PJT_1\\book\\book_27_5.PNG'],
+        summary: 'M. 슐츠의 작품을 기념하기 위해 만든 특별한 20개의 포스터 모음집이다. 바로 뜯어서 전시할 수 있는 피너츠 캐릭터가 담겨 있다. 스누피의 주인인 찰리 브라운, 심술궂고 뽐내기 좋아하는 루시 반 펠트, 찰리 브라운의 강아지이자 동네에서 가장 사랑받는 비글! 스누피, 스누피의 단짝 우드스탁, 항상 답을 찾아 헤매는 고민 많은 소녀 샐리 브라운, 루시의 동생이자 찰리 브라운의 가장 친한 친구 라이너스 반 펠트 등 11명의 피너츠 친구들이 모두 모두 모였다.',
+        description: '찰스 M. 슐츠의 인생이 담긴 피너츠와 친구들을 소개합니다! 스누피의 주인인 찰리 브라운, 심술궂고 뽐내기 좋아하는 루시 반 펠트, 찰리 브라운의 강아지이자 동네에서 가장 사랑받는 비글! 스누피, 스누피의 단짝 우드스탁, 항상 답을 찾아 헤매는 고민 많은 소녀 샐리 브라운, 루시의 동생이자 찰리 브라운의 가장 친한 친구 라이너스 반 펠트 등 11명의 피너츠 친구들이 모두 모두 모였어요. 이 책은 찰스 M. 슐츠의 작품을 기념하기 위해 만든 특별한 20개의 포스터 모음집입니다. 바로 뜯어서 전시할 수 있는 피너츠 캐릭터가 담겨 있습니다. 어디에서도 볼 수 없는 귀엽고 특별한 스누피 친구들을 나만의 소중한 공간에 전시해 보세요.',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_28', image: 'C:\\PJT_1\\book\\book_28.jpg', title: '(58% 할인가)<br>목격자의 증언, 복음서', author: '리처드 보쿰', publisher: '성서유니온선교회',
+        style: '신학', star: '★☆☆☆☆', price: '2500', Category: ['할인','신학'],
+        previewPages: ['C:\\PJT_1\\book\\book_28_1.PNG', 'C:\\PJT_1\\book\\book_28_2.PNG', 'C:\\PJT_1\\book\\book_28_3.PNG', 'C:\\PJT_1\\book\\book_28_4.PNG', 'C:\\PJT_1\\book\\book_28_5.PNG'],
+        summary: 'SU 신학총서 시리즈의 세 번째 책으로 선보이는 『목격자의 증언, 복음서』는 보컴이 『예수와 그 목격자들』에서 방대하고 치밀하게 전개하고 있는 주장을 집약적으로 담아냈다. 얇지만, 보컴이 어떻게 복음서의 역사성과 신뢰성을 회복하고 복음서 연구의 방향을 바꿔놓았다는 평을 듣게 됐는지 충분히 보여 주는 책이다.',
+        description: '‘증언을 통한 예수’라는 용어를 통해 내가 의미하고자 하는 바는 예수와 가장 가까이 있었을 뿐 아니라 후에 자신들이 증언한 사건에 직접 참여했던 이들이 받아들인 인물로서의 예수다. 내가 주장해 온 대로, 복음서들 가운데 하나(요한복음)는 바로 그런 목격자에 의해 기록되었다. 다른 복음서들이 목격자들의 증언에 근거하여 그에 맞게 본문을 기록한 것과 달리 말이다. 한마디로 우리는 사복음서를 통해 목격자들이 전한 예수 이야기를 실질적으로 가지고 있는 셈이다._1. 서론 중에서',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_29', image: 'C:\\PJT_1\\book\\book_29.jpg', title: '(44% 할인가)<br>하바리움 이야기', author: '권미라', publisher: '영진닷컴',
+        style: '공예', star: '★★☆☆☆', price: '9000', Category: ['할인','공예'],
+        previewPages: ['C:\\PJT_1\\book\\book_29_1.PNG', 'C:\\PJT_1\\book\\book_29_2.PNG', 'C:\\PJT_1\\book\\book_29_3.PNG', 'C:\\PJT_1\\book\\book_29_4.PNG', 'C:\\PJT_1\\book\\book_29_5.PNG'],
+        summary: '프리저브드 플라워를 구입하고 손질하는 방법부터 하버리움에 필요한 재료 준비 방법을 포함한 다양한 DIY 과정을 수록했다. 감성 가득한 생활 소품과 인테리어 용품을 하바리움으로 이용해서 만들 수 있다. 계절에 어울리는 소품과 기념일에 어울리는 소품 만들기도 담고 있으며, 소중한 사람에게 특별한 마음을 담아 선물할 수 있게 하바리움을 더 돋보이게 포장하는 방법도 포함하고 있다.',
+        description: '하바리움(Herbarium)이란 보존 기능이 있는 식물표본 오일에 프리저브드 플라워나 드라이 플라워를 넣은 인테리어 소품입니다. 플라워 소재 외에 건조한 과일, 구슬, 모래 등을 넣으면 더 특별한 분위기를 연출할 수 있습니다. 병을 움직일 때마다 꽃들이 흔들리면서 마치 살아 움직이는 듯한 느낌을 줍니다. 《하바리움 이야기》는 프리저브드 플라워를 구입하고 손질하는 방법부터 하버리움에 필요한 재료 준비 방법을 포함한 다양한 DIY 과정을 수록했습니다. 감성 가득한 생활 소품과 인테리어 용품을 하바리움으로 이용해서 만들 수 있습니다. 계절에 어울리는 소품과 기념일에 어울리는 소품 만들기도 담고 있습니다. 또한, 소중한 사람에게 특별한 마음을 담아 선물할 수 있게 하바리움을 더 돋보이게 포장하는 방법도 포함하고 있습니다.',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_30', image: 'C:\\PJT_1\\book\\book_30.jpg', title: '(20% 할인가)<br>하이큐!! 1~45 세트 - 전45권', author: '후루다테 하루이치', publisher: '대원씨아이',
+        style: '만화', star: '★★★★★', price: '198000', Category: ['할인','애니메이션'],
+        previewPages: ['C:\\PJT_1\\book\\nopreview.png'],
+        summary: '동료들과의 특별한 만남과 흘러내리는 소중한 땀, 그리고 정상을 향한 목표! 모두가 기다려왔던 [점프]식 왕도 스포츠만화, 전격 발매!!',
+        description: '오늘도 내일도 마지막의 그 전날까지도, 무엇을 할래? 새창으로 보기 "그저 오늘도 내일도 마지막의 그 전날도 주의 깊게 최선을 다하고 운 좋게 [언제 끝나도 괜찮다]라고 늘 그렇게 생각하고 싶다."배구를 계속하든 그렇지 않든 지금 있는 그 자리에서, 날마다 배구하듯이, 착실히 하루를 쌓아 올리는 등장인물들. 그리고 나 역시, 이들처럼 오늘을 살고 내일을 기다리고 마지막의 전날을 맞이할 테지. 언제 끝나도 괜찮을 만큼 신중하게 하루를 쌓아가고 있는가? 최선의 끝에 따라오는 운을 내 것으로 만들고 있나?작은 종이 한 장에 빼곡히 그려진 배구 경기를 뚫어져라 바라보는 것만으로 모자라 그 한 켠에 몰래 숨어들고 싶어지는 그런 작품',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_31', image: 'C:\\PJT_1\\book\\book_31.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★★☆☆', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_31_1.PNG', 'C:\\PJT_1\\book\\book_31_2.PNG', 'C:\\PJT_1\\book\\book_31_3.PNG', 'C:\\PJT_1\\book\\book_31_4.PNG', 'C:\\PJT_1\\book\\book_31_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_32', image: 'C:\\PJT_1\\book\\book_32.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★★★☆', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_32_1.PNG', 'C:\\PJT_1\\book\\book_32_2.PNG', 'C:\\PJT_1\\book\\book_32_3.PNG', 'C:\\PJT_1\\book\\book_32_4.PNG', 'C:\\PJT_1\\book\\book_32_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_33', image: 'C:\\PJT_1\\book\\book_33.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★★★★', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_33_1.PNG', 'C:\\PJT_1\\book\\book_33_2.PNG', 'C:\\PJT_1\\book\\book_33_3.PNG', 'C:\\PJT_1\\book\\book_33_4.PNG', 'C:\\PJT_1\\book\\book_33_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_34', image: 'C:\\PJT_1\\book\\book_34.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★★★★', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_34_1.PNG', 'C:\\PJT_1\\book\\book_34_2.PNG', 'C:\\PJT_1\\book\\book_34_3.PNG', 'C:\\PJT_1\\book\\book_34_4.PNG', 'C:\\PJT_1\\book\\book_34_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_35', image: 'C:\\PJT_1\\book\\book_35.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★★★★', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_35_1.PNG', 'C:\\PJT_1\\book\\book_35_2.PNG', 'C:\\PJT_1\\book\\book_35_3.PNG', 'C:\\PJT_1\\book\\book_35_4.PNG', 'C:\\PJT_1\\book\\book_35_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_36', image: 'C:\\PJT_1\\book\\book_36.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★★★☆', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_36_1.PNG', 'C:\\PJT_1\\book\\book_36_2.PNG', 'C:\\PJT_1\\book\\book_36_3.PNG', 'C:\\PJT_1\\book\\book_36_4.PNG', 'C:\\PJT_1\\book\\book_36_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_37', image: 'C:\\PJT_1\\book\\book_37.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★★★☆', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_37_1.PNG', 'C:\\PJT_1\\book\\book_37_2.PNG', 'C:\\PJT_1\\book\\book_37_3.PNG', 'C:\\PJT_1\\book\\book_37_4.PNG', 'C:\\PJT_1\\book\\book_37_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_38', image: 'C:\\PJT_1\\book\\book_38.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★★☆☆', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_38_1.PNG', 'C:\\PJT_1\\book\\book_38_2.PNG', 'C:\\PJT_1\\book\\book_38_3.PNG', 'C:\\PJT_1\\book\\book_38_4.PNG', 'C:\\PJT_1\\book\\book_38_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_39', image: 'C:\\PJT_1\\book\\book_39.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★★★☆', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_39_1.PNG', 'C:\\PJT_1\\book\\book_39_2.PNG', 'C:\\PJT_1\\book\\book_39_3.PNG', 'C:\\PJT_1\\book\\book_39_4.PNG', 'C:\\PJT_1\\book\\book_39_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
+    },
+
+    {
+        id: 'book_40', image: 'C:\\PJT_1\\book\\book_40.jpg', title: '', author: '', publisher: '',
+        style: '', star: '★★☆☆☆', price: '28800', Category: ['',''],
+        previewPages: ['C:\\PJT_1\\book\\book_40_1.PNG', 'C:\\PJT_1\\book\\book_40_2.PNG', 'C:\\PJT_1\\book\\book_40_3.PNG', 'C:\\PJT_1\\book\\book_40_4.PNG', 'C:\\PJT_1\\book\\book_40_5.PNG'],
+        summary: '',
+        description: '',
+        relatedArticles: [
+        ]
     }
+
 ];

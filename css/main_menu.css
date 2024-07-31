@@ -8,10 +8,10 @@
   width: 1680px;
   position: relative;
   z-index: 5;
-  background: #6788ff10;
   border-radius: 6px;
   display: flex;
   align-items: center; /* 수직 정렬 */
+  margin: 0 auto; /* 수평 중앙 정렬 */
 }
 
 #project-container nav {

@@ -485,18 +485,26 @@ function removetext() {                                         // ID와 PW 입�
 
 /** 제품 목록 생성 **/
 let currentCategory = '전체';
+let CategoryTitle = document.getElementById('Category_Text')
+
 /* 상품 목록 생성 함수 */
 function createProducts(category) {
 // 기존의 상품 리스트를 지우기
 const productList = document.querySelector('.product-list');
 productList.innerHTML = ''; // 모든 자식 요소 제거
+/* 도서 타이틀 */
+const heading = document.getElementById('category-heading');
+heading.textContent = category + " 도서";
 
 // 새로운 카테고리에 맞는 상품들만 출력
 products.forEach(product => {
-  if (category === '전체' || product.Category === category) {
+  if (category === '전체' || product.Category.includes(category)) {
     const productItem = document.createElement('div');
     productItem.className = 'product-item';
     productItem.id = `product-${product.id}`;
+
+    const formattedPrice = parseInt(product.price, 10).toLocaleString();
+
     productItem.innerHTML = `
       <img style="width:218px; height:300px" src="${product.image}">
       <div class="rating">${product.star}</div>
@@ -504,7 +512,7 @@ products.forEach(product => {
       <p>작가 : ${product.author}</p>
       <p>출판사 : ${product.publisher}</p>
       <p style="text-size:50%; color:gray;">${product.style}</p>
-      <p style="text-size:50%;">￦ ${product.price}원</p>
+      <p style="text-size:50%;">[ ${formattedPrice}원 ]</p>
       <div class="actions">
         <button class="add-to-wishlist" data-product-id="${product.id}">찜하기 ♡</button>
         <button class="add-to-cart">장바구니</button>
@@ -549,14 +557,17 @@ function openPopup(productId) {
   const product = products.find(p => p.id === productId);
 
   if (product) {
+    const titleWithoutBr = product.title.replace(/<br>/gi, ' ');
+    // 가격 형식화
+    const formattedPrice = parseInt(product.price, 10).toLocaleString();
     // 팝업에 상품 정보 로드
     document.getElementById('popup-book-cover').src = product.image;
-    document.getElementById('popup-book-title').textContent = product.title;
+    document.getElementById('popup-book-title').textContent = titleWithoutBr;
     document.getElementById('popup-book-author').textContent = `작가: ${product.author}`;
     document.getElementById('popup-book-publisher').textContent = `출판사: ${product.publisher}`;
     document.getElementById('popup-book-genre').textContent = `장르: ${product.style}`;
     document.getElementById('popup-book-rating').textContent = `별점: ${product.star}`;
-    document.getElementById('popup-book-price').textContent = `가격: ₩${product.price}`;
+    document.getElementById('popup-book-price').textContent = `가격: ${formattedPrice}원`;
 
     document.getElementById('popup-summary-text').textContent = product.summary || '정보 없음';
     document.getElementById('popup-description-text').textContent = product.description || '정보 없음';
@@ -911,7 +922,8 @@ function closeCart() {
 /* 장바구니 초기화 */
 function clearCart() {
   userCart[userType] = [];                                    // 장바구니를 빈 배열로 초기화
-  localStorage.setItem('cart', JSON.stringify(cart));         // 로컬 스토리지에 빈 장바구니 저장
+  //localStorage.setItem('cart', JSON.stringify(cart));         // 로컬 스토리지에 빈 장바구니 저장
+  saveCart();                                                  // userCart[userType]을 로컬 스토리지에 저장
   updateCartUI();                                             // 장바구니 UI 업데이트
   alert('장바구니가 비워졌습니다.');                            // 알람
   updateCartIcon();                                           // 장바구니 아이콘 UI업데이트
