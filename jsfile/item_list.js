@@ -83,6 +83,27 @@ document.addEventListener('DOMContentLoaded', function () {
     overlay2.style.display = 'none';
   });
 
+    // 수량 입력 필드의 요소를 가져옵니다.
+    let popupQuantityInput = document.getElementById('popup-quantity');
+
+    // 입력값을 확인하고 0 미만이면 1로 고정하는 함수
+    function fixQuantity() {
+        let currentValue = parseInt(popupQuantityInput.value);
+
+        // 입력값이 숫자가 아니거나 0 미만이면 1로 설정
+        if (isNaN(currentValue) || currentValue < 1) {
+            popupQuantityInput.value = 1;
+        }
+    }
+
+    // 페이지 로드시 한번 실행
+    fixQuantity();
+
+    // 입력 필드의 input 이벤트를 감지하여 fixQuantity 함수 호출
+    popupQuantityInput.addEventListener('input', fixQuantity);
+
+
+
 });
 
 
@@ -252,9 +273,13 @@ function displayUserList() {                                          // 사용�
   clearAllButton.className = 'btn btn-3 hover-border-1'; // 버튼 스타일 설정
   clearAllButton.style.marginBottom = '20px'; // 버튼 하단 여백 설정
   clearAllButton.addEventListener('click', () => {
-    if (confirm('정말로 모든 데이터를 초기화하시겠습니까?')) { // 사용자 확인
+    var result = confirm('정말로 모든 데이터를 초기화하시겠습니까?');
+    if (result) { // 사용자가 '확인'을 눌렀을 때
       clearLocalStorage(); // 로컬스토리지 초기화
       alert('모든 데이터가 초기화되었습니다.');
+      initializeUserInfo(); // 사용자 목록 새로고침
+    } else {
+      alert('초기화를 취소했습니다.');
       initializeUserInfo(); // 사용자 목록 새로고침
     }
   });
@@ -489,23 +514,23 @@ let CategoryTitle = document.getElementById('Category_Text')
 
 /* 상품 목록 생성 함수 */
 function createProducts(category) {
-// 기존의 상품 리스트를 지우기
-const productList = document.querySelector('.product-list');
-productList.innerHTML = ''; // 모든 자식 요소 제거
-/* 도서 타이틀 */
-const heading = document.getElementById('category-heading');
-heading.textContent = category + " 도서";
+  // 기존의 상품 리스트를 지우기
+  const productList = document.querySelector('.product-list');
+  productList.innerHTML = ''; // 모든 자식 요소 제거
+  /* 도서 타이틀 */
+  const heading = document.getElementById('category-heading');
+  heading.textContent = category + " 도서";
 
-// 새로운 카테고리에 맞는 상품들만 출력
-products.forEach(product => {
-  if (category === '전체' || product.Category.includes(category)) {
-    const productItem = document.createElement('div');
-    productItem.className = 'product-item';
-    productItem.id = `product-${product.id}`;
+  // 새로운 카테고리에 맞는 상품들만 출력
+  products.forEach(product => {
+    if (category === '전체' || product.Category.includes(category)) {
+      const productItem = document.createElement('div');
+      productItem.className = 'product-item';
+      productItem.id = `product-${product.id}`;
 
-    const formattedPrice = parseInt(product.price, 10).toLocaleString();
+      const formattedPrice = parseInt(product.price, 10).toLocaleString();
 
-    productItem.innerHTML = `
+      productItem.innerHTML = `
       <img style="width:218px; height:300px" src="${product.image}">
       <div class="rating">${product.star}</div>
       <h3>${product.title}</h3>
@@ -521,24 +546,24 @@ products.forEach(product => {
       </div>
     `;
 
-    productList.appendChild(productItem);
+      productList.appendChild(productItem);
 
-    // 각 버튼에 이벤트 추가
-    const toggleWishlistButton = productItem.querySelector('.add-to-wishlist');
-    const addToCartButton = productItem.querySelector('.add-to-cart');
-    const openInfoPageButton = productItem.querySelector('.open-info-page');
-    const openPreviewButton = productItem.querySelector('.open-preview');
+      // 각 버튼에 이벤트 추가
+      const toggleWishlistButton = productItem.querySelector('.add-to-wishlist');
+      const addToCartButton = productItem.querySelector('.add-to-cart');
+      const openInfoPageButton = productItem.querySelector('.open-info-page');
+      const openPreviewButton = productItem.querySelector('.open-preview');
 
-    toggleWishlistButton.addEventListener('click', () => toggleWishlist(product.id));
-    addToCartButton.addEventListener('click', () => addToCart(product.id));
-    openInfoPageButton.addEventListener('click', () => {
-      openPopup(product.id);
-      addToRecentProducts(product.id);
-      updateRecentProductsUI();
-    });
-    openPreviewButton.addEventListener('click', () => openPreview(product.id));
-  }
-});
+      toggleWishlistButton.addEventListener('click', () => toggleWishlist(product.id));
+      addToCartButton.addEventListener('click', () => addToCart(product.id));
+      openInfoPageButton.addEventListener('click', () => {
+        openPopup(product.id);
+        addToRecentProducts(product.id);
+        updateRecentProductsUI();
+      });
+      openPreviewButton.addEventListener('click', () => openPreview(product.id));
+    }
+  });
 }
 
 // 초기 실행
@@ -546,8 +571,8 @@ createProducts(currentCategory);
 
 // 카테고리가 변할 때 호출할 함수
 function changeCategory(newCategory) {
-currentCategory = newCategory;
-createProducts(currentCategory);
+  currentCategory = newCategory;
+  createProducts(currentCategory);
 }
 
 
@@ -579,6 +604,7 @@ function openPopup(productId) {
 
     // 수량 입력 필드를 1로 초기화
     document.getElementById('popup-quantity').value = 1;
+
 
     // 현재 상품 ID를 팝업에 저장
     document.getElementById('popup').dataset.productId = productId;
