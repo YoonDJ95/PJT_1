@@ -27,10 +27,10 @@
     <link rel="stylesheet" href="css/main_menu.css">
     <!-- 알림 -->
     <link rel="stylesheet" href="css/notification.css">
-    <!-- 최근상품 -->
-    <link rel="stylesheet" href="css/recent_item.css">
     <!-- 미리보기 -->
     <link rel="stylesheet" href="css/page_preview.css">
+    <!-- 최근상품 -->
+    <link rel="stylesheet" href="css/recent_item.css">
     <!-- 최상단 버튼 -->
     <link rel="stylesheet" href="css/scroll_top.css">
 </head>
@@ -38,6 +38,7 @@
 <body>
     <!-- 장바구니 추가 알람 -->
     <div id="notification" class="notification"></div>
+
     <!-- 제품 메뉴란 -->
     <div style="background: #6788ff10;">
         <div id="project-container">
@@ -55,25 +56,25 @@
                 <p id="not_novel_book">비소설 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <div id="s-d2" class="dropdown2">
                     <p onclick="createProducts('시사')">시사</p>
-                    <p onclick="createProducts('주식/펀드')">주식/펀드</p> 
+                    <p onclick="createProducts('주식/펀드')">주식/펀드</p>
                     <p onclick="createProducts('교양')">교양</p>
                 </div>
                 <p id="not_korean_book">국외도서 ▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <div id="s-d3" class="dropdown3">
-                    <p onclick="createProducts('XX')">XX도서</p>
-                    <p onclick="createProducts('XXXX')">XX도서</p> 
-                    <p onclick="createProducts('XX')">XX도서</p>
+                    <p onclick="createProducts('영미')">영미도서</p>
+                    <p onclick="createProducts('일본')">일본도서</p>
+                    <p onclick="createProducts('독일')">독일도서</p>
                 </div>
                 <p id="sales_book" onclick="createProducts('할인')">할인도서</p>
                 <div style="width: 150px;"></div>
             </nav>
+
             <!-- 로그인영역 -->
             <nav style="display: flex; justify-content: space-between; align-items: center;">
 
                 <!-- 로그인 메뉴, 회원가입, 설정 메뉴 -->
                 <p id="login_space">
-                    <img src="img/login_icon.png" style="width: 50px; height: 50px;"
-                        onclick="toggleDropdown()">
+                    <img src="img/login_icon.png" style="width: 50px; height: 50px;" onclick="toggleDropdown()">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <img id="trigger-image" src="img/add-photo_2961348.png" alt="계정 생성"
                         style="width: 48px; height: 48px;">
@@ -83,6 +84,7 @@
                         style="width: 50px; height: 50px;" />
                 </div>
                 </p>
+
                 <!-- 이미지 클릭 시 팝업 나타나기 -->
                 <p></p>
                 <div id="login-menu" class="dropdown4">
@@ -178,53 +180,60 @@
                     </div>
                 </form>
             </div>
-
             <div style="width: 200px;"></div>
         </div>
         <div style="height: 1px; background-color: #6788ff71;"></div>
+
         <!-- 메인배너 -->
         <div style="background: #ffffff;">
             <div class="swiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide swiper-slide--one" onclick="openPopup('book_1'),addToRecentProducts('book_1')">
+                    <div class="swiper-slide swiper-slide--one"
+                        onclick="openPopup('book_1'),addToRecentProducts('book_1')">
                         <div>
                             <h2>나는 얼마짜리입니까?</h2>
                             <p>전국 방방곡곡 다양한 현장에서 땀 흘리는 일흔다섯명의 노동자가 자신에게 익숙한 도구를 잠시 놓고 펜을 들었다. 그리고 각자가 일하며 겪은 이야기를 써내려가기
                                 시작했다</p>
                         </div>
                     </div>
-                    <div class="swiper-slide swiper-slide--two" onclick="openPopup('book_4'),addToRecentProducts('book_4')">
+                    <div class="swiper-slide swiper-slide--two"
+                        onclick="openPopup('book_4'),addToRecentProducts('book_4')">
                         <div>
                             <h2>갈매기의 꿈</h2>
                             <p>전직 비행사였던 작가가 비행에 대한 꿈과 신념을 실현하고자 끊임없이 노력하는 갈매기 조나단 리빙스턴의 일생을 통해 모든 존재의 초월적 능력을 일깨운 우화 형식의
                                 신비주의 소설</p>
                         </div>
                     </div>
-                    <div class="swiper-slide swiper-slide--three" onclick="openPopup('book_6'),addToRecentProducts('book_6')">
+                    <div class="swiper-slide swiper-slide--three"
+                        onclick="openPopup('book_6'),addToRecentProducts('book_6')">
                         <div>
                             <h2>크리피</h2>
                             <p>현대인의 고립된 환경을 배경으로 일상 가까이에 도사린 공포와 상상을 초월하는 악행의 연쇄를 오싹하게 그린다.</p>
                         </div>
                     </div>
-                    <div class="swiper-slide swiper-slide--four" onclick="openPopup('book_8'),addToRecentProducts('book_8')">
+                    <div class="swiper-slide swiper-slide--four"
+                        onclick="openPopup('book_8'),addToRecentProducts('book_8')">
                         <div>
                             <h2>마녀와의 7일</h2>
                             <p>히가시노가 2015년 자신의 작가 생활 30주년 기념작으로 발표한 『라플라스의 마녀』와 2018년 프리퀄에 해당하는 『마력의 태동』에 이어 5년 만에 선보이는
                                 〈라플라스 시리즈〉 세 번째 작품이다.</p>
                         </div>
                     </div>
-                    <div class="swiper-slide swiper-slide--five" onclick="openPopup('book_9'),addToRecentProducts('book_9')">
+                    <div class="swiper-slide swiper-slide--five"
+                        onclick="openPopup('book_9'),addToRecentProducts('book_9')">
                         <div>
                             <h2>죽은자의 결혼식</h2>
                             <p>친구 모두를 협박해 원하는 바를 이루고자 했던 소시오패스 신랑과 그에 맞서는 친구들의 민낯을 섬세한 시선으로 그린 범죄 스릴러물</p>
                         </div>
                     </div>
                 </div>
+
                 <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>
             </div>
         </div>
     </div>
+
     <!-- 상품란 -->
     <div>
         <main>
@@ -236,11 +245,9 @@
                 </div>
             </section>
         </main>
-
         <aside class="recent-products">
             <!-- 최근 본 상품 이미지들 -->
         </aside>
-
     </div>
 
     <!-- 팝업 구조 -->
@@ -266,6 +273,7 @@
                 <h2>관련 기사</h2>
                 <ul id="popup-articles-list"></ul>
             </div>
+
             <!-- 수량 조절 추가 -->
             <div id="popup-quantity-controls" class="popup-section">
                 <h2>수량</h2>
@@ -280,7 +288,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- 미리보기 팝업 모달 -->
     <div id="overlay3" class="overlay3"></div>
@@ -316,6 +323,7 @@
                 <button class="coupon-button" onclick="clearCart()">비우기</button>
                 <button class="coupon-button" onclick="closeCart()">닫기</button>
             </div>
+
             <!-- 쿠폰 코드 입력 필드와 적용 버튼 추가 -->
             <div>
                 <nav>
@@ -328,10 +336,7 @@
         </div>
     </div>
 
-
     <!-- 스크립트 코드 -->
-    <!-- 팝업 -->
-    <script src="jsfile/detail_page.js"></script>
     <!-- 상품목록 -->
     <script src="jsfile/Products.js"></script>
     <!-- 책 리스트, 상세정보이동, 장바구니 -->
@@ -342,7 +347,6 @@
     <!-- 상단 배너 슬라이스 -->
     <script src='jsfile/main_banner_script_drive.js'></script>
     <script src="jsfile/main_banner_script.js"></script>
-
 
 </body>
 

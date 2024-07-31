@@ -835,7 +835,7 @@ function updateCartIcon() {
   let cart = Array.isArray(userCart[userType]) ? userCart[userType] : [];                                       // userCart[userType]이 배열에 존재하는지지 확인
   let cartItemCount = cart.reduce((total, item) => total + (item.quantity || 0), 0);                            // 현재 장바구니에 담긴 상품 개수를 가져옵니다.
 
-  cartIcon.src = cartItemCount > 0 ? 'C:\\PJT_1\\img\\basket_fill.png' : 'C:\\PJT_1\\img\\basket_empty.png';    // 장바구니에 상품이 있는지 여부에 따라 아이콘을 변경합니다.
+  cartIcon.src = cartItemCount > 0 ? 'img/basket_fill.png' : 'img/basket_empty.png';    // 장바구니에 상품이 있는지 여부에 따라 아이콘을 변경합니다.
 }
 
 /* 장바구니 리스트 UI */
