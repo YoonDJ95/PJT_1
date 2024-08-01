@@ -291,6 +291,13 @@ function displayUserList() {                                          // 사용�
   Object.keys(users).forEach(userId => {                              // users 객체의 모든 키에 대해 반복적으로 작업을 수행
     console.log('userlist 불러온다.');                                 // 디버깅
 
+    console.log('처리 중 userId:', userId);  // 디버깅: 현재 처리 중인 userId를 출력
+
+    if (userId === 'Master') {
+      console.log('마스터 계정 제외됨:', userId);  // 디버깅: 마스터 계정이 제외됨을 알림
+      return; // 현재 루프를 종료하고 다음 사용자로 넘어감
+    }
+
     const userItem = document.createElement('div');                   // 각 사용자 항목을 생성할 div 요소
     userItem.style.paddingTop = '15px';                               // 위쪽 여백을 설정
     userItem.textContent = `ID: ${userId}, PW: ${users[userId].password}, Name: ${users[userId].name}`;
