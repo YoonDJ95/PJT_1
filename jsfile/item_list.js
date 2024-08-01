@@ -688,22 +688,30 @@ function loadRecentItems() {
 }
 
 /* 쿠폰 적용 기능 */  // 현재 반영 안되어잇음.
+let originalTotalPrice;
+
 function applyCoupon() {
-  const couponCode = document.getElementById('coupon-input').value;
-  const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace(/,/g, ''));
-
-  if (couponCode === 'DISCOUNT10') {
-    const discountedPrice = totalPrice * 0.9; // 10% 할인
-    document.getElementById('total-price').textContent = discountedPrice.toLocaleString(); // 천 단위 구분 쉼표 추가
-    alert('쿠폰이 적용되었습니다. 10% 할인이 적용됩니다.');
-    document.getElementById('coupon-input').value = '';
-
-    // 총합계 텍스트를 할인적용 총합계로 변경
+    const couponCode = document.getElementById('coupon-input').value;
+    const totalPriceElement = document.getElementById('total-price');
     const totalPriceContainer = document.getElementById('total-price-container');
-    totalPriceContainer.innerHTML = `10%할인<br>총합계:<br><span id="total-price">${discountedPrice.toLocaleString()}</span> 원`;
-  } else {
-    alert('유효하지 않은 쿠폰 코드입니다.');
-  }
+
+    if (!originalTotalPrice) {
+        originalTotalPrice = parseFloat(totalPriceElement.textContent.replace(/,/g, ''));
+    }
+
+    if (couponCode === 'DISCOUNT10') {
+        const discountedPrice = originalTotalPrice * 0.9; // 10% 할인
+        totalPriceElement.textContent = discountedPrice.toLocaleString(); // 천 단위 구분 쉼표 추가
+        alert('쿠폰이 적용되었습니다. 10% 할인이 적용됩니다.');
+        document.getElementById('coupon-input').value = '';
+
+        // 총합계 텍스트를 할인적용 총합계로 변경
+        totalPriceContainer.innerHTML = `10%할인<br>총합계:<br><span id="total-price">${discountedPrice.toLocaleString()}</span> 원`;
+    } else {
+        alert('유효하지 않은 쿠폰 코드입니다.');
+        // 원래 가격으로 되돌림
+        totalPriceContainer.innerHTML = `총합계:<br><span id="total-price">${originalTotalPrice.toLocaleString()}</span> 원`;
+    }
 }
 
 /* 스크롤 탑 기능 */
@@ -762,7 +770,7 @@ function closePreview() {
 function prevPage() {
   if (currentPreviewPage > 0) {                                       // 페이지 수치가 0보다 크다면
     currentPreviewPage--;                                             // 페이지 수치를 1개 차감
-  } else {                                                            // 그 외
+  } else {                                                            // 그 외ㄴ
     currentPreviewPage = currentPreviewBook.previewPages.length - 1;  // 마지막 페이지로 이동
   }
   updatePreviewImage();                                               // 페이지 이미지 업데이트
@@ -920,6 +928,7 @@ function updateQuantity(index, value) {
   if (!isNaN(newQuantity) && newQuantity > 0) {
     userCart[userType][index].quantity = newQuantity;
     saveCart(); // 변경된 장바구니 상태를 로컬 스토리지에 저장
+    applyCoupon();
     updateCartUI(); // 장바구니 UI를 업데이트합니다.
   } else {
     console.error('Invalid quantity:', value);
@@ -953,6 +962,9 @@ function clearCart() {
   updateCartUI();                                             // 장바구니 UI 업데이트
   alert('장바구니가 비워졌습니다.');                            // 알람
   updateCartIcon();                                           // 장바구니 아이콘 UI업데이트
+  const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace(/,/g, ''));
+  const totalPriceContainer = document.getElementById('total-price-container');
+    totalPriceContainer.innerHTML = `총합계:<br><span id="total-price">${totalPrice.toLocaleString()}</span> 원`;
 }
 
 /*시작 */

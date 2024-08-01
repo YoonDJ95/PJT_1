@@ -17,7 +17,7 @@ var swiper = new Swiper(".swiper", {
   },
   loop: true,
   autoplay: {
-    delay: 4000, // 3초마다 자동으로 슬라이드 전환
+    delay: 4000, // 4초마다 자동으로 슬라이드 전환
     disableOnInteraction: false, // 유저 상호작용 후에도 자동 재생 유지
   },
   pagination: {
