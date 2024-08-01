@@ -687,7 +687,7 @@ function loadRecentItems() {
   }
 }
 
-/* 쿠폰 적용 기능 */  // 현재 반영 안되어잇음.
+/* 쿠폰 적용 기능 */ 
 function applyCoupon() {
   const couponCode = document.getElementById('coupon-input').value;
   const totalPrice = parseFloat(document.getElementById('total-price').textContent.replace(/,/g, ''));
@@ -791,24 +791,6 @@ function updatePreviewImage() {
   if (!currentPreviewBook) return;                                                                    // bookId가 없다면 해당 기능을 수행하지 않음
   document.getElementById('preview-image').src = currentPreviewBook.previewPages[currentPreviewPage]; // 페이지 별 이미지를 배열마다 삽입.
 }
-
-/* 미리보기 HTML 틀  */
-const previewModalHTML = `
-    <div class="preview-modal" style="display: none;">
-        <div class="modal-content">
-        <p id="book-title"></p> <!-- 책의 제목을 출력할 요소 -->
-            <span class="close-btn" onclick="closePreview()">&times;</span>
-            <img id="preview-image" src="" alt="미리보기 이미지" style="width: 1000px; height: 700px;">
-            <div class="page-navigation">
-                <button id="prev-page-btn" onclick="prevPage()">이전</button>
-                <button id="next-page-btn" onclick="nextPage()">다음</button>
-            </div>
-        </div>
-    </div>
-`;
-
-/* 모달 창을 대상요소 바로 뒤 문서에 추가 */
-document.body.insertAdjacentHTML('beforeend', previewModalHTML);
 
 
 
