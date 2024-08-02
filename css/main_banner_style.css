@@ -157,27 +157,27 @@ main > div > a:hover {
 
 .swiper-slide--one {
   background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), 
-  url("C:\\PJT_1\\book\\book_1_banner.png") no-repeat 50% 50%/cover;
+  url("banner/book_1_banner.png") no-repeat 50% 50%/cover;
 }
 
 .swiper-slide--two {
   background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), 
-  url("C:\\PJT_1\\book\\book_4_banner.png") no-repeat 50% 50%/cover;
+  url("banner/book_4_banner.png") no-repeat 50% 50%/cover;
 }
 
 .swiper-slide--three {
   background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), 
-  url("C:\\PJT_1\\book\\book_6_banner.png") no-repeat 50% 50%/cover;
+  url("banner/book_6_banner.png") no-repeat 50% 50%/cover;
 }
 
 .swiper-slide--four {
   background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), 
-  url("C:\\PJT_1\\book\\book_8_banner.png") no-repeat 50% 50%/cover;
+  url("banner/book_8_banner.png") no-repeat 50% 50%/cover;
 }
 
 .swiper-slide--five {
   background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), 
-  url("C:\\PJT_1\\book\\book_9_banner.png") no-repeat 50% 50%/cover;
+  url("banner/book_9_banner.png") no-repeat 50% 50%/cover;
 }
 
 .swiper-3d .swiper-slide-shadow-left,
